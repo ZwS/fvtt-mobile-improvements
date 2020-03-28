@@ -1,0 +1,241 @@
+/* ------------------------------------ */
+/*                Core UI               */
+/* ------------------------------------ */
+
+@media screen and (max-width: 800px) {
+    #sidebar:not(.collapsed) {
+        width: 100%;
+        z-index: 80;
+        background-color: black;
+        height: 100vh;
+        top: 0;
+        right: 0;
+        background: #333;
+    }
+
+    .app {
+        background: #333333EE;
+        border-radius: 0;
+    }
+
+    #navigation {
+        width: calc(100% - 440px);
+    }
+
+    #navigation #scene-list {
+        min-width: 110px;
+    }
+
+    #players {
+        bottom: 120px;
+    }
+
+    #hotbar {
+        left: 0;
+        height: auto;
+        width: 100%;
+        max-width: 600px;
+    }
+
+    #hotbar #action-bar {
+        height: auto;
+    }
+
+    #hotbar #macro-list {
+        flex: 1;
+        border: none;
+    }
+}
+
+.app.sidebar-popout .directory-list {
+    max-height: initial;
+}
+
+/* ------------------------------------ */
+/*              Application             */
+/* ------------------------------------ */
+@media screen and (max-width: 800px) {
+    .window-app:not(.minimized) {
+        width: 100% !important;
+        height: 100% !important;
+        left: 0 !important;
+        top: 0 !important;
+        margin: 0;
+        min-height: 100% !important;
+        min-width: 100% !important;
+        overflow-x: scroll;
+    }
+
+    .window-app .window-resizable-handle {
+        display: none;
+    }
+
+    /* ------------------------------------ */
+    /*         TODO: Organise with JS       */
+    /* ------------------------------------ */
+    .minimized {
+        visibility: hidden;
+    }
+/*     .minimized {
+        margin: 0;
+        box-shadow: 0 0 2px #000;
+        border: 1px solid #000;
+    }
+    .window-app.minimized .window-header {
+        border: none;
+    }
+    .minimized .close {
+        width: 1em;
+    }
+    .minimized .draggable {
+        cursor: pointer;
+    }
+    div:nth-last-of-type(1).minimized {
+        left: 40px !important;
+        bottom: 0px !important;
+        top: unset !important;
+    }
+    div:nth-last-of-type(2).minimized {
+        left: 40px !important;
+        bottom: 30px !important;
+        top: unset !important;
+    }
+    div:nth-last-of-type(3).minimized {
+        left: 40px !important;
+        bottom: 60px !important;
+        top: unset !important;
+    }
+    div:nth-last-of-type(4).minimized {
+        left: 40px !important;
+        bottom: 90px !important;
+        top: unset !important;
+    }
+    div:nth-last-of-type(5).minimized {
+        left: 40px !important;
+        bottom: 120px !important;
+        top: unset !important;
+    }
+    div:nth-last-of-type(6).minimized {
+        left: 40px !important;
+        bottom: 150px !important;
+        top: unset !important;
+    } */
+}
+/* ------------------------------------ */
+/*             dnd5e system             */
+/* ------------------------------------ */
+
+.dnd5e.sheet .sheet-navigation .item {
+    margin: 0;
+}
+
+.dnd5e.sheet.actor ul.attributes li.attribute {
+    height: auto;
+}
+.dnd5e.sheet.actor ul.attributes li.attribute .attribute-value {
+    white-space: nowrap;
+}
+.dnd5e.sheet.actor.character .attributes .resource label.checkbox {
+    white-space: nowrap;
+}
+
+.dnd5e.sheet.actor.character .sheet-header .attributes .attribute .attribute-footer {
+    white-space: nowrap;
+}
+.dnd5e.sheet.actor .sheet-header .charlevel {
+    flex: 1;
+}
+
+.dnd5e.sheet.actor ul.skills-list {
+    min-width: 195px;
+    flex: 1;
+}
+
+
+/* ------------------------------------ */
+/*              Module Apps             */
+/* ------------------------------------ */
+
+.window-selector {
+    z-index: 1000;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(calc(100% - 43px));
+    transition: transform ease-in 100ms;
+}
+
+@media screen and (max-width: 800px) {
+    .window-selector {
+        display: flex;
+    }
+}
+
+.window-selector.open {
+    transform: translateY(0);
+}
+
+.window-selector .window-count {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 2px;
+    font-size: 120%;
+    border: 1px solid #000;
+    line-height: 1.6em;
+    text-align: center;
+    font-weight: bold;
+    background: #333333EE;
+    color: #f0f0e0;
+    z-index: 1;
+    box-shadow: 0 0 20px #000;
+}
+
+.window-selector nav {
+    padding: 0 1em;
+    background: #333333EE;
+    width: 250px;
+    border: 1px solid #000;
+    box-shadow: 0 0 20px #000;
+}
+
+.window-selector .window-list {
+    padding: 0;
+}
+
+.window-selector .window-row {
+    display: flex;
+    margin-bottom: 2px;
+    border: 1px solid #000;
+    background: #333333EE;
+}
+
+.window-selector .window-row:hover {
+    box-shadow: 0 0 3px #000;
+}
+
+.window-selector .window-list .window-close {
+    width: 2.5em;
+    max-width: 2.5em;
+}
+
+.window-selector button {
+    background: none;
+    border: none;
+    color: #f0f0e0;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 0;
+    text-align: left;
+}
+
+.window-selector button:hover {
+    box-shadow: none;
+}
+
+.window-selector button i {
+    margin: 0;
+}

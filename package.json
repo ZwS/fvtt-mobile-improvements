@@ -1,0 +1,30 @@
+{
+  "private": true,
+  "name": "other-screens",
+  "version": "0.1.0",
+  "description": "Foundry VTT module for unorthodox screens",
+  "scripts": {
+    "package": "gulp package",
+    "build": "gulp build && gulp link",
+    "build:watch": "gulp watch",
+    "clean": "gulp clean && gulp link --clean",
+    "update": "npm install --save-dev gitlab:foundry-projects/foundry-pc/foundry-pc-types"
+  },
+  "author": "Sunspots",
+  "license": "MIT",
+  "devDependencies": {
+    "archiver": "^3.1.1",
+    "chalk": "^3.0.0",
+    "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types",
+    "fs-extra": "^9.0.0",
+    "gulp": "^4.0.2",
+    "gulp-git": "^2.10.0",
+    "gulp-less": "^4.0.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "json-stringify-pretty-compact": "^2.0.0",
+    "sass": "^1.26.3",
+    "typescript": "^3.8.3",
+    "yargs": "^15.3.1"
+  }
+}
