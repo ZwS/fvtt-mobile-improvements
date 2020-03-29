@@ -20,7 +20,6 @@ export class WindowSelector extends Application {
 			return true
 		},
 		deleteProperty: function (target, property) {
-			console.log("delet", this.app)
 			setTimeout(() => { this.app.update() }, 10)
 			return delete target[property]
 		},
@@ -34,14 +33,12 @@ export class WindowSelector extends Application {
 			height: 200,
 			popOut: false,
 		})
-		console.log("construct")
 		this.windowChangeHandler.app = this
 		ui.windows = new Proxy(ui.windows, this.windowChangeHandler)
 	}
 	protected activateListeners(html: JQuery | HTMLElement): void {
 		this.toggleButton = (<JQuery>this.element).find(".window-count")
 		this.toggleButton.click(ev => {
-			console.log("click")
 			ev.preventDefault();
 			(<JQuery>this.element).toggleClass("open")
 		})
@@ -58,11 +55,16 @@ export class WindowSelector extends Application {
 		(<JQuery>this.element).toggleClass("open")
 	}
 	update() {
+		const count = Object.values(ui.windows).length
+		if (count < 2) {
+			(<JQuery>this.element).removeClass("has-items")
+			return
+		}
+		(<JQuery>this.element).addClass("has-items")
 		// TODO: add/remove changed instead of clear/fill
 		let list = (<JQuery>this.element).find(".window-list")
 		list.empty()
-		console.log(this.toggleButton.html())
-		this.toggleButton.html(Object.values(ui.windows).length.toString())
+		this.toggleButton.html(count.toString())
 		Object.values(ui.windows).forEach((win: Application) => {
 			// @ts-ignore
 			const title = win.options.title || win.object?.data.name || win.data?.title || win.metadata?.label
@@ -75,7 +77,6 @@ export class WindowSelector extends Application {
 			list.append(row)
 			windowButton.click(ev => {
 				ev.preventDefault()
-				console.log(`selected ${title}`, win)
 				this.toggleOpen()
 				// @ts-ignore
 				if (win._minimized) {
@@ -87,7 +88,6 @@ export class WindowSelector extends Application {
 			})
 			closeButton.click(ev => {
 				ev.preventDefault()
-				console.log(`closing ${title}`, win)
 				win.close()
 			})
 		})

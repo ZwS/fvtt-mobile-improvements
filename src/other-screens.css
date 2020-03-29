@@ -47,6 +47,10 @@
     }
 }
 
+#settings {
+    overflow-y: scroll;
+}
+
 .app.sidebar-popout .directory-list {
     max-height: initial;
 }
@@ -159,19 +163,25 @@
 .window-selector {
     z-index: 1000;
     position: absolute;
-    bottom: 0;
+    bottom: -1px;
     width: 100%;
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    transform: translateY(calc(100% - 43px));
+    transform: translateY(calc(100% + 60px));
     transition: transform ease-in 100ms;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 @media screen and (max-width: 800px) {
     .window-selector {
-        display: flex;
+       visibility: unset;
     }
+}
+
+.window-selector.has-items {
+    transform: translateY(calc(100% - 9px));
 }
 
 .window-selector.open {
@@ -181,7 +191,6 @@
 .window-selector .window-count {
     width: 32px;
     height: 32px;
-    margin-bottom: 2px;
     font-size: 120%;
     border: 1px solid #000;
     line-height: 1.6em;
@@ -191,6 +200,11 @@
     color: #f0f0e0;
     z-index: 1;
     box-shadow: 0 0 20px #000;
+    position: absolute;
+    top: -36px;
+    cursor: pointer;
+    border-radius: 3px;
+    pointer-events: auto;
 }
 
 .window-selector nav {
@@ -199,6 +213,9 @@
     width: 250px;
     border: 1px solid #000;
     box-shadow: 0 0 20px #000;
+    max-height: calc(100vh - 40px);
+    overflow: scroll;
+    pointer-events: auto;
 }
 
 .window-selector .window-list {
@@ -222,14 +239,16 @@
 }
 
 .window-selector button {
+    text-align: left;
     background: none;
     border: none;
     color: #f0f0e0;
+    border-radius: 0;
     flex-grow: 1;
     overflow: hidden;
     text-overflow: ellipsis;
-    border-radius: 0;
-    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
 }
 
 .window-selector button:hover {

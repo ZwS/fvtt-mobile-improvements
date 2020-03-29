@@ -204,7 +204,7 @@ async function copyFolders() {
 }
 async function copyStatics() {
 	return gulp
-		.src(sourceGroups.statics, { allowEmpty: true, base: 'src' })
+		.src(sourceGroups.statics, { allowEmpty: true, cwd: 'src' })
 		.pipe(gulp.dest(distFolder));
 }
 
