@@ -28,7 +28,7 @@ export class WindowSelector extends Application {
 	constructor() {
 		super({
 			title: "Window Selector",
-			template: "modules/other-screens/templates/window-selector.html",
+			template: "modules/mobile-improvements/templates/window-selector.html",
 			width: 400,
 			height: 200,
 			popOut: false,

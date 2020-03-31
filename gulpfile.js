@@ -17,7 +17,7 @@ sass.compiler = require('sass');
 
 // Configuration
 // Output folder, will contain the full module as used by foundry.
-const distFolder = 'dist'
+const distFolder = 'dist';
 
 // Patterns for watch & compile
 // TODO: File watch continuously chokes CPU if you add files that are missing
@@ -40,7 +40,7 @@ const sourceGroups = {
 		// 'system.json',
 		// 'template.json',
 	],
-}
+};
 
 
 function getConfig() {
@@ -215,7 +215,7 @@ async function copyStatics() {
  * Watch for changes for each build step
  */
 function buildWatch() {
-	const opts = { ignoreInitial: false, cwd: 'src' }
+	const opts = { ignoreInitial: false, cwd: 'src' };
 	gulp.watch(sourceGroups.ts, opts, buildTS);
 	gulp.watch(sourceGroups.less, opts, buildLess);
 	gulp.watch(sourceGroups.sass, opts, buildSASS);
