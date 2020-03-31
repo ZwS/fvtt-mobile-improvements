@@ -15,9 +15,12 @@ const argv = require('yargs').argv;
 
 sass.compiler = require('sass');
 
-const distFolder = 'dist/'
+// Configuration
+// Output folder, will contain the full module as used by foundry.
+const distFolder = 'dist'
 
 // Patterns for watch & compile
+// TODO: File watch continuously chokes CPU if you add files that are missing
 const sourceGroups = {
 	'ts': ['**/*.ts'],
 	'less': ['**/*.less'],
@@ -25,17 +28,17 @@ const sourceGroups = {
 
 	// Folders are copied as-is
 	'folders': [
-		'lang',
-		'fonts',
-		'assets',
+		// 'lang',
+		// 'fonts',
+		// 'assets',
 		'templates',
 	],
 	// Files are copied following pattern
 	'statics': [
 		'**/*.css',
 		'module.json',
-		'system.json',
-		'template.json',
+		// 'system.json',
+		// 'template.json',
 	],
 }
 

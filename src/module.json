@@ -1,7 +1,7 @@
 {
-  "name": "other-screens",
-  "title": "Other Screens",
-  "description": "Other Screens improves usability on smaller screen sizes and alternative views.",
+  "name": "mobile-improvements",
+  "title": "Mobile Improvements",
+  "description": "Mobile Improvements improves usability on smaller screen sizes.",
   "systems": [
     "dnd5e"
   ],
@@ -9,19 +9,19 @@
   "author": "Sunspots",
   "scripts": [],
   "esmodules": [
-    "other-screens.js"
+    "mobile-improvements.js"
   ],
   "styles": [
-    "./other-screens.css"
+    "./mobile-improvements.css"
   ],
   "packs": [],
   "languages": [],
   "minimumCoreVersion": "0.5.0",
-  "url": "",
+  "url": "https://gitlab.com/sunspots/mobile-improvements",
   "manifest": "",
   "download": "",
   "license": "",
-  "readme": "",
-  "bugs": "",
+  "readme": "https://gitlab.com/sunspots/mobile-improvements",
+  "bugs": "https://gitlab.com/sunspots/mobile-improvements/-/issues",
   "changelog": ""
 }

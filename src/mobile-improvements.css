@@ -74,56 +74,9 @@
         display: none;
     }
 
-    /* ------------------------------------ */
-    /*         TODO: Organise with JS       */
-    /* ------------------------------------ */
     .minimized {
         visibility: hidden;
     }
-/*     .minimized {
-        margin: 0;
-        box-shadow: 0 0 2px #000;
-        border: 1px solid #000;
-    }
-    .window-app.minimized .window-header {
-        border: none;
-    }
-    .minimized .close {
-        width: 1em;
-    }
-    .minimized .draggable {
-        cursor: pointer;
-    }
-    div:nth-last-of-type(1).minimized {
-        left: 40px !important;
-        bottom: 0px !important;
-        top: unset !important;
-    }
-    div:nth-last-of-type(2).minimized {
-        left: 40px !important;
-        bottom: 30px !important;
-        top: unset !important;
-    }
-    div:nth-last-of-type(3).minimized {
-        left: 40px !important;
-        bottom: 60px !important;
-        top: unset !important;
-    }
-    div:nth-last-of-type(4).minimized {
-        left: 40px !important;
-        bottom: 90px !important;
-        top: unset !important;
-    }
-    div:nth-last-of-type(5).minimized {
-        left: 40px !important;
-        bottom: 120px !important;
-        top: unset !important;
-    }
-    div:nth-last-of-type(6).minimized {
-        left: 40px !important;
-        bottom: 150px !important;
-        top: unset !important;
-    } */
 }
 /* ------------------------------------ */
 /*             dnd5e system             */

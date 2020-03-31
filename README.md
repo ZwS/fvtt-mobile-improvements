@@ -1,7 +1,7 @@
-# Other Screens - Flexible view for Foundry VTT
-This module is intended to make the UI more flexible for use with unorthodox screen resolutions and aspects. Primary focus is on mobile and tablet use. Secondary focus is on TV/Display/Table view.
+# Mobile Improvements - Flexible view for Foundry VTT
+This module is intended to make the UI more flexible for use with mobiles, tablets and other low-resolution devices.
 
-Current state: Useful for general UI interaction. Map does not work well with touch input.
+Current state: Useful for general UI interaction. Map does not work with touch input.
 
 # Features
 - Full-view application windows

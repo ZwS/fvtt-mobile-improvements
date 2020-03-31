@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "other-screens",
+  "name": "mobile-improvements",
   "version": "0.1.0",
   "description": "Foundry VTT module for unorthodox screens",
   "scripts": {
