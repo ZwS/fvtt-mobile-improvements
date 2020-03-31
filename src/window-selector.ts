@@ -56,11 +56,13 @@ export class WindowSelector extends Application {
 	}
 	update() {
 		const count = Object.values(ui.windows).length
-		if (count < 2) {
-			(<JQuery>this.element).removeClass("has-items")
+		if (count == 0) {
+			(<JQuery>this.element).removeClass("has-items");
+			(<JQuery>this.element).removeClass("open");
 			return
+		} else {
+			(<JQuery>this.element).addClass("has-items")
 		}
-		(<JQuery>this.element).addClass("has-items")
 		// TODO: add/remove changed instead of clear/fill
 		let list = (<JQuery>this.element).find(".window-list")
 		list.empty()
