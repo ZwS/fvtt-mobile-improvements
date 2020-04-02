@@ -38,25 +38,40 @@ Current state: Useful for general UI interaction. Map does not work with touch i
 
 
 # Build
-Based on [create-foundry-project](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project).
+Based on [create-foundry-project](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project). The main difference is that generated code is never mixed with source. The dist folder is separate and contains the fully built module after build.
 ```bash
 npm install
 npm run build:watch
 ```
 
-## Automatic install
+## npm build scripts
+
+### build
+`build` will build the code and copy all necessary assets into the dist folder.
+```bash
+npm run build:install
+```
+
+### build:install
 Make a symlink to install the result into your foundry data; create a `foundryconfig.json` file with your Foundry Data path.
 ```json
 {
   "dataPath": "~/.local/share/FoundryVTT/",
 }
 ```
-
-`build` will build and set up a symlink between `dist` and your `dataPath`.
+`build:install` will build and set up a symlink between `dist` and your `dataPath`.
 ```bash
-npm run build
+npm run build:install
+```
+
+### build:watch
+`build:watch` will build and watch for changes, rebuilding automatically.
+```bash
+npm run build:install
 ```
 
 ## Differences to create-foundry-project
 - No source files in dist folder (safe to delete)
-- watch/copy files improved
+- watch/copy files changed
+- somewhat less safety
+- configuration over detection
