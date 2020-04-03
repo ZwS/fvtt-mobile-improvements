@@ -160,7 +160,7 @@ function buildWatch() {
  * Remove all files from `dist`
  */
 async function clean() {
-	if (!fs.exists(distFolder)) { return Promise.resolve(); }
+	if (!fs.existsSync(distFolder)) { return Promise.resolve(); }
 
 	const files = await fs.readdir(distFolder);
 	console.log(' ', chalk.yellow('Files to clean:'));
@@ -174,7 +174,7 @@ async function clean() {
 /********************/
 
 function getInstallPath() {
-	const name = getManifest().name;
+	const name = fs.readJSONSync('package.json').name;
 	const config = fs.readJSONSync('foundryconfig.json');
 
 	// Different types of extensions go in different destinations
