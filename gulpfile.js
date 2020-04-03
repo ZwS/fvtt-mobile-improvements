@@ -38,14 +38,36 @@ const sourceGroups = {
 	],
 };
 
+function resolveVersion(packageVersion) {
+	// Dummy logic ahead
+	const isTaggedRelease = false;
+	const isCI = true;
+
+	// Is a new tagged release in CI, commit should have
+	// package.json with real version
+	if (isTaggedRelease) {
+		return packageVersion;
+	}
+	// Is in CI, but not a tagged release
+	if (isCI) {
+		// There should be some ever-increasing number in CI env
+		const ciSequenceNo = new Date().getTime();
+		return `${packageVersion}-${ciSequenceNo}`;
+	}
+	// Probably all local builds
+	return `${packageVersion}-dirty`;
+}
+
 async function buildManifest() {
 	// const config = await fs.readJSON('foundryconfig.json');
 	const module = await fs.readJSON(path.join("src", manifestType));
 	const package = await fs.readJSON('package.json');
 
+	const version = resolveVersion(package.version);
+
 	let newModule = {
 		...module,
-		version: package.version,
+		version: version,
 		url: package.homepage,
 		readme: package.homepage,
 		bugs: package.bugs.url,
@@ -138,21 +160,11 @@ function buildWatch() {
  * Remove all files from `dist`
  */
 async function clean() {
-	const name = path.basename(path.resolve('.'));
 	const files = await fs.readdir(distFolder);
-
 	console.log(' ', chalk.yellow('Files to clean:'));
 	console.log('   ', chalk.blueBright(files.join('\n    ')));
 
-	// Attempt to remove the files
-	try {
-		for (const filePath of files) {
-			await fs.remove(path.join(distFolder, filePath));
-		}
-		return Promise.resolve();
-	} catch (err) {
-		Promise.reject(err);
-	}
+	await Promise.all(files.map(filePath => fs.remove(path.join(distFolder, filePath))));
 }
 
 /********************/
@@ -163,7 +175,7 @@ function getInstallPath() {
 	const name = getManifest().name;
 	const config = fs.readJSONSync('foundryconfig.json');
 
-	// Types of extensions in different destinations
+	// Different types of extensions go in different destinations
 	const extensionDir = {
 		'module.json': 'modules',
 		'system.json': 'systems',

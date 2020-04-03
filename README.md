@@ -10,6 +10,7 @@ Current state: Useful for general UI interaction. Map does not work with touch i
   - List and switch between open windows
   - Minimizing windows hides them
 - Flexible-ish macro bar
+
 ## dnd5e
 - Narrower character sheets
 
@@ -25,7 +26,7 @@ Current state: Useful for general UI interaction. Map does not work with touch i
   - Selection
   - Movement
   - Manual map controls
-    - Alternative to getting fully working touch control - add pan-and-zoom controls
+    - Alternative to getting working touch control - add pan-and-zoom controls
 
 - System-specific
   - Responsive sheets
@@ -49,7 +50,7 @@ npm run build:watch
 ### build
 `build` will build the code and copy all necessary assets into the dist folder.
 ```bash
-npm run build:install
+npm run build
 ```
 
 ### build:install
@@ -67,11 +68,18 @@ npm run build:install
 ### build:watch
 `build:watch` will build and watch for changes, rebuilding automatically.
 ```bash
-npm run build:install
+npm run build:watch
+```
+
+### clean
+`clean` will remove all contents in the dist file (but keeps the link from build:install).
+```bash
+npm run clean
 ```
 
 ## Differences to create-foundry-project
+- Simplified-ish
 - No source files in dist folder (safe to delete)
-- watch/copy files changed
-- somewhat less safety
-- configuration over detection
+- Watch/copy files changed
+- Somewhat less safety-ckecking
+- Configuration over detection
