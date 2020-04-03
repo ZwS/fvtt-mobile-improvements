@@ -160,6 +160,8 @@ function buildWatch() {
  * Remove all files from `dist`
  */
 async function clean() {
+	if (!fs.exists(distFolder)) { return Promise.resolve(); }
+
 	const files = await fs.readdir(distFolder);
 	console.log(' ', chalk.yellow('Files to clean:'));
 	console.log('   ', chalk.blueBright(files.join('\n    ')));
