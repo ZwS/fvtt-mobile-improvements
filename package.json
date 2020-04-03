@@ -10,18 +10,19 @@
     "build:watch": "gulp watch",
     "clean": "gulp clean",
     "clean:real": "gulp clean && gulp unlink",
-    "update-types": "npm install --save-dev gitlab:foundry-projects/foundry-pc/foundry-pc-types"
+    "update-types": "npm install --save-dev gitlab:foundry-projects/foundry-pc/foundry-pc-types",
+    "publish": "gulp publish"
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/sunspots/mobile-improvements.git"
+    "url": "https://gitlab.com/fvtt-modules-lab/mobile-improvements.git"
   },
   "author": "Sunspots",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/sunspots/mobile-improvements/-/issues"
+    "url": "https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/issues"
   },
-  "homepage": "https://gitlab.com/sunspots/mobile-improvements",
+  "homepage": "https://gitlab.com/fvtt-modules-lab/mobile-improvements",
   "devDependencies": {
     "archiver": "^3.1.1",
     "chalk": "^3.0.0",
