@@ -40,8 +40,8 @@ const sourceGroups = {
 
 function resolveVersion(packageVersion) {
 	// Dummy logic ahead
-	const isTaggedRelease = false;
-	const isCI = true;
+	const isTaggedRelease = process.env.CI_COMMIT_TAG;
+	const isCI = process.env.CI;
 
 	// Is a new tagged release in CI, commit should have
 	// package.json with real version
@@ -51,7 +51,7 @@ function resolveVersion(packageVersion) {
 	// Is in CI, but not a tagged release
 	if (isCI) {
 		// There should be some ever-increasing number in CI env
-		const ciSequenceNo = new Date().getTime();
+		const ciSequenceNo = process.env.CI_PIPELINE_IID;
 		return `${packageVersion}-${ciSequenceNo}`;
 	}
 	// Probably all local builds
@@ -59,7 +59,8 @@ function resolveVersion(packageVersion) {
 }
 
 async function buildManifest() {
-	// const config = await fs.readJSON('foundryconfig.json');
+	await fs.ensureDir('dist');
+
 	const module = await fs.readJSON(path.join("src", manifestType));
 	const package = await fs.readJSON('package.json');
 
@@ -73,6 +74,11 @@ async function buildManifest() {
 		bugs: package.bugs.url,
 		license: package.license
 	};
+
+	if (process.env.CI) {
+		newModule.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`
+		newModule.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/${newModule.name}-v${newModule.version}.zip?job=build-module`
+	}
 
 	fs.writeFileSync(path.join(distFolder, manifestType), stringify(newModule), 'utf8');
 	return Promise.resolve();
