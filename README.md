@@ -4,14 +4,14 @@ This module is intended to make the UI more flexible for use with mobiles, table
 Current state: Useful for general UI interaction. Map does not work with touch input.
 
 # Features
-- Full-view application windows
-- Full-view sidebar
+- Full-screen application windows
+- Full-screen sidebar
 - Window switching
   - List and switch between open windows
   - Minimizing windows hides them
 - Flexible-ish macro bar
 - Disable map toggle
-  - Disable rendering the game board to increase performance
+  - Disable rendering the game board, to increase performance
 - Pan and Zoom with touch input
   - Some simple hacks to pan and zoom with touch input (zoom is quite bad right now)
 

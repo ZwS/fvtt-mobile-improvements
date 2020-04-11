@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mobile-improvements",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Foundry VTT module for unorthodox screens",
   "scripts": {
     "package": "gulp package",

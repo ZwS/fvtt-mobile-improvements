@@ -61,13 +61,13 @@ function resolveVersion(packageVersion) {
 async function buildManifest() {
 	await fs.ensureDir('dist');
 
-	const module = await fs.readJSON(path.join("src", manifestType));
+	const manifest = await fs.readJSON(path.join("src", manifestType));
 	const package = await fs.readJSON('package.json');
 
 	const version = resolveVersion(package.version);
 
-	let newModule = {
-		...module,
+	let newManifest = {
+		...manifest,
 		version: version,
 		url: package.homepage,
 		readme: package.homepage,
@@ -75,12 +75,14 @@ async function buildManifest() {
 		license: package.license
 	};
 
+	const zipName = `${manifest.name}-v${manifest.version}.zip`
+
 	if (process.env.CI) {
-		newModule.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`
-		newModule.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/${newModule.name}-v${newModule.version}.zip?job=build-module`
+		newManifest.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`
+		newManifest.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/${zipName}?job=build-module`
 	}
 
-	fs.writeFileSync(path.join(distFolder, manifestType), stringify(newModule), 'utf8');
+	fs.writeFileSync(path.join(distFolder, manifestType), stringify(newManifest), 'utf8');
 	return Promise.resolve();
 }
 
@@ -143,19 +145,6 @@ async function copyStatics() {
 	return gulp
 		.src(sourceGroups.statics, { allowEmpty: true, cwd: 'src' })
 		.pipe(gulp.dest(distFolder));
-}
-
-/**
- * Watch for changes for each build step
- */
-function buildWatch() {
-	const opts = { ignoreInitial: false, cwd: 'src' };
-	gulp.watch(manifestType, opts, buildManifest);
-	gulp.watch(sourceGroups.ts, opts, buildTS);
-	gulp.watch(sourceGroups.less, opts, buildLess);
-	gulp.watch(sourceGroups.sass, opts, buildSASS);
-	gulp.watch(sourceGroups.folders, opts, copyFolders);
-	gulp.watch(sourceGroups.statics, opts, copyStatics);
 }
 
 /********************/
@@ -245,11 +234,15 @@ async function packageBuild() {
 	try {
 		const manifest = getManifest();
 		// Ensure there is a directory to hold all the packaged versions
-		await fs.ensureDir('package');
+		const packDir = 'package'
+		await fs.ensureDir(packDir);
+
+		const name = fs.readJSONSync('package.json').name;
 
 		// Initialize the zip file
-		const zipName = `${manifest.name}-v${manifest.version}.zip`;
-		const zipFile = fs.createWriteStream(path.join('package', zipName));
+		const zipName = `${manifest.name}-v${manifest.version}.zip`
+
+		const zipFile = fs.createWriteStream(path.join(packDir, zipName));
 		const zip = archiver('zip', { zlib: { level: 9 } });
 
 		zipFile.on('close', () => {
@@ -275,17 +268,31 @@ async function packageBuild() {
 
 // TODO: Consider automating git later.
 
-const execBuild = gulp.parallel(
-	buildManifest,
-	buildTS,
-	buildLess,
-	buildSASS,
-	copyFolders,
-	copyStatics,
+/**
+ * Watch for changes for each build step
+ */
+function buildWatch() {
+	const opts = { ignoreInitial: false, cwd: 'src' };
+	gulp.watch(manifestType, opts, buildManifest);
+	gulp.watch(sourceGroups.ts, opts, buildTS);
+	gulp.watch(sourceGroups.less, opts, buildLess);
+	gulp.watch(sourceGroups.sass, opts, buildSASS);
+	gulp.watch(sourceGroups.folders, opts, copyFolders);
+	gulp.watch(sourceGroups.statics, opts, copyStatics);
+}
+
+const execBuild = gulp.series(
+	buildManifest, gulp.parallel(
+		buildTS,
+		buildLess,
+		buildSASS,
+		copyFolders,
+		copyStatics,
+	)
 );
 
 exports.manifest = buildManifest;
-exports.build = gulp.series(execBuild);
+exports.build = execBuild;
 exports.watch = buildWatch;
 exports.clean = clean;
 exports.link = linkUserData;
@@ -293,7 +300,6 @@ exports.unlink = unlinkUserData;
 exports.package = packageBuild;
 exports.publish = gulp.series(
 	clean,
-	buildManifest,
 	execBuild,
 	packageBuild,
 );

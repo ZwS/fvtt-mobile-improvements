@@ -11,11 +11,13 @@ build-module:
   script:
     - npm install
     - npm run publish
+    - cp dist/module.json .
+    - cp package/*.zip .
 
   artifacts:
     paths:
-      - 'package/*.zip'
-      - 'dist/module.json'
+      - '*.zip'
+      - 'module.json'
   only:
     refs:
       - develop
