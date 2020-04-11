@@ -13,11 +13,6 @@
         background: #333;
     }
 
-    .app {
-        background: #333333EE;
-        border-radius: 0;
-    }
-
     #navigation {
         width: calc(100% - 440px);
     }
@@ -31,10 +26,15 @@
     }
 
     #hotbar {
+        z-index: 81;
         left: 0;
         height: auto;
         width: 100%;
-        max-width: 600px;
+        max-width: none;
+    }
+
+    #hotbar .bar-controls {
+        background: #333;
     }
 
     #hotbar #action-bar {
@@ -43,7 +43,12 @@
 
     #hotbar #macro-list {
         flex: 1;
-        border: none;
+        background: #333;
+        padding: 4px;
+        justify-content: center;
+    }
+    #hotbar .macro {
+        margin: 2px;
     }
 }
 
@@ -55,10 +60,27 @@
     max-height: initial;
 }
 
+.app.filepicker form {
+    max-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.app.filepicker .filepicker-body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 /* ------------------------------------ */
 /*              Application             */
 /* ------------------------------------ */
 @media screen and (max-width: 800px) {
+    .app {
+        background: #333333EE;
+        border-radius: 0;
+    }
+
     .window-app:not(.minimized) {
         width: 100% !important;
         height: 100% !important;
@@ -76,6 +98,16 @@
 
     .minimized {
         visibility: hidden;
+    }
+
+    .dialog .dialog-content {
+        overflow: scroll;
+        flex: 0 1 auto;
+    }
+
+    .dialog .dialog-buttons {
+        flex: none;
+        padding-top: 5px;
     }
 }
 /* ------------------------------------ */
@@ -115,14 +147,14 @@
 
 .window-selector {
     z-index: 1000;
-    position: absolute;
+    position: fixed;
     bottom: -1px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     transform: translateY(calc(100% + 60px));
-    transition: transform ease-in 100ms;
+    transition: transform ease-in 50ms;
     visibility: hidden;
     pointer-events: none;
 }
@@ -209,5 +241,35 @@
 }
 
 .window-selector button i {
+    margin: 0;
+}
+
+.window-selector .minimize-all {
+    text-align: center;
+}
+
+.display-modes-toggle {
+    z-index: 1;
+    position: fixed;
+    right: 5px;
+    top: 380px;
+    width: 30px;
+    height: 30px;
+    font-size: 90%;
+    line-height: 1.6em;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #000;
+    text-align: center;
+    font-weight: bold;
+    background: #333333EE;
+    color: #f0f0e0;
+    box-shadow: 0 0 20px #000;
+    cursor: pointer;
+    border-radius: 3px;
+    pointer-events: auto;
+}
+
+.display-modes-toggle i {
     margin: 0;
 }

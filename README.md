@@ -10,22 +10,33 @@ Current state: Useful for general UI interaction. Map does not work with touch i
   - List and switch between open windows
   - Minimizing windows hides them
 - Flexible-ish macro bar
+- Disable map toggle
+  - Disable rendering the game board to increase performance
+- Pan and Zoom with touch input
+  - Some simple hacks to pan and zoom with touch input (zoom is quite bad right now)
 
 ## dnd5e
 - Narrower character sheets
 
 # TODO
+- Ensure disabling of canvas is actually doing something to performance
 - Application window view
   - Full-view windows (ongoing)
     - Better dialogs
-  - Some kind of toggle between window/map views
+  - Window selector improvements
+    - Minimize all
+    - Minimize button on app header
+
+- Action bas improvements
+  - Spacing and distribution
+  - New list?
+
+- Some kind of toggle between window/map views
 
 - Map interaction
-  - Panning
-    - At least try to get some touch input working for panning around the map
   - Selection
   - Movement
-  - Manual map controls
+  - Manual map controls (maybe)
     - Alternative to getting working touch control - add pan-and-zoom controls
 
 - System-specific

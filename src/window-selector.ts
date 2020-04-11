@@ -27,10 +27,7 @@ export class WindowSelector extends Application {
 	toggleButton: JQuery = null
 	constructor() {
 		super({
-			title: "Window Selector",
 			template: "modules/mobile-improvements/templates/window-selector.html",
-			width: 400,
-			height: 200,
 			popOut: false,
 		})
 		this.windowChangeHandler.app = this
