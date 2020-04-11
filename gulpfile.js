@@ -75,7 +75,7 @@ async function buildManifest() {
 		license: package.license
 	};
 
-	const zipName = `${manifest.name}-v${manifest.version}.zip`
+	const zipName = `${newManifest.name}-v${newManifest.version}.zip`
 
 	if (process.env.CI) {
 		newManifest.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`
