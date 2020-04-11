@@ -114,10 +114,76 @@
 /*             dnd5e system             */
 /* ------------------------------------ */
 
+@media screen and (max-width: 800px) {
+    .dnd5e.sheet .sheet-header {
+        align-items: center;
+    }
+    .dnd5e.sheet.actor.character .sheet-header img.profile {
+        flex: 0 0 20vw;
+        max-width: 20vw;
+        height: 20vw;
+    }
+    .dnd5e.sheet .sheet-header h1 {
+        height: auto;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+    }
+    .dnd5e.sheet .sheet-header h1 input {
+        margin: 0;
+    }
+    .dnd5e.sheet.actor .sheet-header .charlevel,
+    .dnd5e.sheet.actor.character .sheet-header .charlevel {
+        height: auto;
+        flex: 1;
+        max-width: 33vw;
+    }
+    .dnd5e.sheet.actor.character .sheet-header .charlevel .level {
+        height: auto;
+        line-height: 26px;
+    }
+    .dnd5e.sheet.actor .sheet-header .charlevel .level label {
+        font-size: 20px;
+    }
+    .dnd5e.sheet.actor .sheet-header .charlevel .experience {
+        display: flex;
+        justify-content: end;
+        white-space: nowrap;
+    }
+
+    .dnd5e.sheet.actor.character .sheet-header .charlevel .experience input[type="text"] {
+        width: auto;
+        max-width: 50%;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .dnd5e.sheet .sheet-header {
+        position: relative;
+    }
+    .dnd5e.sheet.actor.character .sheet-header img.profile {
+        position: absolute;
+        top: 0px;
+    }
+    .dnd5e.sheet.actor.character .sheet-header img.profile {
+        max-width: 94px;
+        height: 94px;
+    }
+    .dnd5e.sheet.actor.character .sheet-header h1 {
+        margin-left: 94px;
+    }
+    .dnd5e.sheet.actor.character .sheet-header .summary {
+        padding-left: 94px;
+    }
+}
+
 .dnd5e.sheet .sheet-navigation .item {
     margin: 0;
 }
-
+.dnd5e.sheet.actor ul.attributes {
+    height: auto;
+}
 .dnd5e.sheet.actor ul.attributes li.attribute {
     height: auto;
 }
@@ -125,6 +191,13 @@
     white-space: nowrap;
 }
 .dnd5e.sheet.actor.character .attributes .resource label.checkbox {
+    white-space: nowrap;
+}
+.dnd5e.sheet.actor.character .sheet-header .attributes {
+    height: auto;
+}
+
+.dnd5e.sheet.actor.character .sheet-header .attributes .attribute .attribute-name {
     white-space: nowrap;
 }
 
@@ -135,9 +208,26 @@
     flex: 1;
 }
 
-.dnd5e.sheet.actor ul.skills-list {
+.dnd5e.sheet.actor ul.skills-list,
+.dnd5e.sheet.actor.character ul.skills-list {
     min-width: 195px;
     flex: 1;
+}
+
+.dnd5e.sheet.actor .traits {
+    min-width: 250px;
+}
+
+
+/*    Inventory   */
+.dnd5e.sheet.actor .inventory-list .item .item-name .item-image {
+    max-height: 30px;
+}
+
+.dnd5e.sheet .sheet-header .summary li {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 
