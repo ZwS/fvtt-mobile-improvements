@@ -9,6 +9,12 @@ const icons = {
 	"playlists": "fa-music",
 	"compendium": "fa-atlas",
 	"settings": "fa-cogs",
+	"npc": "fa-skull",
+	"character": "fa-user",
+	"spell": "fa-magic",
+	"equipment": "fa-tshirt",
+	"feat": "fa-hand-rock",
+	"class": "fa-user",
 }
 
 export class WindowSelector extends Application {
@@ -51,6 +57,18 @@ export class WindowSelector extends Application {
 	toggleOpen() {
 		(<JQuery>this.element).toggleClass("open")
 	}
+	// Attempt to discern the title and icon of the window
+	windowInfo(win: any) {
+		let title = win.title
+		const windowType = win.icon || win.tabName
+			|| win?.object?.data?.type
+			|| (win.metadata ? "compendium" : "")
+			|| ""
+		console.log(windowType)
+		const icon = icons[windowType] || windowType
+		return { title, icon }
+	}
+
 	update() {
 		const count = Object.values(ui.windows).length
 		if (count == 0) {
@@ -65,11 +83,8 @@ export class WindowSelector extends Application {
 		list.empty()
 		this.toggleButton.html(count.toString())
 		Object.values(ui.windows).forEach((win: Application) => {
-			// @ts-ignore
-			const title = win.options.title || win.object?.data.name || win.data?.title || win.metadata?.label
-			// @ts-ignore
-			const windowType = win.tabName || ""
-			const windowButton = $(`<button class="window-select" title="${title}"><i class="fas ${icons[windowType]}"></i> ${title}</button>`)
+			const winInfo = this.windowInfo(win)
+			const windowButton = $(`<button class="window-select" title="${winInfo.title}"><i class="fas ${winInfo.icon}"></i> ${winInfo.title}</button>`)
 			const closeButton = $(`<button class="window-close" title="close"><i class="fas fa-times"></i></button>`)
 			const row = $('<li class="window-row"></li>')
 			row.append(windowButton, closeButton)

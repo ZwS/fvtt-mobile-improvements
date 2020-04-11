@@ -83,7 +83,7 @@ npm run build:watch
 ```
 
 ### clean
-`clean` will remove all contents in the dist file (but keeps the link from build:install).
+`clean` will remove all contents in the dist folder (but keeps the link from build:install).
 ```bash
 npm run clean
 ```
@@ -94,3 +94,4 @@ npm run clean
 - Watch/copy files changed
 - Somewhat less safety-ckecking
 - Configuration over detection
+- Builds manifest from package.json

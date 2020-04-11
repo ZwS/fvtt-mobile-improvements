@@ -16,7 +16,6 @@ Hooks.once('init', async function () {
 	if (ui.touchInput === undefined) {
 		ui.touchInput = new TouchInput()
 	}
-
 	await preloadTemplates()
 })
 
