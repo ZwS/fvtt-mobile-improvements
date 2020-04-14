@@ -41,6 +41,7 @@
     #hotbar {
         z-index: 81;
         left: 0;
+        bottom: 5px;
         height: auto;
         width: 100%;
         max-width: none;
@@ -48,6 +49,8 @@
 
     #hotbar .bar-controls {
         background: #333;
+        justify-content: space-evenly;
+        max-height: max(60px, calc(100% - 36px));
     }
 
     #hotbar #action-bar {
@@ -57,11 +60,16 @@
     #hotbar #macro-list {
         flex: 1;
         background: #333;
-        padding: 4px;
+        padding: 2px;
         justify-content: center;
     }
     #hotbar .macro {
         margin: 2px;
+    }
+
+    #hotbar .bar-controls a.page-control,
+    #hotbar .bar-controls span.page-number {
+        flex: 0 1;
     }
 }
 
@@ -83,6 +91,35 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+.window-app.image-popout .form-group {
+    position: unset;
+}
+
+.window-app.image-popout .form-group.title {
+    flex: 0 1;
+    order: 1;
+    margin: 0 auto 5px auto;
+}
+
+.window-app.image-popout .lightbox-image {
+    order: 2;
+    flex: 1;
+}
+
+.window-app.image-popout .form-group.picker {
+    order: 3;
+    flex: 0 1;
+    margin: 5px auto 0 auto;
+}
+
+.window-app .window-header .window-title {
+    margin: 0;
+    word-break: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* ------------------------------------ */
@@ -256,6 +293,7 @@
 }
 .dnd5e.sheet.actor .counters .counter .counter-value {
     flex: 1;
+    white-space: nowrap;
 }
 
 .dnd5e.sheet.actor .traits {
@@ -286,7 +324,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
     transform: translateY(calc(100% + 60px));
     transition: transform ease-in 50ms;
     visibility: hidden;
@@ -300,7 +338,7 @@
 }
 
 .window-selector.has-items {
-    transform: translateY(calc(100%));
+    transform: translateY(calc(100% - 32px));
 }
 
 .window-selector.open {
@@ -319,12 +357,12 @@
     color: #c9c7b8;
     z-index: 1;
     box-shadow: 0 0 20px #000;
-    position: absolute;
-    top: -40px;
+    position: relative;
+    top: -6px;
     cursor: pointer;
     border-radius: 3px;
     pointer-events: auto;
-    margin: 0 5px;
+    margin: 0 3px;
     transition: top ease-in 20ms;
 
 }
@@ -332,7 +370,7 @@
     text-shadow: 0 0 8px red;
 }
 .window-selector.open .window-count {
-    top: -36px;
+    top: -6px;
     background: #333;
 }
 
@@ -344,7 +382,7 @@
     border: 1px solid #000;
     box-shadow: 0 0 20px #000;
     max-height: calc(100vh - 40px);
-    overflow: scroll;
+    overflow-y: auto;
     pointer-events: auto;
 }
 
@@ -372,8 +410,11 @@
 .window-selector .window-list .window-close {
     width: 2.5em;
     max-width: 2.5em;
+    text-align: center;
 }
-
+.window-selector .window-list .window-close:hover {
+    text-shadow: 0 0 8px red;
+}
 .window-selector button {
     text-align: left;
     background: none;
