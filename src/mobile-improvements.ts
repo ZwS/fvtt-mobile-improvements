@@ -24,6 +24,6 @@ Hooks.once('ready', function () {
 	ui.displayModes.render(true)
 })
 
-Hooks.once('canvasReady', function () {
-	ui.touchInput.init()
+Hooks.on('canvasReady', function () {
+	ui.touchInput.hook()
 })

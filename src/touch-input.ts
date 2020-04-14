@@ -32,7 +32,7 @@ export class TouchInput {
 
     }
 
-    init() {
+    hook() {
         canvas.stage.on("touchstart", (evt) => {
             if (evt.data.originalEvent.touches.length == 2) {
                 this.lastDist = this.getDist(evt.data.originalEvent.touches)
@@ -51,5 +51,6 @@ export class TouchInput {
             canvas.stage._events.rightup.fn(evt)
         })
 
+        console.log("Mobile Improvements | Touch input hooked")
     }
 }
