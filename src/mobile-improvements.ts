@@ -1,9 +1,9 @@
 
-import { preloadTemplates } from './preloadTemplates.js'
-import { WindowSelector } from './window-selector.js'
-import { DisplayModes } from './display-modes.js'
-import { TouchInput } from './touch-input.js'
-import { registerSettings, settings } from './settings.js'
+import { preloadTemplates } from './module/preloadTemplates.js'
+import { WindowSelector } from './module/window-selector.js'
+import { DisplayModes } from './module/display-modes.js'
+import { TouchInput } from './module/touch-input.js'
+import { registerSettings, settings } from './module/settings.js'
 const MODULE_NAME = "mobile-improvements" // TODO: Better handling
 
 Hooks.once('init', async function () {

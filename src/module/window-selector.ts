@@ -2,8 +2,11 @@ const icons = {
 	"": "",
 	"combat": "fa-fist-raised",
 	"scenes": "fa-map",
+	"scene": "fa-map",
 	"actors": "fa-users",
+	"actor": "fa-users",
 	"items": "fa-suitcase",
+	"item": "fa-suitcase",
 	"journal": "fa-book-open",
 	"tables": "fa-th-list",
 	"playlists": "fa-music",
@@ -48,9 +51,7 @@ export class WindowSelector extends Application {
 	}
 	floatToTop(element) {
 		let z = Number(window.document.defaultView.getComputedStyle(element).zIndex);
-		// @ts-ignore
 		if (z <= _maxZ) {
-			// @ts-ignore
 			element.style.zIndex = Math.min(++_maxZ, 9999);
 		}
 	}
@@ -60,11 +61,11 @@ export class WindowSelector extends Application {
 	// Attempt to discern the title and icon of the window
 	windowInfo(win: any) {
 		let title = win.title
-		const windowType = win.icon || win.tabName
-			|| win?.object?.data?.type
+		let windowType: string = win.icon || win.tabName
+			|| win?.object?.data?.type || win?.object?.data?.entity
 			|| (win.metadata ? "compendium" : "")
 			|| ""
-		console.log(windowType)
+		windowType = windowType.toLowerCase()
 		const icon = icons[windowType] || windowType
 		return { title, icon }
 	}
