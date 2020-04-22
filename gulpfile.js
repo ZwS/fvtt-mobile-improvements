@@ -6,10 +6,6 @@ const stringify = require('json-stringify-pretty-compact');
 
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
-const less = require('gulp-less');
-const sass = require('gulp-sass');
-
-sass.compiler = require('sass');
 
 // Configuration
 const distFolder = 'dist';          // Output folder, will contain the full module as used by foundry.
@@ -21,8 +17,6 @@ const zipName = manifest => `${manifest.name}-v${manifest.version}.zip`;
 // TODO: File watch continuously chokes CPU if you add files that are missing
 const sourceGroups = {
 	'ts': ['**/*.ts'],
-	'less': ['**/*.less'],
-	'sass': ['**/*.scss'],
 
 	// Folders are copied as-is
 	'folders': [
