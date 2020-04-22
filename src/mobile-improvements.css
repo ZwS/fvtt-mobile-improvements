@@ -2,6 +2,13 @@
 /*                Core UI               */
 /* ------------------------------------ */
 
+/* FVTT uses non-standard webkit CSS scroll bars
+* 'thin' scrollbars on standards-compliant browsers(firefox)
+*/
+* {
+    scrollbar-width: thin;
+}
+
 /* Better loading */
 #chat-log .message {
     background-color: #d8d7cc;
@@ -310,6 +317,12 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+}
+
+.dnd5e.sheet.actor .inventory-list .item .item-name h4 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 

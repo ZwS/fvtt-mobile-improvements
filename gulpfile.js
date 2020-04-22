@@ -12,10 +12,10 @@ const sass = require('gulp-sass');
 sass.compiler = require('sass');
 
 // Configuration
-// Output folder, will contain the full module as used by foundry.
-const distFolder = 'dist';
-// Type of manifest (module.json | system.json)
-const manifestType = 'module.json';
+const distFolder = 'dist';          // Output folder, will contain the full module as used by foundry.
+const manifestType = 'module.json'; // Type of manifest (module.json | system.json)
+
+const zipName = manifest => `${manifest.name}-v${manifest.version}.zip`;
 
 // Patterns for watch & compile
 // TODO: File watch continuously chokes CPU if you add files that are missing
@@ -26,15 +26,11 @@ const sourceGroups = {
 
 	// Folders are copied as-is
 	'folders': [
-		// 'lang',
-		// 'fonts',
-		// 'assets',
 		'templates',
 	],
 	// Files are copied following pattern
 	'statics': [
 		'**/*.css',
-		// 'template.json',
 	],
 };
 
@@ -75,11 +71,9 @@ async function buildManifest() {
 		license: package.license
 	};
 
-	const zipName = `${newManifest.name}-v${newManifest.version}.zip`
-
 	if (process.env.CI) {
 		newManifest.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`
-		newManifest.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/${zipName}?job=build-module`
+		newManifest.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/${zipName(newManifest)}?job=build-module`
 	}
 
 	fs.writeFileSync(path.join(distFolder, manifestType), stringify(newManifest), 'utf8');
@@ -102,26 +96,6 @@ function buildTS() {
 	return gulp
 		.src(sourceGroups.ts, { allowEmpty: true, cwd: 'src' })
 		.pipe(tsConfig())
-		.pipe(gulp.dest(distFolder));
-}
-
-/**
- * Build Less
- */
-function buildLess() {
-	return gulp
-		.src(sourceGroups.less, { allowEmpty: true, cwd: 'src' })
-		.pipe(less())
-		.pipe(gulp.dest(distFolder));
-}
-
-/**
- * Build SASS
- */
-function buildSASS() {
-	return gulp
-		.src(sourceGroups.sass, { allowEmpty: true, cwd: 'src' })
-		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest(distFolder));
 }
 
@@ -240,14 +214,14 @@ async function packageBuild() {
 		const name = fs.readJSONSync('package.json').name;
 
 		// Initialize the zip file
-		const zipName = `${manifest.name}-v${manifest.version}.zip`
+		const zipPath = path.join(packDir, zipName(manifest));
 
-		const zipFile = fs.createWriteStream(path.join(packDir, zipName));
+		const zipFile = fs.createWriteStream(zipPath);
 		const zip = archiver('zip', { zlib: { level: 9 } });
 
 		zipFile.on('close', () => {
 			console.log(chalk.green(zip.pointer() + ' total bytes'));
-			console.log(chalk.green(`Zip file ${zipName} has been written`));
+			console.log(chalk.green(`Zip file ${zipPath} has been written`));
 			return Promise.resolve();
 		});
 
@@ -260,7 +234,7 @@ async function packageBuild() {
 		// Add the directory with the final code
 		zip.directory(distFolder, manifest.name);
 
-		zip.finalize();
+		await zip.finalize();
 	} catch (err) {
 		Promise.reject(err);
 	}
@@ -275,8 +249,6 @@ function buildWatch() {
 	const opts = { ignoreInitial: false, cwd: 'src' };
 	gulp.watch(manifestType, opts, buildManifest);
 	gulp.watch(sourceGroups.ts, opts, buildTS);
-	gulp.watch(sourceGroups.less, opts, buildLess);
-	gulp.watch(sourceGroups.sass, opts, buildSASS);
 	gulp.watch(sourceGroups.folders, opts, copyFolders);
 	gulp.watch(sourceGroups.statics, opts, copyStatics);
 }
@@ -284,20 +256,19 @@ function buildWatch() {
 const execBuild = gulp.series(
 	buildManifest, gulp.parallel(
 		buildTS,
-		buildLess,
-		buildSASS,
 		copyFolders,
 		copyStatics,
 	)
 );
 
-exports.manifest = buildManifest;
-exports.build = execBuild;
-exports.watch = buildWatch;
+// Single tasks
 exports.clean = clean;
 exports.link = linkUserData;
 exports.unlink = unlinkUserData;
 exports.package = packageBuild;
+// Combined tasks
+exports.build = execBuild;
+exports.watch = buildWatch;
 exports.publish = gulp.series(
 	clean,
 	execBuild,

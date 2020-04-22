@@ -3,6 +3,11 @@ This module is intended to make the UI more flexible for use with mobiles, table
 
 Current state: Useful for general UI interaction. Map does not work with touch input.
 
+**Mobile Improvements is in a pre-release phase and may have breaking changes or change default settings without notice**
+```
+https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/master/raw/module.json?job=build-module
+```
+
 # Features
 - Full-screen application windows
 - Full-screen sidebar
@@ -23,21 +28,27 @@ Current state: Useful for general UI interaction. Map does not work with touch i
 - Application window view
   - Full-view windows (ongoing)
     - Better dialogs
-  - Window selector improvements
+  - Window navigation improvements
+    - Performance
+      - don't do a full re-render on each window add/remove
     - Minimize all
     - Minimize button on app header
+    - Reorder the list?
 
-- Action bas improvements
+- Settings
+  - Individual settings for each feature (except for css)
+
+- Action bar improvements
   - Spacing and distribution
   - New list?
 
-- Some kind of toggle between window/map views
+- Some kind of toggle between app/scene views
 
 - Map interaction
   - Selection
   - Movement
   - Manual map controls (maybe)
-    - Alternative to getting working touch control - add pan-and-zoom controls
+    - Alternative to touch control; pan and zoom controls
 
 - System-specific
   - Responsive sheets
