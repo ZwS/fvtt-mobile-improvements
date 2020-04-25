@@ -1,7 +1,7 @@
 
 import { preloadTemplates } from './module/preloadTemplates.js'
 import { WindowSelector } from './module/window-selector.js'
-import { DisplayModes } from './module/display-modes.js'
+import { RenderModes } from './module/render-modes.js'
 import { TouchInput } from './module/touch-input.js'
 import { registerSettings, settings } from './module/settings.js'
 import * as mgr from './module/window-manager.js'
@@ -14,8 +14,8 @@ Hooks.once('init', async function () {
 	if (ui.windowSelector === undefined) {
 		ui.windowSelector = new WindowSelector()
 	}
-	if (ui.displayModes === undefined) {
-		ui.displayModes = new DisplayModes()
+	if (ui.renderModes === undefined) {
+		ui.renderModes = new RenderModes()
 	}
 
 	if (ui.touchInput === undefined) {
@@ -29,7 +29,7 @@ Hooks.once('ready', function () {
 	ui.windowSelector.render(true)
 
 	if (game.settings.get(MODULE_NAME, settings.RENDERMODES)) {
-		ui.displayModes.render(true)
+		ui.renderModes.render(true)
 	}
 })
 

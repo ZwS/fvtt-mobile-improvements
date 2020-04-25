@@ -1,10 +1,10 @@
-enum DisplayMode {
+enum RenderMode {
     Full = 1,
     NoCanvas,
 }
 
-export class DisplayModes extends Application {
-    mode: DisplayMode = DisplayMode.Full
+export class RenderModes extends Application {
+    mode: RenderMode = RenderMode.Full
     icon: JQuery = null
     board: JQuery = null
     hud: JQuery = null
@@ -21,9 +21,9 @@ export class DisplayModes extends Application {
 
         (<JQuery>this.element).click(ev => {
             ev.preventDefault();
-            if (this.mode == DisplayMode.Full) {
+            if (this.mode == RenderMode.Full) {
                 // Enter NoCanvas mode
-                this.mode = DisplayMode.NoCanvas
+                this.mode = RenderMode.NoCanvas
                 this.icon.removeClass("fas")
                 this.icon.addClass("far")
                 canvas.app.stop()
@@ -31,7 +31,7 @@ export class DisplayModes extends Application {
                 this.hud.css("display", "none")
             } else {
                 // Enter Full mode
-                this.mode = DisplayMode.Full
+                this.mode = RenderMode.Full
                 this.icon.removeClass("far")
                 this.icon.addClass("fas")
                 canvas.app.start()
