@@ -4,10 +4,13 @@ import { WindowSelector } from './module/window-selector.js'
 import { DisplayModes } from './module/display-modes.js'
 import { TouchInput } from './module/touch-input.js'
 import { registerSettings, settings } from './module/settings.js'
+import * as mgr from './module/window-manager.js'
+
 const MODULE_NAME = "mobile-improvements" // TODO: Better handling
 
 Hooks.once('init', async function () {
 	console.log('Mobile Improvements | Initializing Mobile Improvements')
+	mgr.activate()
 	if (ui.windowSelector === undefined) {
 		ui.windowSelector = new WindowSelector()
 	}
