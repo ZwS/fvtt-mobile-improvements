@@ -166,7 +166,7 @@
 }
 
 /* ------------------------------------ */
-/*               Hide HUD               */
+/*               Hide UI                */
 /* ------------------------------------ */
 #sidebar,
 #controls,
@@ -199,6 +199,10 @@ body.hide-hud #players {
 
 body.hide-hud #logo {
   transform: scale(0.5) translateX(-50%) translateY(-50%);
+}
+
+body.hide-hud .window-selector.has-items {
+  transform: translateY(calc(100% + 60px));
 }
 
 /* ------------------------------------ */
