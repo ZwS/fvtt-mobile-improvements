@@ -5,8 +5,11 @@ export class TouchInput {
   noTap = false;
   initiatingEvent = null;
 
-  longPressTimeout: any;
+  longTapTimeout: any;
   doubleTapTimeout: any = 0;
+
+  longTapDelay = 400;
+  doubleTapTime = 200;
 
   getDist(touches) {
     return Math.hypot(
@@ -51,11 +54,10 @@ export class TouchInput {
   hook() {
     canvas.stage.on("touchstart", evt => {
       this.initiatingEvent = evt;
-
-      this.longPressTimeout = setTimeout(() => {
+      this.longTapTimeout = setTimeout(() => {
         this.noTap = true;
         this._onLongTap(evt);
-      }, 500);
+      }, this.longTapDelay);
 
       if (evt.data.originalEvent.touches.length == 2) {
         this.lastDist = this.getDist(evt.data.originalEvent.touches);
@@ -65,7 +67,7 @@ export class TouchInput {
 
     canvas.stage.on("touchmove", evt => {
       this.noTap = true;
-      clearTimeout(this.longPressTimeout);
+      clearTimeout(this.longTapTimeout);
 
       if (evt.data.originalEvent.touches.length == 2) {
         this.zoom(evt.data.originalEvent);
@@ -73,18 +75,11 @@ export class TouchInput {
       const pos = evt.data.getLocalPosition(canvas.stage);
       const dx = this.touchOrigin.x - pos.x;
       const dy = this.touchOrigin.y - pos.y;
-
-      //   canvas._onDragRightMove(evt);
-      // canvas.stage._events.mousemove.fn(evt)
-
-      canvas.pan({
-        x: canvas.stage.pivot.x + dx,
-        y: canvas.stage.pivot.y + dy,
-      });
+      this._onDrag(dx, dy);
     });
 
     canvas.stage.on("touchend", evt => {
-      clearTimeout(this.longPressTimeout);
+      clearTimeout(this.longTapTimeout);
 
       if (this.noTap) {
         this.noTap = false;
@@ -100,7 +95,7 @@ export class TouchInput {
         this.doubleTapTimeout = setTimeout(() => {
           this._onTap(evt);
           this.doubleTapTimeout = 0;
-        }, 200);
+        }, this.doubleTapTime);
       }
     });
 
@@ -108,29 +103,30 @@ export class TouchInput {
   }
 
   private _onTap(event) {
-    console.log("tapped");
     $(document.body).toggleClass("hide-hud");
   }
-  private _onDrag(event) {}
+  private _onDrag(dx, dy) {
+    canvas.pan({
+      x: canvas.stage.pivot.x + dx,
+      y: canvas.stage.pivot.y + dy,
+    });
+  }
 
   private _onDoubleTap(event) {
-    console.log("doubled", event, this.initiatingEvent);
     const target = this.getTarget(event);
-    console.log(target);
 
-    if (target) {
+    //@ts-ignore
+    if (target && target._canView(game.user, event)) {
       //@ts-ignore
       target?._onClickLeft2(event);
     }
   }
   private _onLongTap(event) {
-    console.log("long");
     const target = this.getTarget(event);
-    if (target) {
+    //@ts-ignore
+    if (target && target._canHUD(game.user, event)) {
       //@ts-ignore
       target?._onClickRight(event);
-    } else {
-      console.log(event.target);
     }
   }
 }
