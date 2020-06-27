@@ -578,16 +578,18 @@ body.hide-hud .window-selector.has-items {
   flex-shrink: 0;
 }
 
-.mobile-improvements
-  .tidy5e.sheet.actor
-  .inventory-list
-  .item-detail.item-action {
-  flex: 0 0 75px;
-}
+@media screen and (max-width: 500px) {
+  .mobile-improvements
+    .tidy5e.sheet.actor
+    .inventory-list
+    .item-detail.item-action {
+    flex: 0 0 75px;
+  }
 
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-weight,
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-charges {
-  flex: 0 0 50px;
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-weight,
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-charges {
+    flex: 0 0 50px;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -629,33 +631,33 @@ body.hide-hud .window-selector.has-items {
 }
 
 /* Features */
+@media screen and (max-width: 500px) {
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-level,
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-action,
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-create {
+    flex: 0 0 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 2px;
+    white-space: nowrap;
+  }
 
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-level,
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-action,
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-create {
-  flex: 0 0 75px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-left: 2px;
-  white-space: nowrap;
+  .mobile-improvements .tidy5e.sheet.actor.character .item-detail.player-class {
+    flex: 0 0 100px;
+  }
 }
-
-.mobile-improvements .tidy5e.sheet.actor.character .item-detail.player-class {
-  flex: 0 0 100px;
-}
-
 /* Spells */
-
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-school,
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-action,
-.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-target {
-  flex: 0 0 75px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-left: 2px;
-  white-space: nowrap;
+@media screen and (max-width: 600px) {
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-school,
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-action,
+  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-target {
+    flex: 0 0 75px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 2px;
+    white-space: nowrap;
+  }
 }
-
 /* Biography & Journal */
 
 .mobile-improvements .tidy5e-sheet .left-notes,
@@ -704,14 +706,15 @@ body.hide-hud .window-selector.has-items {
   overflow: hidden;
 }
 
-.mobile-improvements
-  .tidy5e.sheet.actor.npc
-  .inventory-list
-  .item
-  .item-charges {
-  flex: 0 0 50px;
+@media screen and (max-width: 500px) {
+  .mobile-improvements
+    .tidy5e.sheet.actor.npc
+    .inventory-list
+    .item
+    .item-charges {
+    flex: 0 0 50px;
+  }
 }
-
 /* ------------------------------------ */
 /*        Mobile Improvement Apps       */
 /* ------------------------------------ */
