@@ -9,6 +9,10 @@
   scrollbar-width: thin;
 }
 
+::-webkit-scrollbar {
+  height: 6px;
+}
+
 /* Better loading */
 #chat-log .message {
   background-color: #d8d7cc;
@@ -258,6 +262,7 @@ body.hide-hud .window-selector.has-items {
 }
 /* ------------------------------------ */
 /*             dnd5e system             */
+/*        (needs sorting/structure)     */
 /* ------------------------------------ */
 
 @media screen and (max-width: 800px) {
@@ -317,14 +322,15 @@ body.hide-hud .window-selector.has-items {
     top: 0px;
   }
   .dnd5e.sheet.actor.character .sheet-header img.profile {
-    max-width: 94px;
-    height: 94px;
+    max-width: 90px;
+    height: 90px;
   }
   .dnd5e.sheet.actor.character .sheet-header h1 {
     margin-left: 94px;
   }
   .dnd5e.sheet.actor.character .sheet-header .summary {
-    padding-left: 94px;
+    margin-left: 94px;
+    flex: 0 0 calc(100% - 94px);
   }
 }
 
@@ -396,6 +402,9 @@ body.hide-hud .window-selector.has-items {
 }
 
 /*    Inventory   */
+.dnd5e.sheet.actor .inventory-list .item .item-name h4 {
+  width: 100%;
+}
 .dnd5e.sheet.actor .inventory-list .item .item-name .item-image {
   max-height: 30px;
 }
@@ -412,8 +421,299 @@ body.hide-hud .window-selector.has-items {
   white-space: nowrap;
 }
 
+/* Character */
+
+.dnd5e.sheet.actor h4.box-title {
+  white-space: nowrap;
+}
+
+.dnd5e.sheet.actor.character .resource .attribute-value label.recharge {
+  height: auto;
+}
+.dnd5e.sheet.actor.character
+  .resource
+  .attribute-value
+  label.recharge
+  input[type="checkbox"] {
+  top: 3px;
+}
+
+.dnd5e.sheet.actor .tab.attributes {
+  overflow-y: auto;
+}
+
+.dnd5e.sheet.actor .center-pane {
+  overflow-y: unset;
+  height: unset;
+}
+
+/* Character inventory */
+
+.dnd5e.sheet.actor .inventory-filters .currency {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+@media screen and (max-width: 600px) {
+  .dnd5e.sheet.actor .inventory-filters .currency h3 {
+    font-size: 0;
+  }
+  .dnd5e.sheet.actor .inventory-filters .currency h3 a {
+    font-size: 14px;
+  }
+}
+
+/*  Actor Items */
+.dnd5e.sheet.actor .inventory-list .item .item-name {
+  min-width: 75px;
+}
+
+/* NPC */
+.dnd5e.sheet .sheet-body {
+  overflow-y: auto;
+}
+
 /* ------------------------------------ */
-/*              Module Apps             */
+/*             Tidy5e Sheet             */
+/* ------------------------------------ */
+
+/* Header */
+@media screen and (max-width: 800px) {
+  .mobile-improvements .tidy5e.sheet.actor .header-attributes {
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: start;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .header-attribute {
+    flex: 1 1 60px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .mobile-improvements .tidy5e.sheet.actor .tidy5e-header {
+    padding: 0.3rem;
+    align-items: start;
+  }
+  .mobile-improvements .tidy5e.sheet.actor.npc .tidy5e-header {
+    padding: 0.3rem 0.3rem 1rem;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .character-details {
+    margin: 0 0.3rem;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .profile {
+    width: 100px;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .origin-summary {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .char-name {
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+  .tidy5e.sheet.actor .general-information {
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+}
+
+.mobile-improvements .tidy5e.sheet.actor .profile {
+  min-width: 100px;
+}
+
+/* Navigation */
+@media screen and (max-width: 500px) {
+  .mobile-improvements .tidy5e-navigation {
+    flex-wrap: nowrap;
+  }
+  .mobile-improvements .tidy5e-navigation .item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px 0.25rem 0 0.25rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+}
+/* SheetBody */
+.mobile-improvements .tidy5e.sheet.actor .sheet-body {
+  padding: 1rem 0.25rem 1rem 0.25rem;
+}
+
+.mobile-improvements .tidy5e.sheet .window-content .tab.attributes,
+.mobile-improvements .tidy5e.sheet .window-content .tab.biography,
+.mobile-improvements .tidy5e.sheet .window-content .tab.journal {
+  flex-wrap: wrap;
+  padding-right: 0.25rem;
+}
+
+/* Attributes */
+.mobile-improvements .tidy5e.sheet.actor .left-pane {
+  flex: 1 1 300px;
+  padding: 0 0.25rem;
+}
+.mobile-improvements .tidy5e.sheet.actor .center-pane {
+  flex-grow: 9999;
+  min-width: 300px;
+  margin: 0;
+  padding: 0 0.25rem;
+}
+
+.mobile-improvements .tidy5e.dnd5e.sheet.actor ul.skills-list {
+  flex: 1;
+}
+
+.mobile-improvements .tidy5e.sheet.actor .character-details {
+  max-width: calc(100% - 110px);
+}
+
+/* Inventory */
+
+.mobile-improvements
+  .tidy5e.sheet.actor
+  .inventory-list
+  .item
+  .item-name
+  .item-image {
+  flex-shrink: 0;
+}
+
+.mobile-improvements
+  .tidy5e.sheet.actor
+  .inventory-list
+  .item-detail.item-action {
+  flex: 0 0 75px;
+}
+
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-weight,
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-charges {
+  flex: 0 0 50px;
+}
+
+@media screen and (max-width: 450px) {
+  .mobile-improvements
+    .tidy5e.sheet.actor
+    .inventory-list
+    .item-name
+    h4
+    .info-icon {
+    display: none;
+  }
+}
+
+.tidy5e.sheet.actor .inventory-currency .currency {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-left: 0;
+  margin-left: 1.5rem;
+  align-items: center;
+}
+
+.mobile-improvements .tidy5e.sheet.actor .inventory-currency .currency-item {
+  flex-wrap: nowrap;
+  line-height: 26px;
+}
+
+.mobile-improvements
+  .tidy5e.sheet.actor
+  .inventory-currency
+  .currency-item
+  input {
+  min-width: 50px;
+  height: 26px;
+}
+
+.tidy5e.sheet.actor .inventory-currency .currency-header {
+  position: absolute;
+  left: 20px;
+}
+
+/* Features */
+
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-level,
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-action,
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .item-create {
+  flex: 0 0 75px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2px;
+  white-space: nowrap;
+}
+
+.mobile-improvements .tidy5e.sheet.actor.character .item-detail.player-class {
+  flex: 0 0 100px;
+}
+
+/* Spells */
+
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-school,
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-action,
+.mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-target {
+  flex: 0 0 75px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-left: 2px;
+  white-space: nowrap;
+}
+
+/* Biography & Journal */
+
+.mobile-improvements .tidy5e-sheet .left-notes,
+.mobile-improvements .tidy5e-sheet .right-notes {
+  min-width: 275px;
+  margin: 0 0.25rem 1rem 0.25rem;
+}
+
+.mobile-improvements .tidy5e-sheet .right-notes {
+  margin-bottom: 0;
+}
+
+/* Tidy5E NPC */
+
+.mobile-improvements .tidy5e.sheet.actor.npc .npc-core-stats {
+  flex-wrap: wrap;
+}
+.mobile-improvements .tidy5e.sheet.actor.npc .ability-scores {
+  flex-grow: 999;
+}
+.mobile-improvements .tidy5e.sheet.actor.npc .header-attributes {
+  flex-grow: 1;
+}
+.mobile-improvements
+  .tidy5e.sheet.actor.npc
+  .header-attributes
+  .header-attribute {
+  flex-grow: 1;
+}
+
+.mobile-improvements .tidy5e.sheet.actor.npc .left-pane {
+  flex: 1 1 220px;
+  margin-bottom: 1em;
+}
+
+.mobile-improvements .tidy5e.sheet.actor.npc .traits {
+  width: 100%;
+}
+
+.mobile-improvements
+  .tidy5e.sheet.actor.npc
+  .inventory-list
+  .item
+  .item-name
+  h4 {
+  overflow: hidden;
+}
+
+.mobile-improvements
+  .tidy5e.sheet.actor.npc
+  .inventory-list
+  .item
+  .item-charges {
+  flex: 0 0 50px;
+}
+
+/* ------------------------------------ */
+/*        Mobile Improvement Apps       */
 /* ------------------------------------ */
 
 .window-selector {
@@ -437,7 +737,7 @@ body.hide-hud .window-selector.has-items {
 }
 
 .window-selector.has-items {
-  transform: translateY(calc(100% - 32px));
+  transform: translateY(calc(100% - 30px));
 }
 
 .window-selector.open {
