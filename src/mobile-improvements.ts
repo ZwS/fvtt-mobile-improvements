@@ -59,3 +59,38 @@ Hooks.on("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
     b.toggleClass("collapsed");
   });
 });
+
+const notificationQueueProxy = {
+  get: function (target, key) {
+    if (key === "__isProxy") return true;
+
+    if (key === "push") {
+      return (...arg) => {
+        if (Hooks.call("queuedNotification", ...arg)) {
+          target.push(...arg);
+        }
+      };
+    }
+    return target[key];
+  },
+};
+
+Hooks.once("renderNotifications", app => {
+  if (!app.queue.__isProxy) {
+    app.queue = new Proxy(app.queue, notificationQueueProxy);
+  }
+});
+
+Hooks.on("queuedNotification", notif => {
+  if (typeof notif.message === "string") {
+    const regex = /\s.+px/g;
+    const message = notif.message?.replace(regex, "");
+    //@ts-ignore
+    const match = game.i18n.translations.ERROR.LowResolution.replace(regex, "");
+
+    if (message == match) {
+      console.log("notification suppressed", notif);
+      return false;
+    }
+  }
+});
