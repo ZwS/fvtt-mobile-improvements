@@ -12,20 +12,29 @@ const distFolder = "dist"; // Output folder, will contain the full module as use
 const manifestType = "module.json"; // Type of manifest (module.json | system.json)
 
 const zipName = manifest => `${manifest.name}-v${manifest.version}.zip`;
+const permaLink = fileName =>
+  `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_NAME}/raw/${fileName}?job=${process.env.CI_JOB_NAME}`;
+
+// Manifest should point to latest in branch, not itself.
+function permaLinkManifest() {
+  let branch = process.env.CI_COMMIT_BRANCH || "master";
+  return `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${branch}/raw/${manifestType}?job=${process.env.CI_JOB_NAME}`;
+}
 
 // Patterns for watch & compile
 // TODO: File watch continuously chokes CPU if you add files that are missing
 const sourceGroups = {
-  ts: ["**/*.ts"],
+  ts: ["src/**/*.ts"],
+  less: ["src/**/*.less"],
+  sass: ["src/**/*.scss"],
 
   // Folders are copied as-is
   folders: ["templates"],
   // Files are copied following pattern
-  statics: ["**/*.css"],
+  statics: ["src/**/*.css"],
 };
 
 function resolveVersion(packageVersion) {
-  // Dummy logic ahead
   const isTaggedRelease = process.env.CI_COMMIT_TAG;
   const isCI = process.env.CI;
 
@@ -34,10 +43,14 @@ function resolveVersion(packageVersion) {
   if (isTaggedRelease) {
     return packageVersion;
   }
+
   // Is in CI, but not a tagged release
   if (isCI) {
     // There should be some ever-increasing number in CI env
     const ciSequenceNo = process.env.CI_PIPELINE_IID;
+    if (process.env.CI_COMMIT_REF_SLUG == "develop") {
+      return `${packageVersion}-unstable.${ciSequenceNo}`;
+    }
     return `${packageVersion}-${ciSequenceNo}`;
   }
   // Probably all local builds
@@ -62,10 +75,12 @@ async function buildManifest() {
   };
 
   if (process.env.CI) {
-    newManifest.manifest = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${process.env.CI_COMMIT_REF_SLUG}/raw/module.json?job=build-module`;
-    newManifest.download = `${process.env.CI_PROJECT_URL}/-/jobs/artifacts/${
-      process.env.CI_COMMIT_REF_SLUG
-    }/raw/${zipName(newManifest)}?job=build-module`;
+    newManifest.manifest = permaLinkManifest();
+    newManifest.download = permaLink(zipName(newManifest));
+
+    if (process.env.CI_COMMIT_REF_SLUG === "develop") {
+      newManifest.title = newManifest.title + "(unstable branch)";
+    }
   }
 
   fs.writeFileSync(
@@ -90,7 +105,7 @@ function getManifest() {
 const tsConfig = ts.createProject("tsconfig.json");
 function buildTS() {
   return gulp
-    .src(sourceGroups.ts, { allowEmpty: true, cwd: "src" })
+    .src(sourceGroups.ts, { allowEmpty: true })
     .pipe(tsConfig())
     .pipe(gulp.dest(distFolder));
 }
@@ -101,8 +116,8 @@ function buildTS() {
 async function copyFolders() {
   try {
     for (const folder of sourceGroups.folders) {
-      if (fs.existsSync(path.join("src", folder))) {
-        await fs.copy(path.join("src", folder), path.join("dist", folder));
+      if (fs.existsSync(folder)) {
+        await fs.copy(folder, path.join("dist", folder));
       }
     }
     return Promise.resolve();
@@ -113,7 +128,7 @@ async function copyFolders() {
 
 async function copyStatics() {
   return gulp
-    .src(sourceGroups.statics, { allowEmpty: true, cwd: "src" })
+    .src(sourceGroups.statics, { allowEmpty: true })
     .pipe(gulp.dest(distFolder));
 }
 
@@ -248,8 +263,8 @@ async function packageBuild() {
  * Watch for changes for each build step
  */
 function buildWatch() {
-  const opts = { ignoreInitial: false, cwd: "src" };
-  gulp.watch(manifestType, opts, buildManifest);
+  const opts = { ignoreInitial: false };
+  gulp.watch(path.join("src", manifestType), opts, buildManifest);
   gulp.watch(sourceGroups.ts, opts, buildTS);
   gulp.watch(sourceGroups.folders, opts, copyFolders);
   gulp.watch(sourceGroups.statics, opts, copyStatics);
