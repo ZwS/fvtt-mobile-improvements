@@ -1,9 +1,10 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
-import { WindowSelector } from "./module/window-selector.js";
+import { WindowSelector } from "./module/windowSelector.js";
 import { RenderModes } from "./module/render-modes.js";
 import { TouchInput } from "./module/touch-input.js";
 import { registerSettings, settings } from "./module/settings.js";
-import * as mgr from "./module/window-manager.js";
+import * as mgr from "./module/windowManager.js";
+import { MobileNavigation } from "./module/mobileNavigation.js";
 
 const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
 
@@ -22,12 +23,17 @@ Hooks.once("init", async function () {
   if (window.mobileImprovements.touchInput === undefined) {
     window.mobileImprovements.touchInput = new TouchInput();
   }
+  if (window.mobileImprovements.navigation === undefined) {
+    window.mobileImprovements.navigation = new MobileNavigation();
+  }
   registerSettings();
   await preloadTemplates();
+  window.mobileImprovements.navigation.render(true);
 });
 
 Hooks.once("ready", function () {
   window.mobileImprovements.windowSelector.render(true);
+  window.mobileImprovements.navigation.render(true);
 
   if (game.settings.get(MODULE_NAME, settings.RENDERMODES)) {
     window.mobileImprovements.renderModes.render(true);
@@ -37,13 +43,6 @@ Hooks.once("ready", function () {
 
 Hooks.on("canvasReady", function () {
   window.mobileImprovements.touchInput.hook();
-});
-
-Hooks.on("renderHotbar", () => {
-  if (window.innerWidth < 1110) {
-    //@ts-ignore
-    ui.hotbar.collapse();
-  }
 });
 
 Hooks.once("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {

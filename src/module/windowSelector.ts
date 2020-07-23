@@ -1,4 +1,4 @@
-import { Window } from "window-manager";
+import { Window } from "./windowManager";
 
 const icons = {
   "": "",
@@ -23,7 +23,6 @@ const icons = {
 };
 
 export class WindowSelector extends Application {
-  toggleButton: JQuery = null;
   list: JQuery = null;
 
   constructor() {
@@ -36,11 +35,6 @@ export class WindowSelector extends Application {
   }
 
   protected activateListeners(html: JQuery | HTMLElement): void {
-    this.toggleButton = (<JQuery>this.element).find(".window-count");
-    this.toggleButton.click(ev => {
-      ev.preventDefault();
-      this.toggleOpen();
-    });
     this.list = (<JQuery>this.element).find(".window-list");
   }
   toggleOpen() {
@@ -93,13 +87,6 @@ export class WindowSelector extends Application {
 
   update() {
     const winCount = Object.values(window.WindowManager.windows).length;
-    if (winCount == 0) {
-      (<JQuery>this.element).removeClass("has-items");
-      (<JQuery>this.element).removeClass("open");
-      return;
-    } else {
-      (<JQuery>this.element).addClass("has-items");
-    }
-    this.toggleButton.html(winCount.toString());
+    window.mobileImprovements.navigation.setWindowCount(winCount);
   }
 }
