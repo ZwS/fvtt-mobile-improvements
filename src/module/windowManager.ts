@@ -25,8 +25,13 @@ export class Window {
     return this.app.appId;
   }
 
+  get minimized(): boolean {
+    // @ts-ignore
+    return this.app._minimized;
+  }
+
   private _floatToTop(element: HTMLElement) {
-    let z = Number(
+    let z = parseInt(
       window.document.defaultView.getComputedStyle(element).zIndex
     );
     if (z < _maxZ) {
@@ -38,9 +43,8 @@ export class Window {
     if (this.app._minimized) {
       // @ts-ignore
       this.app.maximize();
-    } else {
-      this._floatToTop((<JQuery>this.app.element).get(0));
     }
+    this._floatToTop((this.app.element as JQuery<HTMLElement>).get(0));
   }
   minimize() {
     this.app.minimize();
@@ -95,5 +99,22 @@ export class WindowManager {
   windowRemoved(appId) {
     delete this.windows[appId];
     Hooks.call("WindowManager:Removed", appId);
+  }
+
+  minimizeAll() {
+    let didMinimize = false;
+    Object.entries(this.windows).forEach(([id, window]) => {
+      didMinimize = didMinimize || !window.minimized;
+      window.minimize();
+    });
+    return didMinimize;
+  }
+
+  closeAll() {
+    const closed = Object.keys(this.windows).length != 0;
+    Object.entries(this.windows).forEach(([id, window]) => {
+      window.close();
+    });
+    return closed;
   }
 }

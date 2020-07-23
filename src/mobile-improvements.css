@@ -787,7 +787,7 @@ body.hide-hud .mobile-navigation {
   flex-direction: column;
   align-items: flex-end;
   transform: translateY(calc(100% + 60px));
-  transition: transform ease-in 50ms;
+  transition: transform ease-out 100ms;
   visibility: hidden;
   pointer-events: none;
 }
@@ -806,42 +806,13 @@ body.hide-hud .mobile-navigation {
   transform: translateY(0);
 }
 
-.window-selector .window-count {
-  width: 30px;
-  height: 30px;
-  font-size: 120%;
-  border: 1px solid #000;
-  line-height: 1.6em;
-  text-align: center;
-  font-weight: bold;
-  background: #333333ee;
-  color: #c9c7b8;
-  z-index: 1;
-  box-shadow: 0 0 20px #000;
-  position: relative;
-  top: -6px;
-  cursor: pointer;
-  border-radius: 3px;
-  pointer-events: auto;
-  margin: 0 3px;
-  transition: top ease-in 20ms;
-}
-.window-selector .window-count:hover {
-  text-shadow: 0 0 8px red;
-}
-.window-selector.open .window-count {
-  top: -6px;
-  background: #333;
-}
-
 .window-selector nav {
   padding: 0 1em;
   background: #333;
   width: 100%;
   max-width: 450px;
-  border: 1px solid #000;
   box-shadow: 0 0 20px #000;
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - var(--navigationHeight));
   overflow-y: auto;
   pointer-events: auto;
 }

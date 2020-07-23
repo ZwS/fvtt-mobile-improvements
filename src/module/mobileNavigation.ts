@@ -29,7 +29,9 @@ export class MobileNavigation extends Application {
   }
 
   showMap() {
-    if (this.state == ViewState.Map) {
+    const minimized = window.WindowManager.minimizeAll();
+    console.log(minimized);
+    if (!minimized && this.state == ViewState.Map) {
       $(document.body).toggleClass("hide-hud");
     }
     this.state = ViewState.Map;
@@ -39,6 +41,7 @@ export class MobileNavigation extends Application {
     this.state = ViewState.Sidebar;
     $(document.body).removeClass("hide-hud");
     ui.sidebar.expand();
+    window.WindowManager.minimizeAll();
   }
 
   showHotbar() {
