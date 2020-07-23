@@ -1,3 +1,23 @@
+// Redeclare protected methods so we can u use them directly
+declare class Placeable extends PlaceableObject {
+  _onHoverIn(
+    event: PIXI.interaction.InteractionEvent,
+    { hoverOutOthers }?: { hoverOutOthers?: boolean }
+  ): boolean;
+  _onHoverOut(event: PIXI.interaction.InteractionEvent): boolean;
+  _onClickLeft(event: PIXI.interaction.InteractionEvent): boolean;
+  _onClickLeft2(event: PIXI.interaction.InteractionEvent): boolean;
+  _onClickRight(event: PIXI.interaction.InteractionEvent): void;
+  _onClickRight2(event: PIXI.interaction.InteractionEvent): void;
+  _onDragLeftStart(event: PIXI.interaction.InteractionEvent): void;
+  _onDragLeftMove(event: PIXI.interaction.InteractionEvent): void;
+  _onDragLeftDrop(event: PIXI.interaction.InteractionEvent): Entity;
+  _onDragLeftCancel(event: PIXI.interaction.InteractionEvent): void;
+
+  // PlaceableObject.can() changes the case of input string, expose this instead
+  _canHUD(user: User, event?: Event): boolean;
+}
+
 export class TouchInput {
   mouseMoveTime = 0;
   lastDist = 0;
@@ -10,6 +30,8 @@ export class TouchInput {
 
   longTapDelay = 400;
   doubleTapTime = 200;
+
+  tapFocus: Placeable = null;
 
   getDist(touches) {
     return Math.hypot(
@@ -40,7 +62,7 @@ export class TouchInput {
     canvas.pan({ scale: dz * canvas.stage.scale.x });
   }
 
-  getTarget(evt): Entity {
+  getTarget(evt): Placeable {
     let target = evt.target;
     while (!target?.data && target?.parent) {
       target = target.parent;
@@ -103,7 +125,21 @@ export class TouchInput {
   }
 
   private _onTap(event) {
-    $(document.body).toggleClass("hide-hud");
+    const target = this.getTarget(event);
+    if (!target && !this.tapFocus) {
+      $(document.body).toggleClass("hide-hud");
+    }
+
+    if (this.tapFocus) {
+      this.tapFocus._onHoverOut(null);
+      this.tapFocus = null;
+    }
+
+    if (!target) return;
+    if (target.can(game.user, "Hover")) {
+      this.tapFocus = target;
+      target._onHoverIn(null, { hoverOutOthers: true });
+    }
   }
   private _onDrag(dx, dy) {
     canvas.pan({
@@ -115,18 +151,16 @@ export class TouchInput {
   private _onDoubleTap(event) {
     const target = this.getTarget(event);
 
-    //@ts-ignore
-    if (target && target._canView(game.user, event)) {
+    if (target && target.can(game.user, "View")) {
       //@ts-ignore
-      target?._onClickLeft2(event);
+      target._onClickLeft2(event);
     }
   }
+
   private _onLongTap(event) {
     const target = this.getTarget(event);
-    //@ts-ignore
-    if (target && target._canHUD(game.user, event)) {
-      //@ts-ignore
-      target?._onClickRight(event);
+    if (target && target._canHUD(game.user, null)) {
+      target._onClickRight(event);
     }
   }
 }
