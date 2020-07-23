@@ -6,7 +6,7 @@ cache:
   paths:
     - node_modules/
 
-build-module:
+.build:
   stage: build
   script:
     - npm install
@@ -16,9 +16,19 @@ build-module:
 
   artifacts:
     paths:
-      - '*.zip'
-      - 'module.json'
+      - "*.zip"
+      - "module.json"
+
+build-module:
+  extends: .build
+  artifacts:
+    expire_in: 6 mos
+
   only:
-    refs:
-      - develop
-      - master
+    - tags
+
+build-unstable:
+  extends: .build
+
+  only:
+    - develop
