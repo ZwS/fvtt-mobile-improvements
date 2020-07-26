@@ -267,6 +267,9 @@ body.hide-hud .window-selector.has-items {
 body.hide-hud .mobile-navigation {
   transform: translateY(calc(100% + 20px));
 }
+body.hide-hud .window-selector {
+  transform: translateY(calc(100% + var(--navigationHeight) + 20px));
+}
 
 /* ------------------------------------ */
 /*              Application             */
@@ -900,6 +903,7 @@ body.hide-hud .mobile-navigation {
 
 .mobile-navigation {
   display: none;
+  visibility: visible !important; /* Spawns before CSS with inline style */
   width: 100%;
   margin: 0;
   padding: 0;
