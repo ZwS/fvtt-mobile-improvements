@@ -1,6 +1,6 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
 import { WindowSelector } from "./module/windowSelector.js";
-import { RenderModes } from "./module/render-modes.js";
+import { RenderModes } from "./module/renderModes.js";
 import { TouchInput } from "./module/touch-input.js";
 import { registerSettings, settings } from "./module/settings.js";
 import * as mgr from "./module/windowManager.js";
@@ -28,10 +28,11 @@ Hooks.once("init", async function () {
   }
   registerSettings();
   await preloadTemplates();
-  window.mobileImprovements.navigation.render(true);
 });
 
 Hooks.once("ready", function () {
+  window.mobileImprovements.navigation.render(true);
+
   window.mobileImprovements.windowSelector.render(true);
   window.mobileImprovements.navigation.render(true);
 
