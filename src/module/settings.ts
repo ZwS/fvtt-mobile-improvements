@@ -1,7 +1,7 @@
 const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
 
 export enum settings {
-  RENDERMODES = "renderModes",
+  SIDEBAR_PAUSES_RENDER = "sideBarPausesRender",
 }
 
 interface Callbacks {
@@ -14,10 +14,9 @@ const noop = (): void => {
 
 const moduleSettings = [
   {
-    setting: settings.RENDERMODES,
-    name: "Render mode toggle",
-    hint:
-      "Adds a button below the sidebar to turn off scene rendering (reload required)",
+    setting: settings.SIDEBAR_PAUSES_RENDER,
+    name: "Pause rendering in sidebar",
+    hint: "Pauses rendering of the map while the sidebar is active",
     type: Boolean,
     default: false,
   },

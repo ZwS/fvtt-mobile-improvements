@@ -1,8 +1,7 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
 import { WindowSelector } from "./module/windowSelector.js";
-import { RenderModes } from "./module/renderModes.js";
 import { TouchInput } from "./module/touch-input.js";
-import { registerSettings, settings } from "./module/settings.js";
+import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as mgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
 
@@ -15,9 +14,6 @@ Hooks.once("init", async function () {
   mgr.activate();
   if (window.mobileImprovements.windowSelector === undefined) {
     window.mobileImprovements.windowSelector = new WindowSelector();
-  }
-  if (window.mobileImprovements.renderModes === undefined) {
-    window.mobileImprovements.renderModes = new RenderModes();
   }
 
   if (window.mobileImprovements.touchInput === undefined) {
@@ -36,9 +32,6 @@ Hooks.once("ready", function () {
   window.mobileImprovements.windowSelector.render(true);
   window.mobileImprovements.navigation.render(true);
 
-  if (game.settings.get(MODULE_NAME, settings.RENDERMODES)) {
-    window.mobileImprovements.renderModes.render(true);
-  }
   $(document.body).addClass("mobile-improvements");
 });
 

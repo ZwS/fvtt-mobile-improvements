@@ -1,3 +1,5 @@
+import { settings, getSetting } from "./settings.js";
+
 enum ViewState {
   Map,
   Sidebar,
@@ -35,6 +37,7 @@ export class MobileNavigation extends Application {
       $(document.body).toggleClass("hide-hud");
     }
     this.state = ViewState.Map;
+    canvas.app.start();
   }
 
   showSidebar() {
@@ -42,6 +45,9 @@ export class MobileNavigation extends Application {
     $(document.body).removeClass("hide-hud");
     ui.sidebar.expand();
     window.WindowManager.minimizeAll();
+    if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
+      canvas.app.stop();
+    }
   }
 
   showHotbar() {
