@@ -4,8 +4,21 @@ import { TouchInput } from "./module/touch-input.js";
 import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as mgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
+import { MobileMenu } from "./module/menu.js";
 
 const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
+
+// https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+
+function viewHeight() {
+  document.documentElement.style.setProperty(
+    "--vh",
+    `${window.innerHeight * 0.01}px`
+  );
+}
+viewHeight();
+window.addEventListener("resize", viewHeight);
+window.addEventListener("scroll", viewHeight);
 
 Hooks.once("init", async function () {
   window.mobileImprovements = window.mobileImprovements || {};
@@ -22,6 +35,9 @@ Hooks.once("init", async function () {
   if (window.mobileImprovements.navigation === undefined) {
     window.mobileImprovements.navigation = new MobileNavigation();
   }
+  if (window.mobileImprovements.menu === undefined) {
+    window.mobileImprovements.menu = new MobileMenu();
+  }
   registerSettings();
   await preloadTemplates();
 });
@@ -31,6 +47,7 @@ Hooks.once("ready", function () {
 
   window.mobileImprovements.windowSelector.render(true);
   window.mobileImprovements.navigation.render(true);
+  window.mobileImprovements.menu.render(true);
 
   $(document.body).addClass("mobile-improvements");
 });

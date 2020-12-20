@@ -9,9 +9,14 @@
   scrollbar-width: thin;
 }
 
+html {
+  background: black;
+}
+
 :root {
   --navigationHeight: 35px;
-  --viewHeight: calc(100vh - var(--navigationHeight));
+  --vh: 1vh;
+  --viewHeight: calc(calc(var(--vh) * 100) - var(--navigationHeight));
 }
 
 ::-webkit-scrollbar {
@@ -24,6 +29,13 @@
 }
 
 @media screen and (max-width: 800px) {
+  html {
+    overflow: hidden;
+  }
+  body {
+    height: calc(var(--vh) * 100);
+    position: relative;
+  }
   #sidebar:not(.collapsed) {
     width: 100%;
     z-index: 80;
@@ -125,6 +137,7 @@
     margin: 2px;
     background: rgba(0, 0, 0, 0.3);
     border-radius: 0;
+    border-color: rgba(0, 0, 0, 0.2);
   }
 
   #hotbar .bar-controls a.page-control,
@@ -280,6 +293,8 @@ body.hide-hud .window-selector.has-items {
 body.hide-hud .mobile-navigation {
   transform: translateY(calc(100% + 20px));
 }
+
+body.hide-hud .mobile-menu,
 body.hide-hud .window-selector {
   transform: translateY(calc(100% + var(--navigationHeight) + 20px));
 }
@@ -340,40 +355,34 @@ body.hide-hud .window-selector {
 /*        Mobile Improvement Apps       */
 /* ------------------------------------ */
 
-.window-selector {
-  z-index: 1001;
-  position: fixed;
+.drawer {
+  z-index: 1000;
+  position: absolute;
   bottom: var(--navigationHeight);
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  max-width: 450px;
+  right: 0;
   transform: translateY(calc(100% + 60px));
   transition: transform ease-out 100ms;
   visibility: hidden;
-  pointer-events: none;
+  box-shadow: 0 0 15px #000c;
 }
 
 @media screen and (max-width: 800px) {
-  .window-selector {
+  .drawer {
     visibility: unset;
   }
 }
 
-.window-selector.has-items {
-  transform: translateY(calc(100% - 30px));
-}
-
-.window-selector.open {
+.drawer.open {
+  z-index: 1001;
   transform: translateY(0);
 }
 
 .window-selector nav {
+  width: 100%;
   padding: 0 1em;
   background: #333;
-  width: 100%;
-  max-width: 450px;
-  box-shadow: 0 0 20px #000;
   max-height: calc(100vh - var(--navigationHeight));
   overflow-y: auto;
   pointer-events: auto;
@@ -392,8 +401,8 @@ body.hide-hud .window-selector {
 .window-selector .window-row {
   display: flex;
   margin-bottom: 2px;
-  border: 1px solid #000;
-  background: #333333ee;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background: #00000035;
 }
 
 .window-selector .window-row:hover {
@@ -436,7 +445,7 @@ body.hide-hud .window-selector {
 
 .display-modes-toggle {
   z-index: 1;
-  position: fixed;
+  position: absolute;
   right: 5px;
   top: 380px;
   width: 30px;
@@ -467,13 +476,13 @@ body.hide-hud .window-selector {
   padding: 0;
   z-index: 1002;
   background-color: #333;
-  position: fixed;
-  bottom: 0;
+  position: absolute;
+  top: var(--viewHeight);
   align-items: stretch;
   transition: transform ease-in 50ms;
   list-style: none;
   color: #f0f0e0;
-  font-weight: bold;
+  font-weight: normal;
   overflow-x: auto;
   overflow-y: hidden;
   font-size: 80%;
@@ -499,12 +508,37 @@ body.hide-hud .window-selector {
   opacity: 1;
 }
 
+.mobile-navigation li:hover,
+.mobile-navigation li:focus,
+.mobile-navigation li:active {
+  opacity: 0.7;
+  background: rgba(0, 0, 0, 0.1);
+}
+
 .mobile-navigation li.active:not(.toggle) {
   color: #ff6400;
+}
+
+.mobile-navigation li.active:not(.toggle) i {
+  transform: scale(1.1);
 }
 
 @media screen and (max-width: 800px) {
   .mobile-navigation {
     display: flex !important;
   }
+}
+
+.mobile-menu {
+  display: flex !important;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  align-items: stretch;
+  list-style: none;
+  color: #f0f0e0;
+  font-weight: bold;
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-size: 80%;
 }

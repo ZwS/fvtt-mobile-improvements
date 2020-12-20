@@ -5,12 +5,17 @@
   "version": "",
   "author": "Sunspots",
   "scripts": [],
-  "esmodules": ["mobile-improvements.js"],
-  "styles": ["./mobile-improvements.css", "./flex-sheets.css"],
+  "esmodules": [
+    "mobile-improvements.js"
+  ],
+  "styles": [
+    "./mobile-improvements.css",
+    "./flex-sheets.css"
+  ],
   "packs": [],
   "languages": [],
   "minimumCoreVersion": "0.6.2",
-  "compatibleCoreVersion": "0.6.4",
+  "compatibleCoreVersion": "0.7.8",
   "url": "",
   "manifest": "",
   "download": "",

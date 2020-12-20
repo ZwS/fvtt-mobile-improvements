@@ -4,12 +4,23 @@ enum ViewState {
   Map,
   Sidebar,
 }
+enum DrawerState {
+  None,
+  Macros = "macros",
+  Menu = "menu",
+  Windows = "windows",
+}
 
 declare let ui: { sidebar: Sidebar; hotbar: any };
 
 export class MobileNavigation extends Application {
-  element: JQuery<HTMLElement>;
   state: ViewState = ViewState.Map;
+  drawerState: DrawerState = DrawerState.None;
+
+  public get elem(): JQuery<HTMLElement> {
+    return this.element as JQuery<HTMLElement>;
+  }
+
   constructor() {
     super({
       template: "modules/mobile-improvements/templates/navigation.html",
@@ -51,51 +62,65 @@ export class MobileNavigation extends Application {
   }
 
   showHotbar() {
-    if (!$(document.body).hasClass("show-hotbar")) {
-      $(document.body).addClass("show-hotbar");
-      this.element.find(".navigation-macros").addClass("active");
+    $(document.body).addClass("show-hotbar");
+    ui.hotbar.expand();
+  }
 
-      ui.hotbar.expand();
-    } else {
-      // ui.hotbar.collapse();
-      $(document.body).removeClass("show-hotbar");
-      this.element.find(".navigation-macros").removeClass("active");
-    }
+  hideHotbar() {
+    $(document.body).removeClass("show-hotbar");
   }
+
   setWindowCount(count: number) {
-    this.element.find(".navigation-windows span span").html(count.toString());
+    this.elem.find(".navigation-windows span span").html(count.toString());
   }
+
+  setDrawerState(state: DrawerState) {
+    $(`body > .drawer`).removeClass("open");
+    this.elem.find(".toggle.active").removeClass("active");
+    this.hideHotbar();
+    if (state == DrawerState.None || state == this.drawerState) {
+      this.drawerState = DrawerState.None;
+      return;
+    }
+
+    this.drawerState = state;
+    if (state == DrawerState.Macros) {
+      this.showHotbar();
+    } else {
+      console.log(state);
+      $(`body > .drawer.drawer-${state}`).addClass("open");
+    }
+    this.elem.find(`.navigation-${state}`).addClass("active");
+  }
+
   selectItem(name: string) {
     console.log(name);
     switch (name) {
       case "map":
         this.showMap();
+        this.setDrawerState(DrawerState.None);
         break;
       case "sidebar":
         this.showSidebar();
-        break;
-      case "macros":
-        this.showHotbar();
-        break;
-      case "windows":
-        window.mobileImprovements.windowSelector.toggleOpen();
+        this.setDrawerState(DrawerState.None);
         break;
       default:
-        break;
+        this.setDrawerState(name as DrawerState);
     }
+
     this.updateMode();
   }
 
   updateMode() {
-    this.element.find(".active:not(.toggle)").removeClass("active");
+    this.elem.find(".active:not(.toggle)").removeClass("active");
     $(document.body).removeClass("show-sidebar");
 
     switch (this.state) {
       case ViewState.Map:
-        this.element.find(".navigation-map").addClass("active");
+        this.elem.find(".navigation-map").addClass("active");
         break;
       case ViewState.Sidebar:
-        this.element.find(".navigation-sidebar").addClass("active");
+        this.elem.find(".navigation-sidebar").addClass("active");
         $(document.body).addClass("show-sidebar");
         break;
       default:

@@ -215,7 +215,7 @@
 
 /*    Item sheet   */
 .mobile-improvements .dnd5e.sheet.item .sheet-body .editor {
-  min-width: 400px;
+  flex-basis: 400px;
   flex-grow: 999;
 }
 
@@ -237,7 +237,7 @@
 }
 
 .dnd5e.sheet.item .sheet-body .tab[data-tab="description"] {
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* ------------------------------------ */
