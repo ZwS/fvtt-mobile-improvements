@@ -35,7 +35,7 @@ export class WindowSelector extends Application {
     Hooks.on("WindowManager:Removed", this.windowRemoved.bind(this));
   }
 
-  protected activateListeners(html: JQuery | HTMLElement): void {
+  activateListeners(html: JQuery | HTMLElement): void {
     this.list = (<JQuery>this.element).find(".window-list");
   }
   toggleOpen() {

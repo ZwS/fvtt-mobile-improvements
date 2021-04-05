@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
-    "lib": ["DOM", "ES6", "ES2019"],
-    "types": ["foundry-pc-types"],
-    "module": "ES6"
+    "moduleResolution": "node",
+    "target": "ES2020",
+    "lib": [
+      "DOM",
+      "ES6",
+      "ES2020"
+    ],
+    "types": [
+      "@league-of-foundry-developers/foundry-vtt-types",
+    ],
+    "module": "ES2020"
   }
 }

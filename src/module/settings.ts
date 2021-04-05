@@ -37,7 +37,7 @@ export function registerSettings(callbacks: Callbacks = {}): void {
   });
 }
 
-export function getSetting(setting: settings): string | boolean | number {
+export function getSetting(setting: settings): any {
   return game.settings.get(MODULE_NAME, setting as string);
 }
 

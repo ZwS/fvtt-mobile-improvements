@@ -32,7 +32,7 @@ export class MobileNavigation extends Application {
     });
   }
 
-  protected activateListeners(html: JQuery<HTMLElement>): void {
+  activateListeners(html: JQuery<HTMLElement>): void {
     html.find("li").click((evt, as) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
       const [_, name] = firstClass.split("-");
@@ -45,6 +45,7 @@ export class MobileNavigation extends Application {
     const minimized = window.WindowManager.minimizeAll();
     console.log(minimized);
     this.state = ViewState.Map;
+    //@ts-ignore
     canvas.app.start();
   }
 
@@ -54,6 +55,7 @@ export class MobileNavigation extends Application {
     ui.sidebar.expand();
     window.WindowManager.minimizeAll();
     if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
+      //@ts-ignore
       canvas.app.stop();
     }
   }
