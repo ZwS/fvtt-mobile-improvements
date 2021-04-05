@@ -10,7 +10,7 @@
   ],
   "styles": [
     "./mobile-improvements.css",
-    "./flex-sheets.css"
+    "./sheets/dnd5e.css"
   ],
   "packs": [],
   "languages": [],
