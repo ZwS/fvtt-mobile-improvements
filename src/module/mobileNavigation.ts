@@ -44,9 +44,6 @@ export class MobileNavigation extends Application {
   showMap() {
     const minimized = window.WindowManager.minimizeAll();
     console.log(minimized);
-    if (!minimized && this.state == ViewState.Map) {
-      $(document.body).toggleClass("hide-hud");
-    }
     this.state = ViewState.Map;
     canvas.app.start();
   }

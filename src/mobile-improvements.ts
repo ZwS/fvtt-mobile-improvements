@@ -1,6 +1,5 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
 import { WindowSelector } from "./module/windowSelector.js";
-import { TouchInput } from "./module/touch-input.js";
 import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as mgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
@@ -28,10 +27,6 @@ Hooks.once("init", async function () {
   if (window.mobileImprovements.windowSelector === undefined) {
     window.mobileImprovements.windowSelector = new WindowSelector();
   }
-
-  if (window.mobileImprovements.touchInput === undefined) {
-    window.mobileImprovements.touchInput = new TouchInput();
-  }
   if (window.mobileImprovements.navigation === undefined) {
     window.mobileImprovements.navigation = new MobileNavigation();
   }
@@ -50,10 +45,6 @@ Hooks.once("ready", function () {
   window.mobileImprovements.menu.render(true);
 
   $(document.body).addClass("mobile-improvements");
-});
-
-Hooks.on("canvasReady", function () {
-  window.mobileImprovements.touchInput.hook();
 });
 
 Hooks.once("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
