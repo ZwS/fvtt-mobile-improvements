@@ -15,6 +15,13 @@ https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/master/
 
 # Features
 
+Mobile Improvements comes in two major parts:
+
+1. Complete core UI overhaul
+2. Flexible character sheets
+
+## General features
+
 - Full-screen application windows
 - Full-screen sidebar
 - Window switching
@@ -23,20 +30,6 @@ https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/master/
 - Flexible-ish macro bar
 - Disable map toggle
   - Disable rendering the game board, to increase performance
-- Pan and Zoom with touch input
-- Tap canvas to hide UI.
-
-## Canvas Touch Control
-
-- Drag to pan
-- Multi-touch zoom (zoom is barely usable)
-- Double tap acts like double click (show sheet)
-- Long tap acts like right click (show token HUD)
-- Tap to hide UI
-
-## dnd5e
-
-- Narrower character sheets
 
 # TODO
 
@@ -81,11 +74,6 @@ https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/master/
   - Build system improvements
 
 # Build
-
-Based on
-[create-foundry-project](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project).
-The main difference is that generated code is never mixed with source. The dist
-folder is separate and contains the fully built module after build.
 
 ```bash
 npm install
@@ -136,12 +124,3 @@ build:install).
 ```bash
 npm run clean
 ```
-
-## Differences to create-foundry-project
-
-- Simplified-ish
-- No source files in dist folder (safe to delete)
-- Watch/copy files changed
-- Somewhat less safety-ckecking
-- Configuration over detection
-- Builds manifest from package.json
