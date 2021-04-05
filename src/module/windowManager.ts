@@ -55,28 +55,25 @@ export class Window {
 }
 
 export class WindowManager {
+  // All windows
   windows: {
     [id: string]: Window;
   } = {};
+  // Stack order of windows
+  stack: number[];
   version = "1.0";
   windowChangeHandler: ProxyHandler<Object> = {
-    set: (target, property, value, receiver) => {
+    set: (target, property: string, value, receiver) => {
       target[property] = value;
-      if (typeof property === "string") {
-        property = parseInt(property);
-      }
-      this.windowAdded(property);
+      this.windowAdded(parseInt(property as string));
       // Hook for new window being rendered
       Hooks.once("render" + value.constructor.name, this.newWindowRendered);
       return true;
     },
     deleteProperty: (target, property) => {
       const res = delete target[property];
-      if (typeof property === "string") {
-        property = parseInt(property);
-      }
       setTimeout(() => {
-        this.windowRemoved(property);
+        this.windowRemoved(parseInt(property as string));
       }, 1);
       return res;
     },
