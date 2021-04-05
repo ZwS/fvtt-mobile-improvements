@@ -4,8 +4,8 @@ import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as mgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
 import { MobileMenu } from "./module/menu.js";
+import { MobileImprovementsCore } from "./module/core.js";
 
-const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
 
 // https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
@@ -20,29 +20,28 @@ window.addEventListener("resize", viewHeight);
 window.addEventListener("scroll", viewHeight);
 
 Hooks.once("init", async function () {
-  window.mobileImprovements = window.mobileImprovements || {};
-
   console.log("Mobile Improvements | Initializing Mobile Improvements");
   mgr.activate();
-  if (window.mobileImprovements.windowSelector === undefined) {
-    window.mobileImprovements.windowSelector = new WindowSelector();
+  if (MobileImprovementsCore.windowSelector === undefined) {
+    MobileImprovementsCore.windowSelector = new WindowSelector();
   }
-  if (window.mobileImprovements.navigation === undefined) {
-    window.mobileImprovements.navigation = new MobileNavigation();
+
+  if (MobileImprovementsCore.navigation === undefined) {
+    MobileImprovementsCore.navigation = new MobileNavigation();
   }
-  if (window.mobileImprovements.menu === undefined) {
-    window.mobileImprovements.menu = new MobileMenu();
+  if (MobileImprovementsCore.menu === undefined) {
+    MobileImprovementsCore.menu = new MobileMenu();
   }
   registerSettings();
   await preloadTemplates();
 });
 
 Hooks.once("ready", function () {
-  window.mobileImprovements.navigation.render(true);
+  MobileImprovementsCore.navigation.render(true);
 
-  window.mobileImprovements.windowSelector.render(true);
-  window.mobileImprovements.navigation.render(true);
-  window.mobileImprovements.menu.render(true);
+  MobileImprovementsCore.windowSelector.render(true);
+  MobileImprovementsCore.navigation.render(true);
+  MobileImprovementsCore.menu.render(true);
 
   $(document.body).addClass("mobile-improvements");
 });

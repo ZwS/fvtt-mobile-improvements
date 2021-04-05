@@ -1,4 +1,5 @@
 import { Window } from "./windowManager";
+import { MobileImprovementsCore } from "./core.js";
 
 const icons = {
   "": "",
@@ -87,6 +88,6 @@ export class WindowSelector extends Application {
 
   update() {
     const winCount = Object.values(window.WindowManager.windows).length;
-    window.mobileImprovements.navigation.setWindowCount(winCount);
+    MobileImprovementsCore.navigation.setWindowCount(winCount);
   }
 }
