@@ -5,16 +5,11 @@ import * as mgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
 import { MobileMenu } from "./module/menu.js";
 import { MobileImprovementsCore } from "./module/core.js";
+import { viewHeight } from "./module/util.js";
 
-
-// https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-
-function viewHeight() {
-  document.documentElement.style.setProperty(
-    "--vh",
-    `${window.innerHeight * 0.01}px`
-  );
-}
+document.addEventListener("fullscreenchange", event =>
+  setTimeout(viewHeight, 100)
+);
 viewHeight();
 window.addEventListener("resize", viewHeight);
 window.addEventListener("scroll", viewHeight);
