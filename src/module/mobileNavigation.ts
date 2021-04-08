@@ -1,4 +1,6 @@
 import { settings, getSetting } from "./settings.js";
+import { WindowMenu } from "./windowMenu.js";
+import { MobileMenu } from "./mobileMenu.js";
 
 enum ViewState {
   Map,
@@ -17,28 +19,42 @@ export class MobileNavigation extends Application {
   state: ViewState = ViewState.Map;
   drawerState: DrawerState = DrawerState.None;
 
-  public get elem(): JQuery<HTMLElement> {
-    return this.element as JQuery<HTMLElement>;
-  }
+  windowMenu: WindowMenu;
+  mobileMenu: MobileMenu;
 
   constructor() {
     super({
       template: "modules/mobile-improvements/templates/navigation.html",
       popOut: false,
     });
+
+    this.windowMenu = new WindowMenu(this);
+    this.mobileMenu = new MobileMenu(this);
+
     // Ensure HUD shows on opening a new window
     Hooks.on("WindowManager:NewRendered", () => {
       $(document.body).removeClass("hide-hud");
     });
   }
 
+  render(force: boolean, ...arg) {
+    const r = super.render(force, ...arg);
+    this.windowMenu.render(force);
+    this.mobileMenu.render(force);
+    return r;
+  }
+
   activateListeners(html: JQuery<HTMLElement>): void {
-    html.find("li").click((evt, as) => {
+    html.find("li").on("click", (evt, as) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
       const [_, name] = firstClass.split("-");
       this.selectItem(name);
     });
     this.updateMode();
+  }
+
+  closeDrawer() {
+    this.setDrawerState(DrawerState.None);
   }
 
   showMap() {
@@ -70,12 +86,12 @@ export class MobileNavigation extends Application {
   }
 
   setWindowCount(count: number) {
-    this.elem.find(".navigation-windows span span").html(count.toString());
+    this.element.find(".navigation-windows span span").html(count.toString());
   }
 
   setDrawerState(state: DrawerState) {
     $(`body > .drawer`).removeClass("open");
-    this.elem.find(".toggle.active").removeClass("active");
+    this.element.find(".toggle.active").removeClass("active");
     this.hideHotbar();
     if (state == DrawerState.None || state == this.drawerState) {
       this.drawerState = DrawerState.None;
@@ -86,10 +102,9 @@ export class MobileNavigation extends Application {
     if (state == DrawerState.Macros) {
       this.showHotbar();
     } else {
-      console.log(state);
       $(`body > .drawer.drawer-${state}`).addClass("open");
     }
-    this.elem.find(`.navigation-${state}`).addClass("active");
+    this.element.find(`.navigation-${state}`).addClass("active");
   }
 
   selectItem(name: string) {
@@ -111,15 +126,15 @@ export class MobileNavigation extends Application {
   }
 
   updateMode() {
-    this.elem.find(".active:not(.toggle)").removeClass("active");
+    this.element.find(".active:not(.toggle)").removeClass("active");
     $(document.body).removeClass("show-sidebar");
 
     switch (this.state) {
       case ViewState.Map:
-        this.elem.find(".navigation-map").addClass("active");
+        this.element.find(".navigation-map").addClass("active");
         break;
       case ViewState.Sidebar:
-        this.elem.find(".navigation-sidebar").addClass("active");
+        this.element.find(".navigation-sidebar").addClass("active");
         $(document.body).addClass("show-sidebar");
         break;
       default:

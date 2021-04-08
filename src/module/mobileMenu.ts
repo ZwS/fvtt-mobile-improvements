@@ -1,16 +1,17 @@
-export class MobileMenu extends Application {
-  public get elem(): JQuery<HTMLElement> {
-    return this.element as JQuery<HTMLElement>;
-  }
+import type { MobileNavigation } from "./mobileNavigation.js";
 
-  constructor() {
+export class MobileMenu extends Application {
+  nav: MobileNavigation;
+
+  constructor(nav: MobileNavigation) {
     super({
       template: "modules/mobile-improvements/templates/menu.html",
       popOut: false,
     });
+    this.nav = nav;
   }
   activateListeners(html: JQuery<HTMLElement>): void {
-    html.find("li").click((evt, as) => {
+    html.find("li").on("click", (evt, as) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
       const [_, name] = firstClass.split("-");
       this.selectItem(name);
@@ -18,7 +19,7 @@ export class MobileMenu extends Application {
   }
 
   toggleOpen() {
-    this.elem.toggleClass("open");
+    this.element.toggleClass("open");
   }
 
   selectItem(name: string) {
@@ -34,5 +35,6 @@ export class MobileMenu extends Application {
       default:
         break;
     }
+    this.nav.closeDrawer();
   }
 }

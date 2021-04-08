@@ -1,31 +1,25 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
-import { WindowSelector } from "./module/windowSelector.js";
 import { registerSettings, settings, getSetting } from "./module/settings.js";
-import * as mgr from "./module/windowManager.js";
+import * as windowMgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
-import { MobileMenu } from "./module/menu.js";
 import { MobileImprovementsCore } from "./module/core.js";
 import { viewHeight } from "./module/util.js";
 
+// Trigger the recalculation of viewheight often. Not great performance,
+// but required to work on different mobile browsers
 document.addEventListener("fullscreenchange", event =>
   setTimeout(viewHeight, 100)
 );
-viewHeight();
 window.addEventListener("resize", viewHeight);
 window.addEventListener("scroll", viewHeight);
+viewHeight();
 
 Hooks.once("init", async function () {
   console.log("Mobile Improvements | Initializing Mobile Improvements");
-  mgr.activate();
-  if (MobileImprovementsCore.windowSelector === undefined) {
-    MobileImprovementsCore.windowSelector = new WindowSelector();
-  }
+  windowMgr.activate();
 
   if (MobileImprovementsCore.navigation === undefined) {
     MobileImprovementsCore.navigation = new MobileNavigation();
-  }
-  if (MobileImprovementsCore.menu === undefined) {
-    MobileImprovementsCore.menu = new MobileMenu();
   }
   registerSettings();
   await preloadTemplates();
@@ -33,11 +27,6 @@ Hooks.once("init", async function () {
 
 Hooks.once("ready", function () {
   MobileImprovementsCore.navigation.render(true);
-
-  MobileImprovementsCore.windowSelector.render(true);
-  MobileImprovementsCore.navigation.render(true);
-  MobileImprovementsCore.menu.render(true);
-
   $(document.body).addClass("mobile-improvements");
 });
 
@@ -47,7 +36,7 @@ Hooks.once("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
 });
 
 Hooks.on("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
-  b.find(".fa-users").click(evt => {
+  b.find(".fa-users").on("click", evt => {
     evt.preventDefault();
     evt.stopPropagation();
     a._collapsed = !a._collapsed;

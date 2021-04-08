@@ -1,5 +1,5 @@
 import { Window } from "./windowManager";
-import { MobileImprovementsCore } from "./core.js";
+import type { MobileNavigation } from "./mobileNavigation.js";
 
 const icons = {
   "": "",
@@ -23,14 +23,16 @@ const icons = {
   class: "fa-user",
 };
 
-export class WindowSelector extends Application {
+export class WindowMenu extends Application {
   list: JQuery = null;
+  nav: MobileNavigation;
 
-  constructor() {
+  constructor(nav: MobileNavigation) {
     super({
       template: "modules/mobile-improvements/templates/window-selector.html",
       popOut: false,
     });
+    this.nav = nav;
     Hooks.on("WindowManager:NewRendered", this.windowAdded.bind(this));
     Hooks.on("WindowManager:Removed", this.windowRemoved.bind(this));
   }
@@ -38,9 +40,7 @@ export class WindowSelector extends Application {
   activateListeners(html: JQuery | HTMLElement): void {
     this.list = (<JQuery>this.element).find(".window-list");
   }
-  toggleOpen() {
-    (<JQuery>this.element).toggleClass("open");
-  }
+
   // Attempt to discern the title and icon of the window
   winIcon(win: any) {
     let windowType: string =
@@ -66,12 +66,12 @@ export class WindowSelector extends Application {
     const row = $(`<li class="window-row"  data-id="${win.id}"></li>`);
     row.append(windowButton, closeButton);
 
-    windowButton.click(ev => {
+    windowButton.on("click", ev => {
       ev.preventDefault();
       win.show();
-      this.toggleOpen();
+      this.nav.closeDrawer();
     });
-    closeButton.click(ev => {
+    closeButton.on("click", ev => {
       ev.preventDefault();
       win.close();
     });
@@ -88,6 +88,6 @@ export class WindowSelector extends Application {
 
   update() {
     const winCount = Object.values(window.WindowManager.windows).length;
-    MobileImprovementsCore.navigation.setWindowCount(winCount);
+    this.nav.setWindowCount(winCount);
   }
 }
