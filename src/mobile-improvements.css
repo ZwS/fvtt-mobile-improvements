@@ -537,8 +537,22 @@ body.hide-hud .window-selector {
   align-items: stretch;
   list-style: none;
   color: #f0f0e0;
-  font-weight: bold;
   overflow-x: auto;
   overflow-y: hidden;
-  font-size: 80%;
+}
+
+.mobile-menu .menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 10px;
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+}
+.mobile-menu .menu-list > li {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.mobile-menu .menu-list > li i.fas {
+  margin-right: 5px;
 }
