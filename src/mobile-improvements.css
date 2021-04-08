@@ -81,15 +81,10 @@ html {
   }
 
   #players {
-    bottom: 120px;
+    bottom: 40px;
     left: 2px;
   }
 
-  #players.collapsed {
-    width: 42px;
-    height: 26px;
-    overflow: hidden;
-  }
   #players h3 {
     margin: 0;
   }
