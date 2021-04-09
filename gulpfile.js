@@ -4,6 +4,7 @@ const chalk = require("chalk");
 
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
+const sass = require("sass");
 
 const buildTools = require("build-tools");
 
@@ -37,6 +38,27 @@ function buildTS() {
     .src(sourceGroups.ts, { allowEmpty: true })
     .pipe(tsConfig())
     .pipe(gulp.dest(options.outDir));
+}
+
+/**
+ * Build Sass
+ */
+
+function buildSass() {
+  return new Promise((resolve, reject) => {
+    sass.render({ file: "src/mobile-improvements.scss" }, (err, result) => {
+      if (err) return reject(err);
+
+      fs.writeFile(
+        path.join(options.outDir, "mobile-improvements.css"),
+        result.css,
+        err => {
+          if (err) return reject(err);
+          resolve();
+        }
+      );
+    });
+  });
 }
 
 /**
@@ -82,13 +104,15 @@ function buildWatch() {
   gulp.watch(sourceGroups.ts, opts, buildTS);
   gulp.watch(sourceGroups.folders, opts, copyFolders);
   gulp.watch(sourceGroups.statics, opts, copyStatics);
+  gulp.watch(sourceGroups.sass, opts, buildSass);
 }
 
 const execBuild = gulp.parallel(
   packageTool.buildManifest,
   buildTS,
   copyFolders,
-  copyStatics
+  copyStatics,
+  buildSass
 );
 
 // Single tasks
