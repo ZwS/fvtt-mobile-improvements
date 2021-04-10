@@ -72,7 +72,7 @@ export class MobileNavigation extends Application {
     window.WindowManager.minimizeAll();
     if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
       //@ts-ignore
-      canvas.app.stop();
+      // canvas.app.stop();
     }
   }
 
