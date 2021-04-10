@@ -2,32 +2,56 @@ import { preloadTemplates } from "./module/preloadTemplates.js";
 import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as windowMgr from "./module/windowManager.js";
 import { MobileNavigation } from "./module/mobileNavigation.js";
-import { MobileImprovementsCore } from "./module/core.js";
 import { viewHeight } from "./module/util.js";
+
+class MobileMode {
+  static enabled = false;
+  static navigation: MobileNavigation;
+
+  static enter() {
+    if (MobileMode.enabled) return;
+    MobileMode.enabled = true;
+    document.body.classList.add("mobile-improvements");
+  }
+  static leave() {
+    if (!MobileMode.enabled) return;
+    MobileMode.enabled = false;
+    document.body.classList.remove("mobile-improvements");
+  }
+
+  static viewResize() {
+    if (window.innerWidth < 800) {
+      MobileMode.enter();
+    } else {
+      MobileMode.leave();
+    }
+
+    if (MobileMode.enabled) viewHeight();
+  }
+}
 
 // Trigger the recalculation of viewheight often. Not great performance,
 // but required to work on different mobile browsers
 document.addEventListener("fullscreenchange", event =>
-  setTimeout(viewHeight, 100)
+  setTimeout(MobileMode.viewResize, 100)
 );
-window.addEventListener("resize", viewHeight);
-window.addEventListener("scroll", viewHeight);
-viewHeight();
+window.addEventListener("resize", MobileMode.viewResize);
+window.addEventListener("scroll", MobileMode.viewResize);
+MobileMode.viewResize();
 
 Hooks.once("init", async function () {
   console.log("Mobile Improvements | Initializing Mobile Improvements");
   windowMgr.activate();
 
-  if (MobileImprovementsCore.navigation === undefined) {
-    MobileImprovementsCore.navigation = new MobileNavigation();
+  if (MobileMode.navigation === undefined) {
+    MobileMode.navigation = new MobileNavigation();
   }
   registerSettings();
   await preloadTemplates();
 });
 
 Hooks.once("ready", function () {
-  MobileImprovementsCore.navigation.render(true);
-  $(document.body).addClass("mobile-improvements");
+  MobileMode.navigation.render(true);
 });
 
 Hooks.once("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
