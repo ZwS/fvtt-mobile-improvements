@@ -247,8 +247,6 @@
 /* Header */
 @media screen and (max-width: 800px) {
   .mobile-improvements .tidy5e.sheet.actor .header-attributes {
-    overflow-x: auto;
-    overflow-y: hidden;
     justify-content: start;
   }
   .mobile-improvements .tidy5e.sheet.actor .header-attribute {
@@ -270,6 +268,15 @@
   }
   .mobile-improvements .tidy5e.sheet.actor .profile {
     width: 100px;
+    height: 100px;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .character-stats {
+    margin-left: -111px;
+    margin-top: 26px;
+    margin-bottom: 7px;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .roundPortrait .rest-container {
+    z-index: 100;
   }
   .mobile-improvements .tidy5e.sheet.actor .origin-summary {
     flex-wrap: wrap;
@@ -290,10 +297,16 @@
 
 /* Navigation */
 @media screen and (max-width: 500px) {
-  .mobile-improvements .tidy5e-navigation {
+  .mobile-improvements .tidy5e.sheet.actor .tidy5e-navigation {
     flex-wrap: nowrap;
   }
-  .mobile-improvements .tidy5e-navigation .item {
+  .mobile-improvements
+    .tidy5e.sheet.actor
+    .tidy5e-navigation
+    .toggle-allow-edit {
+    padding: 0;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .tidy5e-navigation .item {
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 5px 0.25rem 0 0.25rem;
@@ -398,9 +411,11 @@
 
 /* Features */
 @media screen and (max-width: 500px) {
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-level,
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-action,
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-create {
+  .mobile-improvements .tidy5e.sheet.actor .items-list .item-level,
+  .mobile-improvements .tidy5e.sheet.actor .items-list .item-action,
+  .mobile-improvements .tidy5e.sheet.actor .items-list .effect-duration,
+  .mobile-improvements .tidy5e.sheet.actor .items-list .item-source,
+  .mobile-improvements .tidy5e.sheet.actor .items-list .item-requirements {
     flex: 0 0 75px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -417,13 +432,20 @@
   .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-school,
   .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-action,
   .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-target {
-    flex: 0 0 75px;
+    flex: 0 1 65px;
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 0 2px;
     white-space: nowrap;
   }
+  .mobile-improvements .tidy5e.sheet.actor .spell-comps {
+    flex: 0 0 40px;
+  }
+  .mobile-improvements .tidy5e.sheet.actor .spellcasting-ability {
+    flex-wrap: wrap;
+  }
 }
+
 /* Biography & Journal */
 
 .mobile-improvements .tidy5e-sheet .left-notes,
