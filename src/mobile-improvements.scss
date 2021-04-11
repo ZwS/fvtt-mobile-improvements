@@ -309,17 +309,8 @@ body.hide-hud .window-selector {
     border-radius: 0;
   }
 
-  /* .window-content form > footer {
-    margin-right: 40px;
-    flex: 0;
-  }
-
-  .sidebar-tab .directory-footer {
-    margin: 6px 40px !important;
-  } */
-
-  #client-settings section.content .settings-list {
-    max-height: calc(100vh - 120px);
+  #client-settings section.content {
+    flex-grow: 9999;
   }
 
   .window-app:not(.minimized) {
