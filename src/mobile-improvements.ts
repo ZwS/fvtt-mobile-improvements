@@ -1,7 +1,7 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
 import { registerSettings, settings, getSetting } from "./module/settings.js";
 import * as windowMgr from "./module/windowManager.js";
-import { MobileNavigation } from "./module/mobileNavigation.js";
+import { MobileNavigation, ViewState } from "./module/mobileNavigation.js";
 import { viewHeight } from "./module/util.js";
 
 class MobileMode {
@@ -54,18 +54,25 @@ Hooks.once("ready", function () {
   MobileMode.navigation.render(true);
 });
 
-Hooks.once("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
-  b.addClass("collapsed");
-  a._collapsed = true;
-});
+Hooks.on("createChatMessage", (message: ChatMessage) => {
+  if (!MobileMode.enabled || !message.isAuthor) return;
 
-Hooks.on("renderPlayerList", (a, b: JQuery<HTMLElement>, c) => {
-  b.find(".fa-users").on("click", evt => {
-    evt.preventDefault();
-    evt.stopPropagation();
-    a._collapsed = !a._collapsed;
-    b.toggleClass("collapsed");
-  });
+  const shouldBloop =
+    MobileMode.navigation.state === ViewState.Map ||
+    window.WindowManager.minimizeAll() ||
+    ui.sidebar.activeTab !== "chat";
+
+  MobileMode.navigation.showSidebar();
+  ui.sidebar.activateTab("chat");
+
+  if (shouldBloop) {
+    Hooks.once("renderChatMessage", (obj: ChatMessage, html: JQuery) => {
+      if (obj.id !== message.id) return; // Avoid possible race condition?
+
+      html.addClass("bloop");
+      setTimeout(() => html.removeClass("bloop"), 10000);
+    });
+  }
 });
 
 const notificationQueueProxy = {

@@ -2,9 +2,6 @@
 /*                Core UI               */
 /* ------------------------------------ */
 
-/* FVTT uses non-standard webkit CSS scroll bars
-* 'thin' scrollbars on standards-compliant browsers(firefox)
-*/
 * {
   scrollbar-width: thin;
 }
@@ -86,7 +83,7 @@ html {
   }
 
   #players {
-    bottom: 40px;
+    bottom: 90px;
     left: 2px;
   }
 
@@ -188,6 +185,22 @@ html {
     #pause {
       transform: scale(0.85);
     }
+  }
+
+  @keyframes bloopborder {
+    0% {
+      border-color: #00c853;
+    }
+    80% {
+      border-color: #76ff03;
+    }
+    100% {
+      border-color: #6f6c66;
+    }
+  }
+  .chat-message.bloop {
+    animation-name: bloopborder;
+    animation-duration: 4s;
   }
 }
 
@@ -319,7 +332,7 @@ body.hide-hud .window-selector {
     top: 0 !important;
     margin: 0;
     min-height: var(--viewHeight) !important;
-    overflow-x: scroll;
+    overflow-x: auto;
     width: calc(100% - 300px) !important;
     min-width: calc(100% - 300px) !important;
     box-shadow: none;
@@ -354,7 +367,7 @@ body.hide-hud .window-selector {
 
 .drawer {
   z-index: 1000;
-  position: absolute;
+  position: fixed;
   bottom: var(--navigationHeight);
   width: 100%;
   max-width: 450px;
@@ -505,6 +518,21 @@ body.hide-hud .window-selector {
   opacity: 1;
 }
 
+.mobile-navigation li.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.mobile-navigation li .count {
+  border-radius: 100%;
+  padding: 0 4px;
+  display: inline-flex;
+  background: #222;
+  margin-left: -5px;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .mobile-navigation li:hover,
 .mobile-navigation li:focus,
 .mobile-navigation li:active {
@@ -517,7 +545,7 @@ body.hide-hud .window-selector {
 }
 
 .mobile-navigation li.active:not(.toggle) i {
-  transform: scale(1.1);
+  transform: scale(1.1) translateX(-1%);
 }
 
 .mobile-improvements {

@@ -2,7 +2,7 @@ import { settings, getSetting } from "./settings.js";
 import { WindowMenu } from "./windowMenu.js";
 import { MobileMenu } from "./mobileMenu.js";
 
-enum ViewState {
+export enum ViewState {
   Map,
   Sidebar,
 }
@@ -63,6 +63,8 @@ export class MobileNavigation extends Application {
     this.state = ViewState.Map;
     //@ts-ignore
     canvas.app.start();
+    this.setDrawerState(DrawerState.None);
+    this.updateMode();
   }
 
   showSidebar() {
@@ -74,6 +76,8 @@ export class MobileNavigation extends Application {
       //@ts-ignore
       // canvas.app.stop();
     }
+    this.setDrawerState(DrawerState.None);
+    this.updateMode();
   }
 
   showHotbar() {
@@ -86,7 +90,15 @@ export class MobileNavigation extends Application {
   }
 
   setWindowCount(count: number) {
-    this.element.find(".navigation-windows span span").html(count.toString());
+    this.element.find(".navigation-windows .count").html(count.toString());
+    if (count === 0) {
+      this.element.find(".navigation-windows").addClass("disabled");
+    } else {
+      this.element.find(".navigation-windows").removeClass("disabled");
+    }
+    if (this.drawerState == DrawerState.Windows) {
+      this.setDrawerState(DrawerState.None);
+    }
   }
 
   setDrawerState(state: DrawerState) {
@@ -112,17 +124,13 @@ export class MobileNavigation extends Application {
     switch (name) {
       case "map":
         this.showMap();
-        this.setDrawerState(DrawerState.None);
         break;
       case "sidebar":
         this.showSidebar();
-        this.setDrawerState(DrawerState.None);
         break;
       default:
         this.setDrawerState(name as DrawerState);
     }
-
-    this.updateMode();
   }
 
   updateMode() {
