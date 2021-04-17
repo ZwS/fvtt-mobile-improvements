@@ -326,7 +326,7 @@ body.hide-hud .window-selector {
     flex-grow: 9999;
   }
 
-  .window-app:not(.minimized) {
+  .window-app {
     height: var(--viewHeight) !important;
     left: 0 !important;
     top: 0 !important;
@@ -336,10 +336,15 @@ body.hide-hud .window-selector {
     width: calc(100% - 300px) !important;
     min-width: calc(100% - 300px) !important;
     box-shadow: none;
+    transition: transform 100ms ease;
     @media screen and (max-width: 900px) {
       width: 100% !important;
       min-width: 100% !important;
     }
+  }
+
+  .window-app .window-content {
+    display: flex !important;
   }
 
   .window-app .window-resizable-handle {
@@ -347,7 +352,7 @@ body.hide-hud .window-selector {
   }
 
   .minimized {
-    visibility: hidden;
+    transform: translateY(calc(100% + 50px));
   }
 
   .dialog .dialog-content {
