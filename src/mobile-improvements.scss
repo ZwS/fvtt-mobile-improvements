@@ -85,6 +85,7 @@ html {
   #players {
     bottom: 90px;
     left: 2px;
+    z-index: 62;
   }
 
   #players h3 {
@@ -519,10 +520,6 @@ body.hide-hud .window-selector {
   font-size: 120%;
 }
 
-.mobile-navigation li.active {
-  opacity: 1;
-}
-
 .mobile-navigation li.disabled {
   pointer-events: none;
   opacity: 0.5;
@@ -541,8 +538,15 @@ body.hide-hud .window-selector {
 .mobile-navigation li:hover,
 .mobile-navigation li:focus,
 .mobile-navigation li:active {
-  opacity: 0.7;
+  opacity: 0.8;
   background: rgba(0, 0, 0, 0.1);
+}
+
+.mobile-navigation li.active,
+.mobile-navigation li.active:hover,
+.mobile-navigation li.active:focus,
+.mobile-navigation li.active:active {
+  opacity: 1;
 }
 
 .mobile-navigation li.active:not(.toggle) {
@@ -550,7 +554,7 @@ body.hide-hud .window-selector {
 }
 
 .mobile-navigation li.active:not(.toggle) i {
-  transform: scale(1.1) translateX(-1%);
+  transform: scale(1.1);
 }
 
 .mobile-improvements {
@@ -585,4 +589,7 @@ body.hide-hud .window-selector {
 }
 .mobile-menu .menu-list > li i.fas {
   margin-right: 5px;
+  width: 20px;
+  display: inline-flex;
+  justify-content: center;
 }
