@@ -12,6 +12,7 @@ class MobileMode {
     if (MobileMode.enabled) return;
     MobileMode.enabled = true;
     document.body.classList.add("mobile-improvements");
+    ui.nav?.collapse();
   }
   static leave() {
     if (!MobileMode.enabled) return;
@@ -48,10 +49,11 @@ Hooks.once("init", async function () {
   }
   registerSettings();
   await preloadTemplates();
+  MobileMode.navigation.render(true);
 });
 
-Hooks.once("ready", function () {
-  MobileMode.navigation.render(true);
+Hooks.once("renderSceneNavigation", () => {
+  if (MobileMode.enabled) ui.nav?.collapse();
 });
 
 Hooks.on("createChatMessage", (message: ChatMessage) => {
