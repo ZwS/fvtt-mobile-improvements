@@ -51,6 +51,12 @@ export class MobileNavigation extends Application {
       this.selectItem(name);
     });
     this.updateMode();
+    html.before(
+      `<div id="show-mobile-navigation"><i class="fas fa-chevron-up"></i></div>`
+    );
+    html.siblings("#show-mobile-navigation").on("click", () => {
+      $(document.body).toggleClass("hide-hud");
+    });
   }
 
   closeDrawer() {
@@ -59,7 +65,9 @@ export class MobileNavigation extends Application {
 
   showMap() {
     const minimized = window.WindowManager.minimizeAll();
-    console.log(minimized);
+    if (!minimized && this.state == ViewState.Map) {
+      $(document.body).toggleClass("hide-hud");
+    }
     this.state = ViewState.Map;
     canvas.ready && canvas.app.start();
     this.setDrawerState(DrawerState.None);

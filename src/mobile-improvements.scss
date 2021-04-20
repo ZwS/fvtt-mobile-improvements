@@ -270,7 +270,8 @@ html {
 #navigation,
 #hotbar,
 #players,
-#logo {
+#logo,
+#show-mobile-navigation {
   transition: transform 100ms ease-out;
 }
 .mobile-improvements {
@@ -301,7 +302,7 @@ html {
   }
 
   &.show-sidebar #logo {
-    display: none;
+    transform: scale(0.5) translateX(-100%) translateY(-100%);
   }
 
   &.hide-hud .window-selector.has-items {
@@ -315,6 +316,9 @@ html {
   &.hide-hud .mobile-menu,
   &.hide-hud .window-selector {
     transform: translateY(calc(100% + var(--navigationHeight) + 20px));
+  }
+  &.hide-hud #show-mobile-navigation {
+    transform: translateY(0);
   }
 }
 
@@ -589,6 +593,23 @@ html {
 
 .mobile-navigation li.active:not(.toggle) i {
   transform: scale(1.1);
+}
+
+#show-mobile-navigation {
+  color: #f0f0e0;
+  z-index: 69;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: var(--viewHeight);
+  background: #333;
+  height: 25px;
+  width: 25px;
+  font-size: 110%;
+  border-radius: 100%;
+  left: 12px;
+  transform: translateY(200%);
 }
 
 .mobile-improvements {

@@ -8,6 +8,7 @@ import {
 import * as windowMgr from "./module/windowManager.js";
 import { MobileNavigation, ViewState } from "./module/mobileNavigation.js";
 import { viewHeight } from "./module/util.js";
+import { TouchInput } from "./module/touchInput.js";
 
 class MobileMode {
   static enabled = false;
@@ -137,6 +138,9 @@ Hooks.once("renderNotifications", app => {
     app.queue = new Proxy(app.queue, notificationQueueProxy);
   }
 });
+
+const touchInput = new TouchInput();
+Hooks.on("canvasReady", () => touchInput.hook());
 
 Hooks.on("queuedNotification", notif => {
   if (typeof notif.message === "string") {
