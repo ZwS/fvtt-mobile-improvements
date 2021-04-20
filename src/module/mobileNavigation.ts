@@ -15,6 +15,10 @@ enum DrawerState {
 
 declare let ui: { sidebar: Sidebar; hotbar: any };
 
+function isTabletMode() {
+  return window.innerWidth > 900;
+}
+
 export class MobileNavigation extends Application {
   state: ViewState = ViewState.Map;
   drawerState: DrawerState = DrawerState.None;
@@ -32,9 +36,15 @@ export class MobileNavigation extends Application {
     this.mobileMenu = new MobileMenu(this);
 
     // Ensure HUD shows on opening a new window
-    Hooks.on("WindowManager:NewRendered", () => {
-      $(document.body).removeClass("hide-hud");
-    });
+    Hooks.on("WindowManager:NewRendered", () => this._onShowWindow());
+    Hooks.on("WindowManager:BroughtToTop", () => this._onShowWindow());
+  }
+
+  _onShowWindow() {
+    $(document.body).removeClass("hide-hud");
+    if (isTabletMode()) {
+      this.showSidebar();
+    }
   }
 
   render(force: boolean, ...arg) {
@@ -78,7 +88,8 @@ export class MobileNavigation extends Application {
     this.state = ViewState.Sidebar;
     $(document.body).removeClass("hide-hud");
     ui.sidebar.expand();
-    window.WindowManager.minimizeAll();
+    if (!isTabletMode()) window.WindowManager.minimizeAll();
+
     if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
       // canvas.ready && canvas.app.stop();
     }

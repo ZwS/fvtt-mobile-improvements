@@ -30,21 +30,20 @@ export class Window {
     return this.app._minimized;
   }
 
-  private _floatToTop(element: HTMLElement) {
+  show() {
+    if (this.app.bringToTop) return this.app.bringToTop();
+    // @ts-ignore
+    if (this.app._minimized) {
+      // @ts-ignore
+      this.app.maximize();
+    }
+    const element = (this.app.element as JQuery<HTMLElement>).get(0);
     let z = parseInt(
       window.document.defaultView.getComputedStyle(element).zIndex
     );
     if (z < _maxZ) {
       element.style.zIndex = Math.min(++_maxZ, 9999).toString();
     }
-  }
-  show() {
-    // @ts-ignore
-    if (this.app._minimized) {
-      // @ts-ignore
-      this.app.maximize();
-    }
-    this._floatToTop((this.app.element as JQuery<HTMLElement>).get(0));
   }
   minimize() {
     this.app.minimize();
@@ -81,6 +80,15 @@ export class WindowManager {
   constructor() {
     //@ts-ignore
     ui.windows = new Proxy(ui.windows, this.windowChangeHandler);
+    // Override Application bringToTop
+    if (Application.prototype.bringToTop) {
+      const old = Application.prototype.bringToTop;
+      const self = this;
+      Application.prototype.bringToTop = function () {
+        old.call(this);
+        self.windowBroughtToTop(this.appId);
+      };
+    }
     console.info("Window Manager | Initiated");
     Hooks.call("WindowManager:Init");
   }
@@ -89,13 +97,15 @@ export class WindowManager {
     Hooks.call("WindowManager:NewRendered", window.appId);
   };
   windowAdded(appId) {
-    //@ts-ignore
     this.windows[appId] = new Window(ui.windows[appId]);
     Hooks.call("WindowManager:Added", appId);
   }
   windowRemoved(appId) {
     delete this.windows[appId];
     Hooks.call("WindowManager:Removed", appId);
+  }
+  windowBroughtToTop(appId) {
+    Hooks.call("WindowManager:BroughtToTop", appId);
   }
 
   minimizeAll() {
