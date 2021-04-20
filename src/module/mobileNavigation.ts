@@ -61,8 +61,7 @@ export class MobileNavigation extends Application {
     const minimized = window.WindowManager.minimizeAll();
     console.log(minimized);
     this.state = ViewState.Map;
-    //@ts-ignore
-    canvas.app.start();
+    canvas.ready && canvas.app.start();
     this.setDrawerState(DrawerState.None);
     this.updateMode();
   }
@@ -73,8 +72,7 @@ export class MobileNavigation extends Application {
     ui.sidebar.expand();
     window.WindowManager.minimizeAll();
     if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
-      //@ts-ignore
-      // canvas.app.stop();
+      // canvas.ready && canvas.app.stop();
     }
     this.setDrawerState(DrawerState.None);
     this.updateMode();

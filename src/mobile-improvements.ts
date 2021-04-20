@@ -1,5 +1,10 @@
 import { preloadTemplates } from "./module/preloadTemplates.js";
-import { registerSettings, settings, getSetting } from "./module/settings.js";
+import {
+  registerSettings,
+  settings,
+  getSetting,
+  setSetting,
+} from "./module/settings.js";
 import * as windowMgr from "./module/windowManager.js";
 import { MobileNavigation, ViewState } from "./module/mobileNavigation.js";
 import { viewHeight } from "./module/util.js";
@@ -13,21 +18,30 @@ class MobileMode {
     MobileMode.enabled = true;
     document.body.classList.add("mobile-improvements");
     ui.nav?.collapse();
+    viewHeight();
+    Hooks.call("mobile-improvements:enter");
   }
+
   static leave() {
     if (!MobileMode.enabled) return;
     MobileMode.enabled = false;
     document.body.classList.remove("mobile-improvements");
+    Hooks.call("mobile-improvements:leave");
   }
 
   static viewResize() {
+    if (MobileMode.enabled) viewHeight();
+
+    if (game.settings && getSetting(settings.PIN_MOBILE_MODE))
+      return MobileMode.enter();
+    if (localStorage.getItem("mobile-improvements.pinMobileMode") === "true")
+      return MobileMode.enter();
+
     if (window.innerWidth < 800) {
       MobileMode.enter();
     } else {
       MobileMode.leave();
     }
-
-    if (MobileMode.enabled) viewHeight();
   }
 }
 
@@ -57,9 +71,21 @@ Hooks.once("init", async function () {
   }
   registerSettings({
     [settings.SHOW_PLAYER_LIST]: togglePlayerList,
+    [settings.PIN_MOBILE_MODE]: enabled => {
+      if (enabled) MobileMode.enter();
+      else MobileMode.leave();
+    },
   });
   await preloadTemplates();
   MobileMode.navigation.render(true);
+
+  const button = $(
+    `<a id="mobile-improvements-toggle"><i class="fas fa-mobile-alt"></i> Enable Mobile Mode</a>`
+  );
+  $("body").append(button);
+  button.on("click", () => {
+    setSetting(settings.PIN_MOBILE_MODE, true);
+  });
 });
 
 Hooks.once("renderSceneNavigation", () => {

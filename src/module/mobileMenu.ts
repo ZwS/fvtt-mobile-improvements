@@ -39,6 +39,9 @@ export class MobileMenu extends Application {
           !getSetting(settings.SHOW_PLAYER_LIST)
         );
         break;
+      case "exit":
+        setSetting(settings.PIN_MOBILE_MODE, false);
+        break;
       default:
         break;
     }

@@ -273,48 +273,49 @@ html {
 #logo {
   transition: transform 100ms ease-out;
 }
+.mobile-improvements {
+  &.hide-hud #sidebar {
+    transform: translateX(150%);
+  }
 
-body.hide-hud #sidebar {
-  transform: translateX(150%);
-}
+  &.show-sidebar #controls,
+  &.hide-hud #controls {
+    transform: translateX(-200%);
+  }
 
-body.show-sidebar #controls,
-body.hide-hud #controls {
-  transform: translateX(-200%);
-}
+  &.show-sidebar #navigation,
+  &.hide-hud #navigation {
+    transform: translateY(-200%);
+  }
 
-body.show-sidebar #navigation,
-body.hide-hud #navigation {
-  transform: translateY(-200%);
-}
+  &.show-sidebar #players,
+  &.hide-hud #players {
+    transform: translateX(-200%);
+  }
+  &.hide-hud #hotbar {
+    transform: translateY(200%);
+  }
 
-body.show-sidebar #players,
-body.hide-hud #players {
-  transform: translateX(-200%);
-}
-body.hide-hud #hotbar {
-  transform: translateY(200%);
-}
+  &.hide-hud #logo {
+    transform: scale(0.5) translateX(-50%) translateY(-50%);
+  }
 
-body.hide-hud #logo {
-  transform: scale(0.5) translateX(-50%) translateY(-50%);
-}
+  &.show-sidebar #logo {
+    display: none;
+  }
 
-body.show-sidebar #logo {
-  display: none;
-}
+  &.hide-hud .window-selector.has-items {
+    transform: translateY(calc(100% + 60px));
+  }
 
-body.hide-hud .window-selector.has-items {
-  transform: translateY(calc(100% + 60px));
-}
+  &.hide-hud .mobile-navigation {
+    transform: translateY(calc(100% + 20px));
+  }
 
-body.hide-hud .mobile-navigation {
-  transform: translateY(calc(100% + 20px));
-}
-
-body.hide-hud .mobile-menu,
-body.hide-hud .window-selector {
-  transform: translateY(calc(100% + var(--navigationHeight) + 20px));
+  &.hide-hud .mobile-menu,
+  &.hide-hud .window-selector {
+    transform: translateY(calc(100% + var(--navigationHeight) + 20px));
+  }
 }
 
 /* ------------------------------------ */
@@ -373,6 +374,36 @@ body.hide-hud .window-selector {
 /* ------------------------------------ */
 /*        Mobile Improvement Apps       */
 /* ------------------------------------ */
+
+#mobile-improvements-toggle {
+  position: absolute;
+  top: 33px;
+  left: 84px;
+  z-index: 61;
+
+  height: 29px;
+  max-width: 29px;
+  overflow: hidden;
+
+  white-space: nowrap;
+  background-color: #333;
+  color: #f0f0e0;
+  padding: 6px 10px;
+  border-radius: 100px;
+  transition: all 250ms ease-out;
+}
+
+#mobile-improvements-toggle:hover {
+  max-width: 500px;
+}
+
+#mobile-improvements-toggle .fas {
+  margin-right: 6px;
+}
+
+.mobile-improvements #mobile-improvements-toggle {
+  display: none;
+}
 
 .drawer {
   z-index: 1000;

@@ -5,6 +5,7 @@ export enum settings {
   SIDEBAR_PAUSES_RENDER = "sideBarPausesRender",
   // Not in config
   SHOW_PLAYER_LIST = "showPlayerList",
+  PIN_MOBILE_MODE = "pinMobileMode",
 }
 
 interface Callbacks {
@@ -25,6 +26,12 @@ const moduleSettings = [
   },
   {
     setting: settings.SHOW_PLAYER_LIST,
+    type: Boolean,
+    default: false,
+    config: false,
+  },
+  {
+    setting: settings.PIN_MOBILE_MODE,
     type: Boolean,
     default: false,
     config: false,
