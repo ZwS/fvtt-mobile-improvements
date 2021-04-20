@@ -91,6 +91,9 @@ html {
   #players h3 {
     margin: 0;
   }
+  #players.mobile-hidden {
+    transform: translateX(-110%);
+  }
 
   #hotbar {
     z-index: 1000;

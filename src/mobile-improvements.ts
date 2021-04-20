@@ -31,6 +31,14 @@ class MobileMode {
   }
 }
 
+function togglePlayerList(show: boolean) {
+  if (show) {
+    document.getElementById("players").classList.add("mobile-hidden");
+  } else {
+    document.getElementById("players").classList.remove("mobile-hidden");
+  }
+}
+
 // Trigger the recalculation of viewheight often. Not great performance,
 // but required to work on different mobile browsers
 document.addEventListener("fullscreenchange", event =>
@@ -47,7 +55,9 @@ Hooks.once("init", async function () {
   if (MobileMode.navigation === undefined) {
     MobileMode.navigation = new MobileNavigation();
   }
-  registerSettings();
+  registerSettings({
+    [settings.SHOW_PLAYER_LIST]: togglePlayerList,
+  });
   await preloadTemplates();
   MobileMode.navigation.render(true);
 });
@@ -55,6 +65,10 @@ Hooks.once("init", async function () {
 Hooks.once("renderSceneNavigation", () => {
   if (MobileMode.enabled) ui.nav?.collapse();
 });
+
+Hooks.once("renderPlayerList", () =>
+  togglePlayerList(getSetting(settings.SHOW_PLAYER_LIST))
+);
 
 Hooks.on("createChatMessage", (message: ChatMessage) => {
   if (!MobileMode.enabled || !message.isAuthor) return;

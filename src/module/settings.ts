@@ -1,7 +1,10 @@
 const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
 
 export enum settings {
+  // In config
   SIDEBAR_PAUSES_RENDER = "sideBarPausesRender",
+  // Not in config
+  SHOW_PLAYER_LIST = "showPlayerList",
 }
 
 interface Callbacks {
@@ -19,6 +22,12 @@ const moduleSettings = [
     hint: "Pauses rendering of the map while the sidebar is active",
     type: Boolean,
     default: false,
+  },
+  {
+    setting: settings.SHOW_PLAYER_LIST,
+    type: Boolean,
+    default: false,
+    config: false,
   },
 ];
 

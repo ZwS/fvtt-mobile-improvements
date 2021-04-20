@@ -1,4 +1,5 @@
 import type { MobileNavigation } from "./mobileNavigation.js";
+import { getSetting, setSetting, settings } from "./settings.js";
 
 export class MobileMenu extends Application {
   nav: MobileNavigation;
@@ -31,6 +32,12 @@ export class MobileMenu extends Application {
         } else {
           document.documentElement.requestFullscreen();
         }
+        break;
+      case "players":
+        setSetting(
+          settings.SHOW_PLAYER_LIST,
+          !getSetting(settings.SHOW_PLAYER_LIST)
+        );
         break;
       default:
         break;
