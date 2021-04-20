@@ -24,7 +24,7 @@ const sourceGroups = {
   sass: ["src/**/*.scss"],
 
   // Folders are copied as-is
-  folders: ["templates"],
+  folders: ["templates", "lang"],
   // Files are copied following pattern
   statics: ["src/**/*.css"],
 };

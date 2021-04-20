@@ -28,7 +28,7 @@ export class MobileNavigation extends Application {
 
   constructor() {
     super({
-      template: "modules/mobile-improvements/templates/navigation.html",
+      template: "modules/mobile-improvements/templates/navigation.hbs",
       popOut: false,
     });
 

@@ -54,6 +54,22 @@ function togglePlayerList(show: boolean) {
   }
 }
 
+function showToggleModeButton(show: boolean) {
+  if (!show) {
+    $("#mobile-improvements-toggle").detach();
+    return;
+  }
+  const button = $(
+    `<a id="mobile-improvements-toggle"><i class="fas fa-mobile-alt"></i> ${game.i18n.localize(
+      "MOBILEIMPROVEMENTS.EnableMobileMode"
+    )}</a>`
+  );
+  $("body").append(button);
+  button.on("click", () => {
+    setSetting(settings.PIN_MOBILE_MODE, true);
+  });
+}
+
 // Trigger the recalculation of viewheight often. Not great performance,
 // but required to work on different mobile browsers
 document.addEventListener("fullscreenchange", event =>
@@ -72,21 +88,18 @@ Hooks.once("init", async function () {
   }
   registerSettings({
     [settings.SHOW_PLAYER_LIST]: togglePlayerList,
+    [settings.SHOW_MOBILE_TOGGLE]: showToggleModeButton,
     [settings.PIN_MOBILE_MODE]: enabled => {
       if (enabled) MobileMode.enter();
       else MobileMode.leave();
     },
   });
   await preloadTemplates();
-  MobileMode.navigation.render(true);
+});
 
-  const button = $(
-    `<a id="mobile-improvements-toggle"><i class="fas fa-mobile-alt"></i> Enable Mobile Mode</a>`
-  );
-  $("body").append(button);
-  button.on("click", () => {
-    setSetting(settings.PIN_MOBILE_MODE, true);
-  });
+Hooks.on("ready", () => {
+  MobileMode.navigation.render(true);
+  showToggleModeButton(getSetting(settings.SHOW_MOBILE_TOGGLE));
 });
 
 Hooks.once("renderSceneNavigation", () => {

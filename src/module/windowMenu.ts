@@ -29,7 +29,7 @@ export class WindowMenu extends Application {
 
   constructor(nav: MobileNavigation) {
     super({
-      template: "modules/mobile-improvements/templates/window-selector.html",
+      template: "modules/mobile-improvements/templates/window-selector.hbs",
       popOut: false,
     });
     this.nav = nav;

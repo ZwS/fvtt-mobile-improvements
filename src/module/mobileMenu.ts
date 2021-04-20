@@ -6,7 +6,7 @@ export class MobileMenu extends Application {
 
   constructor(nav: MobileNavigation) {
     super({
-      template: "modules/mobile-improvements/templates/menu.html",
+      template: "modules/mobile-improvements/templates/menu.hbs",
       popOut: false,
     });
     this.nav = nav;

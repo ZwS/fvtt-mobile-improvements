@@ -3,6 +3,7 @@ const MODULE_NAME = "mobile-improvements"; // TODO: Better handling
 export enum settings {
   // In config
   SIDEBAR_PAUSES_RENDER = "sideBarPausesRender",
+  SHOW_MOBILE_TOGGLE = "showMobileToggle",
   // Not in config
   SHOW_PLAYER_LIST = "showPlayerList",
   PIN_MOBILE_MODE = "pinMobileMode",
@@ -19,8 +20,15 @@ const noop = (): void => {
 const moduleSettings = [
   {
     setting: settings.SIDEBAR_PAUSES_RENDER,
-    name: "Pause rendering in sidebar",
-    hint: "Pauses rendering of the map while the sidebar is active",
+    name: "MOBILEIMPROVEMENTS.SettingsPauseRendering",
+    hint: "MOBILEIMPROVEMENTS.SettingsPauseRenderingHint",
+    type: Boolean,
+    default: false,
+  },
+  {
+    setting: settings.SHOW_MOBILE_TOGGLE,
+    name: "MOBILEIMPROVEMENTS.SettingsShowToggle",
+    hint: "MOBILEIMPROVEMENTS.SettingsShowToggleHint",
     type: Boolean,
     default: false,
   },

@@ -13,7 +13,13 @@
     "./sheets/dnd5e.css"
   ],
   "packs": [],
-  "languages": [],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
   "minimumCoreVersion": "0.6.2",
   "compatibleCoreVersion": "0.7.9",
   "url": "",
