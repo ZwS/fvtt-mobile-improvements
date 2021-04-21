@@ -245,161 +245,129 @@
 /* ------------------------------------ */
 
 /* Header */
-@media screen and (max-width: 800px) {
-  .mobile-improvements .tidy5e.sheet.actor .header-attributes {
-    justify-content: start;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .header-attribute {
-    /* flex: 1 1 60px; */
-    overflow: hidden;
-  }
+.tidy5e.sheet.actor .header-attributes {
+  justify-content: start;
+}
+.tidy5e.sheet.actor .header-attribute {
+  /* flex: 1 1 60px; */
+  overflow: hidden;
 }
 
-@media screen and (max-width: 500px) {
-  .mobile-improvements .tidy5e.sheet.actor .tidy5e-header {
-    padding: 0.3rem;
-    align-items: start;
-  }
-  .mobile-improvements .tidy5e.sheet.actor.npc .tidy5e-header {
-    padding: 0.3rem 0.3rem 1rem;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .character-details {
-    margin: 0 0.3rem;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .profile {
-    width: 100px;
-    height: 100px;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .character-stats {
-    margin-left: -111px;
-    margin-top: 26px;
-    margin-bottom: 7px;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .roundPortrait .rest-container {
-    z-index: 100;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .origin-summary {
-    flex-wrap: wrap;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .char-name {
-    white-space: nowrap;
-    overflow-x: hidden;
-  }
-  .tidy5e.sheet.actor .general-information {
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+.tidy5e.sheet.actor div.profile {
+  width: 100%;
+  height: auto;
 }
 
-.mobile-improvements .tidy5e.sheet.actor .profile {
+.tidy5e.sheet.actor .character-stats {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 16px;
+}
+
+.tidy5e.sheet.actor .tidy5e-header {
+  padding: 0.3rem;
+  align-items: start;
+}
+.tidy5e.sheet.actor.npc .tidy5e-header {
+  padding: 0.3rem 0.3rem 1rem;
+}
+.tidy5e.sheet.actor .character-details {
+  margin: 0 0.3rem;
+}
+
+.tidy5e.sheet.actor .roundPortrait .rest-container {
+  z-index: 100;
+}
+.tidy5e.sheet.actor .origin-summary {
+  flex-wrap: wrap;
+}
+.tidy5e.sheet.actor .char-name {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.tidy5e.sheet.actor .general-information {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.tidy5e.sheet.actor .profile {
   min-width: 100px;
 }
 
-/* Navigation */
-@media screen and (max-width: 500px) {
-  .mobile-improvements .tidy5e.sheet.actor .tidy5e-navigation {
-    flex-wrap: nowrap;
-  }
-  .mobile-improvements
-    .tidy5e.sheet.actor
-    .tidy5e-navigation
-    .toggle-allow-edit {
-    padding: 0;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .tidy5e-navigation .item {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 5px 0.25rem 0 0.25rem;
-    white-space: nowrap;
-    text-align: center;
-  }
-}
 /* SheetBody */
-.mobile-improvements .tidy5e.sheet.actor .sheet-body {
+.tidy5e.sheet.actor section.sheet-body {
   padding: 1rem 0.25rem 1rem 0.25rem;
 }
 
-.mobile-improvements .tidy5e.sheet .window-content .tab.attributes,
-.mobile-improvements .tidy5e.sheet .window-content .tab.biography,
-.mobile-improvements .tidy5e.sheet .window-content .tab.journal {
+.tidy5e.sheet .sheet-body .tab.attributes.active,
+.tidy5e.sheet .sheet-body .tab.biography.active,
+.tidy5e.sheet .sheet-body .tab.journal.active {
+  display: flex;
   flex-wrap: wrap;
   padding-right: 0.25rem;
 }
 
 /* Attributes */
-.mobile-improvements .tidy5e.sheet.actor .left-pane {
-  flex: 1 1 300px;
+.tidy5e.sheet.actor .left-pane {
+  flex: 1 1 240px;
   padding: 0 0.25rem;
 }
-.mobile-improvements .tidy5e.sheet.actor .center-pane {
+.tidy5e.sheet.actor .sheet-body .center-pane {
   flex-grow: 9999;
   min-width: 300px;
   margin: 0;
   padding: 0 0.25rem;
 }
 
-.mobile-improvements .tidy5e.dnd5e.sheet.actor ul.skills-list {
+.tidy5e.dnd5e.sheet.actor ul.skills-list {
   flex: 1;
 }
 
-.mobile-improvements .tidy5e.sheet.actor .character-details {
+.tidy5e.sheet.actor .character-details {
   max-width: calc(100% - 110px);
+}
+
+/* Item lists */
+.tidy5e.sheet.actor .filter-list .filter-item {
+  white-space: nowrap;
+}
+
+.tidy5e.sheet.actor .items-list .item .item-name .item-image {
+  flex-shrink: 0;
+}
+
+.tidy5e.sheet.actor .list-layout .items-list .item-detail {
+  max-width: max(20%, 65px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 2px;
+  white-space: nowrap;
+}
+
+/* Slightly smoller */
+.tidy5e.sheet.actor .list-layout .items-list .item-detail.spell-comps {
+  max-width: max(15%, 50px);
 }
 
 /* Inventory */
 
-.mobile-improvements
-  .tidy5e.sheet.actor
-  .inventory-list
-  .item
-  .item-name
-  .item-image {
-  flex-shrink: 0;
+.tidy5e.sheet.actor .inventory-currency {
+  overflow: hidden;
 }
-
-@media screen and (max-width: 500px) {
-  .mobile-improvements
-    .tidy5e.sheet.actor
-    .inventory-list
-    .item-detail.item-action {
-    flex: 0 0 75px;
-  }
-
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-weight,
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .item-charges {
-    flex: 0 0 50px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .mobile-improvements
-    .tidy5e.sheet.actor
-    .inventory-list
-    .item-name
-    h4
-    .info-icon {
-    display: none;
-  }
-}
-
 .tidy5e.sheet.actor .inventory-currency .currency {
   flex-wrap: nowrap;
   overflow-x: auto;
   padding-left: 0;
-  margin-left: 1.5rem;
+  /* margin-left: 1.5rem; */
   align-items: center;
 }
 
-.mobile-improvements .tidy5e.sheet.actor .inventory-currency .currency-item {
+.tidy5e.sheet.actor .inventory-currency .currency-item {
   flex-wrap: nowrap;
   line-height: 26px;
 }
 
-.mobile-improvements
-  .tidy5e.sheet.actor
-  .inventory-currency
-  .currency-item
-  input {
+.tidy5e.sheet.actor .inventory-currency .currency-item input {
   min-width: 50px;
   height: 26px;
 }
@@ -409,97 +377,65 @@
   left: 20px;
 }
 
-/* Features */
-@media screen and (max-width: 500px) {
-  .mobile-improvements .tidy5e.sheet.actor .items-list .item-level,
-  .mobile-improvements .tidy5e.sheet.actor .items-list .item-action,
-  .mobile-improvements .tidy5e.sheet.actor .items-list .effect-duration,
-  .mobile-improvements .tidy5e.sheet.actor .items-list .item-source,
-  .mobile-improvements .tidy5e.sheet.actor .items-list .item-requirements {
-    flex: 0 0 75px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 2px;
-    white-space: nowrap;
-  }
-
-  .mobile-improvements .tidy5e.sheet.actor.character .item-detail.player-class {
-    flex: 0 0 100px;
-  }
+.tidy5e.sheet.actor.character .item-detail.player-class {
+  flex: 0 0 100px;
 }
+
 /* Spells */
-@media screen and (max-width: 600px) {
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-school,
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-action,
-  .mobile-improvements .tidy5e.sheet.actor .inventory-list .spell-target {
-    flex: 0 1 65px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 0 2px;
-    white-space: nowrap;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .spell-comps {
-    flex: 0 0 40px;
-  }
-  .mobile-improvements .tidy5e.sheet.actor .spellcasting-ability {
-    flex-wrap: wrap;
-  }
+
+.tidy5e.sheet.actor .spellcasting-ability {
+  flex-wrap: wrap;
 }
 
 /* Biography & Journal */
 
-.mobile-improvements .tidy5e-sheet .left-notes,
-.mobile-improvements .tidy5e-sheet .right-notes {
+.tidy5e-sheet .left-notes,
+.tidy5e-sheet .right-notes {
   min-width: 275px;
   margin: 0 0.25rem 1rem 0.25rem;
 }
 
-.mobile-improvements .tidy5e-sheet .right-notes {
+.tidy5e-sheet .right-notes {
   margin-bottom: 0;
 }
 
 /* Tidy5E NPC */
 
-.mobile-improvements .tidy5e.sheet.actor.npc .npc-core-stats {
+.tidy5e.sheet.actor.npc .npc-core-stats {
   flex-wrap: wrap;
 }
-.mobile-improvements .tidy5e.sheet.actor.npc .ability-scores {
+.tidy5e.sheet.actor.npc .ability-scores {
   flex-grow: 999;
 }
-.mobile-improvements .tidy5e.sheet.actor.npc .header-attributes {
-  flex-grow: 1;
-}
-.mobile-improvements
-  .tidy5e.sheet.actor.npc
-  .header-attributes
-  .header-attribute {
+.tidy5e.sheet.actor.npc .header-attributes {
   flex-grow: 1;
 }
 
-.mobile-improvements .tidy5e.sheet.actor.npc .left-pane {
+.tidy5e.sheet.actor.npc .header-attributes .header-attribute {
+  flex-grow: 1;
+}
+
+.tidy5e.sheet.actor.npc .left-pane {
   flex: 1 1 220px;
   margin-bottom: 1em;
 }
 
-.mobile-improvements .tidy5e.sheet.actor.npc .traits {
+.tidy5e.sheet.actor.npc .traits {
   width: 100%;
 }
 
-.mobile-improvements
-  .tidy5e.sheet.actor.npc
-  .inventory-list
-  .item
-  .item-name
-  h4 {
+.tidy5e.sheet.actor.npc .inventory-list .item .item-name h4 {
   overflow: hidden;
 }
 
+.tidy5e.sheet.actor.npc .inventory-list .item .item-charges {
+  flex: 0 0 50px;
+}
+
+/* Media Queries only for exceptions */
 @media screen and (max-width: 500px) {
-  .mobile-improvements
-    .tidy5e.sheet.actor.npc
-    .inventory-list
-    .item
-    .item-charges {
-    flex: 0 0 50px;
+  .tidy5e.sheet.actor section.character-stats {
+    margin-left: -111px;
+    margin-top: 26px;
   }
 }
