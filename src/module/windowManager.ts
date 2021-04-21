@@ -31,13 +31,13 @@ export class Window {
   }
 
   show() {
-    if (this.app.bringToTop) return this.app.bringToTop();
     // @ts-ignore
     if (this.app._minimized) {
-      // @ts-ignore
       this.app.maximize();
     }
-    const element = (this.app.element as JQuery<HTMLElement>).get(0);
+    if (this.app.bringToTop) return this.app.bringToTop();
+
+    const element = this.app.element.get(0);
     let z = parseInt(
       window.document.defaultView.getComputedStyle(element).zIndex
     );
