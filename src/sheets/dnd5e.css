@@ -140,10 +140,19 @@
   min-width: 250px;
 }
 
-/*    Inventory   */
-.dnd5e.sheet.actor .inventory-list .item .item-name h4 {
-  width: 100%;
+/* Item Lists*/
+.dnd5e.sheet .items-list .items-header {
+  flex-wrap: nowrap;
 }
+.dnd5e.sheet .items-list .items-header > div:not(.item-name) {
+  max-width: max(15%, 50px);
+}
+.dnd5e.sheet.actor .item-list .item > div:not(.item-summary):not(.item-name) {
+  max-width: max(15%, 50px);
+}
+
+/*    Inventory   */
+
 .dnd5e.sheet.actor .inventory-list .item .item-name .item-image {
   max-height: 30px;
 }
@@ -214,12 +223,12 @@
 }
 
 /*    Item sheet   */
-.mobile-improvements .dnd5e.sheet.item .sheet-body .editor {
+.dnd5e.sheet.item .sheet-body .editor {
   flex-basis: 400px;
   flex-grow: 999;
 }
 
-.mobile-improvements .dnd5e.sheet.item .sheet-body .item-properties {
+.dnd5e.sheet.item .sheet-body .item-properties {
   flex-grow: 1;
   margin-bottom: 0.5em;
 }
@@ -328,6 +337,10 @@
 }
 
 /* Item lists */
+.tidy5e.sheet.actor .list-layout .items-list .item .item-name {
+  flex: 999 1 80px !important;
+}
+
 .tidy5e.sheet.actor .filter-list .filter-item {
   white-space: nowrap;
 }
