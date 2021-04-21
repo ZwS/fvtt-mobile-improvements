@@ -648,3 +648,11 @@ html {
   display: inline-flex;
   justify-content: center;
 }
+
+/* Module compatibility */
+
+.mobile-improvements {
+  .gm-screen-app {
+    display: none !important;
+  }
+}
