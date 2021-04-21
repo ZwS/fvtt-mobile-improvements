@@ -72,6 +72,10 @@
   }
 }
 
+.dnd5e.sheet.actor .sheet-header .header-exp {
+  max-width: 25%;
+}
+
 .dnd5e.sheet .sheet-navigation .item {
   margin: 0;
 }
@@ -201,6 +205,17 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
+}
+.dnd5e.sheet .items-list .item-controls a {
+  flex: unset;
+}
+.dnd5e.sheet.actor .item-controls {
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.dnd5e.sheet.actor .spellcasting-ability {
+  max-width: 40%;
 }
 
 @media screen and (max-width: 600px) {
