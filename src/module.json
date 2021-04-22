@@ -8,6 +8,11 @@
   "esmodules": [
     "mobile-improvements.js"
   ],
+  "dependencies": [
+    {
+      "name": "touch-vtt"
+    }
+  ],
   "styles": [
     "./mobile-improvements.css",
     "./sheets/dnd5e.css"
