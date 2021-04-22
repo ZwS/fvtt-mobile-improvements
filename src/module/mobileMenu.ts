@@ -1,8 +1,10 @@
 import type { MobileNavigation } from "./mobileNavigation.js";
 import { getSetting, setSetting, settings } from "./settings.js";
+import { About } from "./about.js";
 
 export class MobileMenu extends Application {
   nav: MobileNavigation;
+  aboutApp: About;
 
   constructor(nav: MobileNavigation) {
     super({
@@ -10,6 +12,7 @@ export class MobileMenu extends Application {
       popOut: false,
     });
     this.nav = nav;
+    this.aboutApp = new About();
   }
   activateListeners(html: JQuery<HTMLElement>): void {
     html.find("li").on("click", (evt, as) => {
@@ -24,8 +27,10 @@ export class MobileMenu extends Application {
   }
 
   selectItem(name: string) {
-    console.log(name);
     switch (name) {
+      case "about":
+        this.aboutApp.render(true);
+        break;
       case "fullscreen":
         if (document.fullscreenElement) {
           document.exitFullscreen();
@@ -43,6 +48,7 @@ export class MobileMenu extends Application {
         setSetting(settings.PIN_MOBILE_MODE, false);
         break;
       default:
+        console.log("Unhandled menu item", name);
         break;
     }
     this.nav.closeDrawer();

@@ -379,6 +379,22 @@ html {
 /*        Mobile Improvement Apps       */
 /* ------------------------------------ */
 
+#mobile-improvements-about {
+  max-height: 260px;
+  .window-content {
+    padding: 30px;
+    div {
+      text-align: center;
+      ul {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+    }
+  }
+}
+
 #mobile-improvements-toggle {
   position: absolute;
   top: 33px;

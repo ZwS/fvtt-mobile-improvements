@@ -8,8 +8,13 @@
   "MOBILEIMPROVEMENTS.NavigationActions": "Actions",
   "MOBILEIMPROVEMENTS.NavigationMore": "More",
   "MOBILEIMPROVEMENTS.NavigationWindows": "Windows",
+  "MOBILEIMPROVEMENTS.MenuAbout": "About Mobile Improvements",
   "MOBILEIMPROVEMENTS.MenuLeave": "Leave mobile mode",
   "MOBILEIMPROVEMENTS.MenuPlayerList": "Toggle player list",
   "MOBILEIMPROVEMENTS.MenuFullscreen": "Toggle fullscreen",
-  "MOBILEIMPROVEMENTS.EnableMobileMode": "Enable Mobile Mode"
+  "MOBILEIMPROVEMENTS.EnableMobileMode": "Enable Mobile Mode",
+  "MOBILEIMPROVEMENTS.AboutText": "Mobile Improvements helps you use Foundry on your phone or tablet. Created with love by Sunspots.",
+  "MOBILEIMPROVEMENTS.AboutIssues": "Report an issue",
+  "MOBILEIMPROVEMENTS.AboutFoundryHub": "Endorse on Foundry Hub",
+  "MOBILEIMPROVEMENTS.AboutSupport": "Support the creator"
 }
