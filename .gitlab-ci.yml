@@ -13,7 +13,7 @@ image: node:latest
       - "*.zip"
       - "module.json"
 
-build-module:
+build-release:
   extends: .build
   artifacts:
     expire_in: 6 mos
