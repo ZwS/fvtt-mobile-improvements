@@ -3,17 +3,10 @@
 Mobile Improvements changes the core UI to be flexible for use with mobiles,
 tablets and other low-resolution devices.
 
-Current state: Useful for general UI interaction. TouchVTT module recommended
-for interacting with the map.
-
-**Mobile Improvements is in a pre-release phase and may have breaking changes or
-change default settings without notice**
-
 # Installation
 
-Release version is old and unsupported. Use the unstable branch or wait for
-version 1.0! ~~Mobile Improvements is available in the in-application module
-browser. It can also be installed manually with the following manifest URL:~~
+Mobile Improvements is available in the module browser. It can also be installed
+manually with the following manifest URL:
 
 ```
 https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/master/raw/module.json?job=build-module
@@ -37,10 +30,23 @@ Mobile Improvements comes in two major parts:
 
 ## General features
 
-- Full-screen application windows
-- Full-screen sidebar
+- Full-screen, mobile adjusted application windows
+- Switch between Scene and Sidebar("App") view
 - Window switching
   - List and switch between open windows
-  - Minimizing windows hides them
-- Flexible-ish macro bar
+  - Keep minimized windows in the background
+- Mobile friendly macro/actions bar
 - Disable rendering the game board, to increase performance
+- Hide/show the UI to get a clear view of the scene
+- Manual and/or automatic toggle between mobile and regular view
+- "Tablet" view
+
+## Dependencies
+
+The module depends on [TouchVTT](https://github.com/Oromis/touch-vtt) for touch
+control of the scene.
+
+# Support the project
+
+If you want to support Mobile Improvements or any of my other modules, feel free
+to donate on https://ko-fi.com/sunspots
