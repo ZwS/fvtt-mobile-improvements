@@ -16,7 +16,7 @@ enum DrawerState {
 declare let ui: { sidebar: Sidebar; hotbar: any };
 
 function isTabletMode() {
-  return window.innerWidth > 900;
+  return globalThis.MobileMode.enabled && window.innerWidth > 900;
 }
 
 export class MobileNavigation extends Application {
