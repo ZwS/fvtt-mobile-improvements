@@ -364,14 +364,32 @@ html {
     transform: translateY(calc(100% + 50px));
   }
 
+  .window-app.dialog {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background: #000d;
+    .window-content {
+      flex-grow: 0;
+      flex-basis: auto;
+    }
+    .window-header {
+      background: #333333ee;
+      font-size: 110%;
+      font-weight: bold;
+    }
+  }
+
   .dialog .dialog-content {
-    overflow: scroll;
+    overflow: auto;
     flex: 0 1 auto;
   }
 
   .dialog .dialog-buttons {
     flex: none;
     padding-top: 5px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
