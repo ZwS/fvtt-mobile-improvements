@@ -1,8 +1,10 @@
 import { settings, getSetting } from "./settings.js";
 import { WindowMenu } from "./windowMenu.js";
 import { MobileMenu } from "./mobileMenu.js";
+import { noCanvasAvailable } from "./util.js";
 
 export enum ViewState {
+  Unloaded,
   Map,
   Sidebar,
 }
@@ -13,15 +15,14 @@ enum DrawerState {
   Windows = "windows",
 }
 
-declare let ui: { sidebar: Sidebar; hotbar: any };
-
 function isTabletMode() {
   return globalThis.MobileMode.enabled && window.innerWidth > 900;
 }
 
 export class MobileNavigation extends Application {
-  state: ViewState = ViewState.Map;
+  state: ViewState = ViewState.Unloaded;
   drawerState: DrawerState = DrawerState.None;
+  noCanvas = false;
 
   windowMenu: WindowMenu;
   mobileMenu: MobileMenu;
@@ -48,6 +49,10 @@ export class MobileNavigation extends Application {
   }
 
   render(force: boolean, ...arg) {
+    this.noCanvas =
+      noCanvasAvailable() && (game.settings.get("core", "noCanvas") as boolean);
+    this.state = this.noCanvas ? ViewState.Sidebar : ViewState.Map;
+
     const r = super.render(force, ...arg);
     this.windowMenu.render(force);
     this.mobileMenu.render(force);
@@ -55,7 +60,7 @@ export class MobileNavigation extends Application {
   }
 
   activateListeners(html: JQuery<HTMLElement>): void {
-    html.find("li").on("click", (evt, as) => {
+    html.find("li").on("click", (evt) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
       const [_, name] = firstClass.split("-");
       this.selectItem(name);
@@ -67,6 +72,9 @@ export class MobileNavigation extends Application {
     html.siblings("#show-mobile-navigation").on("click", () => {
       $(document.body).toggleClass("hide-hud");
     });
+    if (this.noCanvas) {
+      this.element.find(".navigation-map").detach();
+    }
   }
 
   closeDrawer() {
@@ -87,7 +95,7 @@ export class MobileNavigation extends Application {
   showSidebar() {
     this.state = ViewState.Sidebar;
     $(document.body).removeClass("hide-hud");
-    ui.sidebar.expand();
+    ui.sidebar?.expand();
     if (!isTabletMode()) window.WindowManager.minimizeAll();
 
     if (getSetting(settings.SIDEBAR_PAUSES_RENDER) === true) {
@@ -137,7 +145,6 @@ export class MobileNavigation extends Application {
   }
 
   selectItem(name: string) {
-    console.log(name);
     switch (name) {
       case "map":
         this.showMap();

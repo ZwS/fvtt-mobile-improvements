@@ -1,7 +1,7 @@
 import type { MobileNavigation } from "./mobileNavigation.js";
 import { getSetting, setSetting, settings } from "./settings.js";
 import { About } from "./about.js";
-
+import { noCanvasAvailable } from "./util.js";
 export class MobileMenu extends Application {
   nav: MobileNavigation;
   aboutApp: About;
@@ -15,18 +15,21 @@ export class MobileMenu extends Application {
     this.aboutApp = new About();
   }
   activateListeners(html: JQuery<HTMLElement>): void {
-    html.find("li").on("click", (evt, as) => {
+    html.find("li").on("click", (evt) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
       const [_, name] = firstClass.split("-");
       this.selectItem(name);
     });
+    if (!noCanvasAvailable()) {
+      html.find(".menu-canvas").detach();
+    }
   }
 
-  toggleOpen() {
+  toggleOpen(): void {
     this.element.toggleClass("open");
   }
 
-  selectItem(name: string) {
+  selectItem(name: string): void {
     switch (name) {
       case "about":
         this.aboutApp.render(true);
@@ -42,6 +45,13 @@ export class MobileMenu extends Application {
         setSetting(
           settings.SHOW_PLAYER_LIST,
           !getSetting(settings.SHOW_PLAYER_LIST)
+        );
+        break;
+      case "canvas":
+        game.settings.set(
+          "core",
+          "noCanvas",
+          !game.settings.get("core", "noCanvas")
         );
         break;
       case "exit":

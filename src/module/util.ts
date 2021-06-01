@@ -5,3 +5,8 @@ export function viewHeight() {
     `${Math.min(window.innerHeight, window.outerHeight) * 0.01}px`
   );
 }
+
+/** Checks that Foundry version has support for noCanvas mode */
+export function noCanvasAvailable(): boolean {
+  return isNewerVersion(game.data.version, "0.8.5");
+}

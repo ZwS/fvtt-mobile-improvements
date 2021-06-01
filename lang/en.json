@@ -10,6 +10,7 @@
   "MOBILEIMPROVEMENTS.NavigationWindows": "Windows",
   "MOBILEIMPROVEMENTS.MenuAbout": "About Mobile Improvements",
   "MOBILEIMPROVEMENTS.MenuLeave": "Leave mobile mode",
+  "MOBILEIMPROVEMENTS.MenuCanvas": "Toggle game canvas",
   "MOBILEIMPROVEMENTS.MenuPlayerList": "Toggle player list",
   "MOBILEIMPROVEMENTS.MenuFullscreen": "Toggle fullscreen",
   "MOBILEIMPROVEMENTS.EnableMobileMode": "Enable Mobile Mode",
