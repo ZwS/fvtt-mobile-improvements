@@ -1,11 +1,11 @@
 // WindowManager is a singleton that allows management of application windows
-export function activate(): any {
+export function activate(): void {
   if (!window.WindowManager) {
     window.WindowManager = new WindowManager();
   }
 }
 
-export function getManager() {
+export function getManager(): WindowManager {
   if (!window.WindowManager) {
     activate();
   }
@@ -30,7 +30,7 @@ export class Window {
     return this.app._minimized;
   }
 
-  show() {
+  show(): void {
     // @ts-ignore
     if (this.app._minimized) {
       this.app.maximize();
@@ -38,17 +38,17 @@ export class Window {
     if (this.app.bringToTop) return this.app.bringToTop();
 
     const element = this.app.element.get(0);
-    let z = parseInt(
+    const z = parseInt(
       window.document.defaultView.getComputedStyle(element).zIndex
     );
     if (z < _maxZ) {
       element.style.zIndex = Math.min(++_maxZ, 9999).toString();
     }
   }
-  minimize() {
+  minimize(): void {
     this.app.minimize();
   }
-  close() {
+  close(): void {
     this.app.close();
   }
 }
@@ -61,8 +61,8 @@ export class WindowManager {
   // Stack order of windows
   stack: number[];
   version = "1.0";
-  windowChangeHandler: ProxyHandler<Object> = {
-    set: (target, property: string, value, receiver) => {
+  windowChangeHandler: ProxyHandler<any> = {
+    set: (target, property: string, value) => {
       target[property] = value;
       this.windowAdded(parseInt(property as string));
       // Hook for new window being rendered
@@ -78,48 +78,47 @@ export class WindowManager {
     },
   };
   constructor() {
-    //@ts-ignore
     ui.windows = new Proxy(ui.windows, this.windowChangeHandler);
     // Override Application bringToTop
     if (Application.prototype.bringToTop) {
       const old = Application.prototype.bringToTop;
-      const self = this;
+      const windowBroughtToTop = this.windowBroughtToTop.bind(this);
       Application.prototype.bringToTop = function () {
         old.call(this);
-        self.windowBroughtToTop(this.appId);
+        windowBroughtToTop(this.appId);
       };
     }
     console.info("Window Manager | Initiated");
     Hooks.call("WindowManager:Init");
   }
 
-  newWindowRendered = (window, html, data) => {
-    Hooks.call("WindowManager:NewRendered", window.appId);
-  };
-  windowAdded(appId) {
+  newWindowRendered(app: Application): void {
+    Hooks.call("WindowManager:NewRendered", app.appId);
+  }
+  windowAdded(appId: number): void {
     this.windows[appId] = new Window(ui.windows[appId]);
     Hooks.call("WindowManager:Added", appId);
   }
-  windowRemoved(appId) {
+  windowRemoved(appId: number): void {
     delete this.windows[appId];
     Hooks.call("WindowManager:Removed", appId);
   }
-  windowBroughtToTop(appId) {
+  windowBroughtToTop(appId: number): void {
     Hooks.call("WindowManager:BroughtToTop", appId);
   }
 
-  minimizeAll() {
+  minimizeAll(): boolean {
     let didMinimize = false;
-    Object.entries(this.windows).forEach(([id, window]) => {
+    Object.values(this.windows).forEach((window) => {
       didMinimize = didMinimize || !window.minimized;
       window.minimize();
     });
     return didMinimize;
   }
 
-  closeAll() {
+  closeAll(): boolean {
     const closed = Object.keys(this.windows).length != 0;
-    Object.entries(this.windows).forEach(([id, window]) => {
+    Object.values(this.windows).forEach((window) => {
       window.close();
     });
     return closed;

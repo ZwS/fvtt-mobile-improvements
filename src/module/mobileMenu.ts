@@ -17,7 +17,7 @@ export class MobileMenu extends Application {
   activateListeners(html: JQuery<HTMLElement>): void {
     html.find("li").on("click", (evt) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
-      const [_, name] = firstClass.split("-");
+      const [, name] = firstClass.split("-");
       this.selectItem(name);
     });
     if (!noCanvasAvailable()) {

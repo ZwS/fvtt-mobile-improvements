@@ -41,14 +41,14 @@ export class MobileNavigation extends Application {
     Hooks.on("WindowManager:BroughtToTop", () => this._onShowWindow());
   }
 
-  _onShowWindow() {
+  _onShowWindow(): void {
     $(document.body).removeClass("hide-hud");
     if (isTabletMode()) {
       this.showSidebar();
     }
   }
 
-  render(force: boolean, ...arg) {
+  render(force: boolean, ...arg: unknown[]): unknown {
     this.noCanvas =
       noCanvasAvailable() && (game.settings.get("core", "noCanvas") as boolean);
     this.state = this.noCanvas ? ViewState.Sidebar : ViewState.Map;
@@ -62,7 +62,7 @@ export class MobileNavigation extends Application {
   activateListeners(html: JQuery<HTMLElement>): void {
     html.find("li").on("click", (evt) => {
       const [firstClass] = evt.currentTarget.className.split(" ");
-      const [_, name] = firstClass.split("-");
+      const [, name] = firstClass.split("-");
       this.selectItem(name);
     });
     this.updateMode();
@@ -77,11 +77,11 @@ export class MobileNavigation extends Application {
     }
   }
 
-  closeDrawer() {
+  closeDrawer(): void {
     this.setDrawerState(DrawerState.None);
   }
 
-  showMap() {
+  showMap(): void {
     const minimized = window.WindowManager.minimizeAll();
     if (!minimized && this.state == ViewState.Map) {
       $(document.body).toggleClass("hide-hud");
@@ -92,7 +92,7 @@ export class MobileNavigation extends Application {
     this.updateMode();
   }
 
-  showSidebar() {
+  showSidebar(): void {
     this.state = ViewState.Sidebar;
     $(document.body).removeClass("hide-hud");
     ui.sidebar?.expand();
@@ -105,16 +105,16 @@ export class MobileNavigation extends Application {
     this.updateMode();
   }
 
-  showHotbar() {
+  showHotbar(): void {
     $(document.body).addClass("show-hotbar");
     ui.hotbar.expand();
   }
 
-  hideHotbar() {
+  hideHotbar(): void {
     $(document.body).removeClass("show-hotbar");
   }
 
-  setWindowCount(count: number) {
+  setWindowCount(count: number): void {
     this.element.find(".navigation-windows .count").html(count.toString());
     if (count === 0) {
       this.element.find(".navigation-windows").addClass("disabled");
@@ -126,7 +126,7 @@ export class MobileNavigation extends Application {
     }
   }
 
-  setDrawerState(state: DrawerState) {
+  setDrawerState(state: DrawerState): void {
     $(`body > .drawer`).removeClass("open");
     this.element.find(".toggle.active").removeClass("active");
     this.hideHotbar();
@@ -144,7 +144,7 @@ export class MobileNavigation extends Application {
     this.element.find(`.navigation-${state}`).addClass("active");
   }
 
-  selectItem(name: string) {
+  selectItem(name: string): void {
     switch (name) {
       case "map":
         this.showMap();
@@ -157,7 +157,7 @@ export class MobileNavigation extends Application {
     }
   }
 
-  updateMode() {
+  updateMode(): void {
     this.element.find(".active:not(.toggle)").removeClass("active");
     $(document.body).removeClass("show-sidebar");
 

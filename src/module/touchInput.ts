@@ -3,10 +3,10 @@ export class TouchInput {
   tapMaxTime = 400;
   tapStart = -1;
 
-  getTarget(evt): PlaceableObject {
-    let target = evt.target;
+  getTarget(evt: PIXI.InteractionEvent): PlaceableObject {
+    let target = evt.target as PlaceableObject;
     while (!target?.data && target?.parent) {
-      target = target.parent;
+      target = target.parent as PlaceableObject;
     }
     if (!target.data) {
       return null;
@@ -14,18 +14,18 @@ export class TouchInput {
     return target;
   }
 
-  hook() {
+  hook(): void {
     if (!canvas.ready) return;
-    canvas.stage.on("touchstart", evt => {
+    canvas.stage.on("touchstart", (evt) => {
       this.tapStart = Date.now();
       if (evt.data.originalEvent.touches.length > 1) {
         this.cancelled = true;
       }
     });
 
-    canvas.stage.on("touchmove", evt => (this.cancelled = true));
+    canvas.stage.on("touchmove", () => (this.cancelled = true));
 
-    canvas.stage.on("touchend", evt => {
+    canvas.stage.on("touchend", (evt) => {
       if (!this.cancelled && Date.now() - this.tapStart < this.tapMaxTime) {
         const target = this.getTarget(evt);
         if (!target) {

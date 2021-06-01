@@ -10,7 +10,7 @@ import { MobileNavigation, ViewState } from "./module/mobileNavigation.js";
 import { viewHeight } from "./module/util.js";
 import { TouchInput } from "./module/touchInput.js";
 
-class MobileMode {
+abstract class MobileMode {
   static enabled = false;
   static navigation: MobileNavigation;
 
@@ -72,7 +72,7 @@ function showToggleModeButton(show: boolean) {
 
 // Trigger the recalculation of viewheight often. Not great performance,
 // but required to work on different mobile browsers
-document.addEventListener("fullscreenchange", event =>
+document.addEventListener("fullscreenchange", () =>
   setTimeout(MobileMode.viewResize, 100)
 );
 window.addEventListener("resize", MobileMode.viewResize);
@@ -89,7 +89,7 @@ Hooks.once("init", async function () {
   registerSettings({
     [settings.SHOW_PLAYER_LIST]: togglePlayerList,
     [settings.SHOW_MOBILE_TOGGLE]: showToggleModeButton,
-    [settings.PIN_MOBILE_MODE]: enabled => {
+    [settings.PIN_MOBILE_MODE]: (enabled) => {
       if (enabled) MobileMode.enter();
       else MobileMode.leave();
     },
@@ -146,7 +146,7 @@ const notificationQueueProxy = {
   },
 };
 
-Hooks.once("renderNotifications", app => {
+Hooks.once("renderNotifications", (app) => {
   if (!app.queue.__isProxy) {
     app.queue = new Proxy(app.queue, notificationQueueProxy);
   }
@@ -155,7 +155,7 @@ Hooks.once("renderNotifications", app => {
 const touchInput = new TouchInput();
 Hooks.on("canvasReady", () => touchInput.hook());
 
-Hooks.on("queuedNotification", notif => {
+Hooks.on("queuedNotification", (notif) => {
   if (typeof notif.message === "string") {
     const regex = /\s.+px/g;
     const message = notif.message?.replace(regex, "");

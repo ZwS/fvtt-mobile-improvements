@@ -13,10 +13,6 @@ interface Callbacks {
   [setting: string]: (value) => void;
 }
 
-const noop = (): void => {
-  return;
-};
-
 const moduleSettings = [
   {
     setting: settings.SIDEBAR_PAUSES_RENDER,
@@ -51,12 +47,12 @@ function registerSetting(callbacks: Callbacks, { setting, ...options }): void {
     config: true,
     scope: "client",
     ...options,
-    onChange: callbacks[setting] || noop,
+    onChange: callbacks[setting] || undefined,
   });
 }
 
 export function registerSettings(callbacks: Callbacks = {}): void {
-  moduleSettings.forEach(item => {
+  moduleSettings.forEach((item) => {
     registerSetting(callbacks, item);
   });
 }
@@ -65,6 +61,6 @@ export function getSetting(setting: settings): any {
   return game.settings.get(MODULE_NAME, setting as string);
 }
 
-export function setSetting(setting: settings, value): Promise<any> {
+export function setSetting(setting: settings, value: unknown): Promise<any> {
   return game.settings.set(MODULE_NAME, setting as string, value);
 }

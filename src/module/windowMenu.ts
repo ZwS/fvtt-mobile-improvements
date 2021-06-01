@@ -24,7 +24,7 @@ const icons = {
 };
 
 export class WindowMenu extends Application {
-  list: JQuery = null;
+  list: JQuery<HTMLElement> = null;
   nav: MobileNavigation;
 
   constructor(nav: MobileNavigation) {
@@ -37,12 +37,12 @@ export class WindowMenu extends Application {
     Hooks.on("WindowManager:Removed", this.windowRemoved.bind(this));
   }
 
-  activateListeners(html: JQuery | HTMLElement): void {
-    this.list = (<JQuery>this.element).find(".window-list");
+  activateListeners(html: JQuery<HTMLElement>): void {
+    this.list = html.find(".window-list");
   }
 
   // Attempt to discern the title and icon of the window
-  winIcon(win: any) {
+  winIcon(win: any): string {
     let windowType: string =
       win.icon ||
       win.tabName ||
@@ -55,7 +55,7 @@ export class WindowMenu extends Application {
     return icon;
   }
 
-  newWindow = (win: Window) => {
+  newWindow = (win: Window): JQuery<HTMLElement> => {
     const winIcon = this.winIcon(win.app);
     const windowButton = $(
       `<button class="window-select" title="${win.title}"><i class="fas ${winIcon}"></i> ${win.title}</button>`
@@ -66,27 +66,27 @@ export class WindowMenu extends Application {
     const row = $(`<li class="window-row"  data-id="${win.id}"></li>`);
     row.append(windowButton, closeButton);
 
-    windowButton.on("click", ev => {
+    windowButton.on("click", (ev) => {
       ev.preventDefault();
       win.show();
       this.nav.closeDrawer();
     });
-    closeButton.on("click", ev => {
+    closeButton.on("click", (ev) => {
       ev.preventDefault();
       win.close();
     });
     return row;
   };
-  windowAdded(appId) {
+  windowAdded(appId: number): void {
     this.list.append(this.newWindow(window.WindowManager.windows[appId]));
     this.update();
   }
-  windowRemoved(appId) {
+  windowRemoved(appId: number): void {
     this.list.find(`li[data-id="${appId}"]`).remove();
     this.update();
   }
 
-  update() {
+  update(): void {
     const winCount = Object.values(window.WindowManager.windows).length;
     this.nav.setWindowCount(winCount);
   }
