@@ -690,4 +690,10 @@ html {
   .gm-screen-app {
     display: none !important;
   }
+
+  #dice-box-canvas {
+    z-index: 81;
+    width: 100% !important;
+    height: var(--viewHeight) !important;
+  }
 }
