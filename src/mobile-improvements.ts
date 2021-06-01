@@ -168,3 +168,5 @@ Hooks.on("queuedNotification", notif => {
     }
   }
 });
+
+globalThis.MobileMode = MobileMode;
