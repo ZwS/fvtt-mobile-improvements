@@ -8,4 +8,10 @@ export class About extends Application {
       height: 260,
     });
   }
+
+  activateListeners(html: JQuery<HTMLElement>): void {
+    html.find(".close-about").on("click", (evt) => {
+      this.close();
+    });
+  }
 }
