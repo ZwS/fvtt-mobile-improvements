@@ -4,7 +4,7 @@ const chalk = require("chalk");
 
 const gulp = require("gulp");
 const ts = require("gulp-typescript");
-const sass = require("sass");
+const sass = require("gulp-sass")(require("sass"));
 
 const buildTools = require("build-tools");
 
@@ -17,23 +17,18 @@ const options = {
 const packageTool = new buildTools.PackageTool(options);
 
 // Patterns for watch & compile
-// TODO: File watch continuously chokes CPU if you add files that are missing
 const sourceGroups = {
   ts: ["src/**/*.ts"],
-  less: ["src/**/*.less"],
   sass: ["src/**/*.scss"],
-
   // Folders are copied as-is
   folders: ["templates", "lang"],
-  // Files are copied following pattern
-  statics: ["src/**/*.css"],
 };
 
 /**
  * Build TypeScript
  */
-const tsConfig = ts.createProject("tsconfig.json");
 function buildTS() {
+  const tsConfig = ts.createProject("tsconfig.json");
   return gulp
     .src(sourceGroups.ts, { allowEmpty: true })
     .pipe(tsConfig())
@@ -45,20 +40,10 @@ function buildTS() {
  */
 
 function buildSass() {
-  return new Promise((resolve, reject) => {
-    sass.render({ file: "src/mobile-improvements.scss" }, (err, result) => {
-      if (err) return reject(err);
-
-      fs.writeFile(
-        path.join(options.outDir, "mobile-improvements.css"),
-        result.css,
-        err => {
-          if (err) return reject(err);
-          resolve();
-        }
-      );
-    });
-  });
+  return gulp
+    .src(sourceGroups.sass, { allowEmpty: true })
+    .pipe(sass().on("error", sass.logError))
+    .pipe(gulp.dest(options.outDir));
 }
 
 /**
@@ -70,12 +55,6 @@ async function copyFolders() {
       await fs.copy(folder, path.join(options.outDir, folder));
     }
   }
-}
-
-async function copyStatics() {
-  return gulp
-    .src(sourceGroups.statics, { allowEmpty: true })
-    .pipe(gulp.dest(options.outDir));
 }
 
 /**
@@ -91,7 +70,7 @@ async function clean() {
   console.log("   ", chalk.blueBright(files.join("\n    ")));
 
   await Promise.all(
-    files.map(filePath => fs.remove(path.join(options.outDir, filePath)))
+    files.map((filePath) => fs.remove(path.join(options.outDir, filePath)))
   );
 }
 
@@ -103,7 +82,6 @@ function buildWatch() {
   gulp.watch(options.manifest, opts, packageTool.buildManifest);
   gulp.watch(sourceGroups.ts, opts, buildTS);
   gulp.watch(sourceGroups.folders, opts, copyFolders);
-  gulp.watch(sourceGroups.statics, opts, copyStatics);
   gulp.watch(sourceGroups.sass, opts, buildSass);
 }
 
@@ -111,7 +89,6 @@ const execBuild = gulp.parallel(
   packageTool.buildManifest,
   buildTS,
   copyFolders,
-  copyStatics,
   buildSass
 );
 
