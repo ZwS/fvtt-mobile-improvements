@@ -31,19 +31,10 @@ export class Window {
   }
 
   show(): void {
-    // @ts-ignore
-    if (this.app._minimized) {
+    if (this.minimized) {
       this.app.maximize();
     }
-    if (this.app.bringToTop) return this.app.bringToTop();
-
-    const element = this.app.element.get(0);
-    const z = parseInt(
-      window.document.defaultView.getComputedStyle(element).zIndex
-    );
-    if (z < _maxZ) {
-      element.style.zIndex = Math.min(++_maxZ, 9999).toString();
-    }
+    this.app.bringToTop();
   }
   minimize(): void {
     this.app.minimize();
@@ -55,11 +46,7 @@ export class Window {
 
 export class WindowManager {
   // All windows
-  windows: {
-    [id: string]: Window;
-  } = {};
-  // Stack order of windows
-  stack: number[];
+  windows: { [id: string]: Window } = {};
   version = "1.0";
   windowChangeHandler: ProxyHandler<any> = {
     set: (target, property: string, value) => {
@@ -80,14 +67,13 @@ export class WindowManager {
   constructor() {
     ui.windows = new Proxy(ui.windows, this.windowChangeHandler);
     // Override Application bringToTop
-    if (Application.prototype.bringToTop) {
-      const old = Application.prototype.bringToTop;
-      const windowBroughtToTop = this.windowBroughtToTop.bind(this);
-      Application.prototype.bringToTop = function () {
-        old.call(this);
-        windowBroughtToTop(this.appId);
-      };
-    }
+    const old = Application.prototype.bringToTop;
+    const windowBroughtToTop = this.windowBroughtToTop.bind(this);
+    Application.prototype.bringToTop = function () {
+      old.call(this);
+      windowBroughtToTop(this.appId);
+    };
+
     console.info("Window Manager | Initiated");
     Hooks.call("WindowManager:Init");
   }
@@ -108,12 +94,11 @@ export class WindowManager {
   }
 
   minimizeAll(): boolean {
-    let didMinimize = false;
-    Object.values(this.windows).forEach((window) => {
+    return Object.values(this.windows).reduce((didMinimize, window) => {
       didMinimize = didMinimize || !window.minimized;
       window.minimize();
-    });
-    return didMinimize;
+      return didMinimize;
+    }, false as boolean);
   }
 
   closeAll(): boolean {
