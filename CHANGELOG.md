@@ -1,3 +1,18 @@
+## [1.0.3] - 2021-07-25
+
+Long overdue fixes
+
+### Changed
+
+- Version compatibility increased to 0.8.8, minimum supported up to 0.8.6
+- Character sheet modifications are now only applied in mobile mode
+
+### Fixed
+
+- Tidy5eSheet currency icon overlapping attunements
+- Message background colors all being the same (private roll, whisper, etc)
+- Close button in the about page actually closes the about window
+
 ## [1.0.2] - 2021-06-02
 
 Foundry 0.8.6 update!
