@@ -25,8 +25,8 @@
       "path": "lang/en.json"
     }
   ],
-  "minimumCoreVersion": "0.6.2",
-  "compatibleCoreVersion": "0.8.6",
+  "minimumCoreVersion": "0.8.6",
+  "compatibleCoreVersion": "0.8.8",
   "url": "",
   "manifest": "",
   "download": "",
