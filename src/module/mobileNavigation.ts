@@ -6,7 +6,7 @@ import { noCanvasAvailable } from "./util.js";
 export enum ViewState {
   Unloaded,
   Map,
-  Sidebar,
+  App,
 }
 enum DrawerState {
   None,
@@ -51,7 +51,7 @@ export class MobileNavigation extends Application {
   render(force: boolean, ...arg: unknown[]): unknown {
     this.noCanvas =
       noCanvasAvailable() && (game.settings.get("core", "noCanvas") as boolean);
-    this.state = this.noCanvas ? ViewState.Sidebar : ViewState.Map;
+    this.state = this.noCanvas ? ViewState.App : ViewState.Map;
 
     const r = super.render(force, ...arg);
     this.windowMenu.render(force);
@@ -93,7 +93,7 @@ export class MobileNavigation extends Application {
   }
 
   showSidebar(): void {
-    this.state = ViewState.Sidebar;
+    this.state = ViewState.App;
     $(document.body).removeClass("hide-hud");
     ui.sidebar?.expand();
     if (!isTabletMode()) window.WindowManager.minimizeAll();
@@ -159,15 +159,17 @@ export class MobileNavigation extends Application {
 
   updateMode(): void {
     this.element.find(".active:not(.toggle)").removeClass("active");
-    $(document.body).removeClass("show-sidebar");
+    $(document.body).removeClass("mobile-app");
+    $(document.body).removeClass("mobile-map");
 
     switch (this.state) {
       case ViewState.Map:
         this.element.find(".navigation-map").addClass("active");
+        $(document.body).addClass("mobile-map");
         break;
-      case ViewState.Sidebar:
+      case ViewState.App:
         this.element.find(".navigation-sidebar").addClass("active");
-        $(document.body).addClass("show-sidebar");
+        $(document.body).addClass("mobile-app");
         break;
       default:
         break;

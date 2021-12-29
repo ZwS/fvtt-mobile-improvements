@@ -26,38 +26,71 @@ html {
 }
 
 // Mobile Improvements enabled
+html.mobile-improvements {
+  overflow: hidden;
+}
+
+body.mobile-improvements {
+  height: calc(var(--vh) * 100);
+  position: relative;
+}
+
 .mobile-improvements {
-  html {
-    overflow: hidden;
-  }
-  body {
-    height: calc(var(--vh) * 100);
-    position: relative;
-  }
-  #sidebar:not(.collapsed) {
+  // Fullscreen
+  #ui-left,
+  #ui-middle,
+  #ui-right {
+    position: absolute;
     width: 100%;
-    max-width: 300px;
-    z-index: 80;
     height: var(--viewHeight) !important;
     top: 0;
     right: 0;
-    /* background: #333; */
+  }
+
+  // Layering
+  #ui-left {
+    z-index: 79;
+  }
+  #ui-right {
+    z-index: 80;
+  }
+  #ui-middle {
+    z-index: 1000;
+  }
+
+  #sidebar {
+    width: 100%;
+    height: 100%;
+    margin: 0;
     border: none;
-    transform: translateX(calc(100%));
     box-shadow: none;
+  }
+
+  // Scene mode is default
+  #ui-right {
+    // max-width: 300px;
     @media screen and (max-width: 550px) {
       max-width: 100%;
     }
+    transform: translateX(200%);
   }
 
-  &.show-sidebar #sidebar {
-    transform: translateX(0);
+  // App mode
+  &.mobile-app {
+    #ui-left {
+      transform: translateX(-200%);
+    }
+
+    #ui-right {
+      transform: translateX(0);
+    }
   }
 
   #sidebar-tabs > .item {
     border-radius: 0;
     flex: 1;
   }
+
   #sidebar:not(.collapsed) #sidebar-tabs > .item.active {
     border-color: #ff6400;
     box-shadow: 0 -6px 6px inset #ff6400;
@@ -74,11 +107,11 @@ html {
     display: flex !important;
   }
 
-  #navigation {
-    width: calc(100% - 120px);
+  #ui-top {
+    margin: 0 18px 0 120px;
   }
 
-  #navigation #scene-list {
+  #ui-top #scene-list {
     min-width: 110px;
   }
 
@@ -96,19 +129,16 @@ html {
   }
 
   #hotbar {
-    z-index: 1000;
-    left: 0;
-    bottom: var(--navigationHeight);
     height: auto;
     width: 100%;
-    max-width: none;
+    max-width: 590px;
     background: #333;
-    padding: 10px 5px;
+    padding: 4px;
     pointer-events: all;
     box-shadow: 0 0 10px #000c;
     border-radius: 10px 10px 0 0;
     transform: translateY(calc(100% + var(--navigationHeight)));
-    max-width: 650px;
+    margin: 0;
   }
 
   &.show-hotbar #hotbar {
@@ -131,10 +161,15 @@ html {
   #hotbar #macro-list {
     flex: 1;
     border: none;
-    margin: 0;
-    padding: 0;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
+    padding: 0.3em 0;
+
+    grid-template-columns: repeat(10, var(--macro-size));
+
+    @media screen and (max-width: 575px) {
+      grid-template-columns: repeat(5, 50px);
+    }
   }
   #hotbar .macro {
     margin: 2px;
@@ -145,7 +180,10 @@ html {
 
   #hotbar .bar-controls a.page-control,
   #hotbar .bar-controls span.page-number {
-    flex: 0 1;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   #hotbar .bar-controls #bar-toggle {
@@ -266,6 +304,9 @@ html {
 /* ------------------------------------ */
 /*               Hide UI                */
 /* ------------------------------------ */
+#ui-left,
+#ui-right,
+#ui-center,
 #sidebar,
 #controls,
 #navigation,
@@ -280,17 +321,17 @@ html {
     transform: translateX(150%);
   }
 
-  &.show-sidebar #controls,
+  &.mobile-app #controls,
   &.hide-hud #controls {
     transform: translateX(-200%);
   }
 
-  &.show-sidebar #navigation,
+  &.mobile-app #navigation,
   &.hide-hud #navigation {
     transform: translateY(-200%);
   }
 
-  &.show-sidebar #players,
+  &.mobile-app #players,
   &.hide-hud #players {
     transform: translateX(-200%);
   }
@@ -302,7 +343,7 @@ html {
     transform: scale(0.5) translateX(-50%) translateY(-50%);
   }
 
-  &.show-sidebar #logo {
+  &.mobile-app #logo {
     transform: scale(0.5) translateX(-60%) translateY(-60%);
   }
 
