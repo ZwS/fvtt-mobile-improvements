@@ -19,7 +19,7 @@ function isTabletMode() {
   return globalThis.MobileMode.enabled && window.innerWidth > 900;
 }
 
-export class MobileNavigation extends Application {
+export class MobileUI extends Application {
   state: ViewState = ViewState.Unloaded;
   drawerState: DrawerState = DrawerState.None;
   noCanvas = false;

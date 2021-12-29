@@ -1,12 +1,12 @@
-import type { MobileNavigation } from "./mobileNavigation.js";
+import type { MobileUI } from "./MobileUi.js";
 import { getSetting, setSetting, settings } from "./settings.js";
 import { About } from "./about.js";
 import { noCanvasAvailable } from "./util.js";
 export class MobileMenu extends Application {
-  nav: MobileNavigation;
+  nav: MobileUI;
   aboutApp: About;
 
-  constructor(nav: MobileNavigation) {
+  constructor(nav: MobileUI) {
     super({
       template: "modules/mobile-improvements/templates/menu.hbs",
       popOut: false,

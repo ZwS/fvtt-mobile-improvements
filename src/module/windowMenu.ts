@@ -1,5 +1,5 @@
 import { Window } from "./windowManager";
-import type { MobileNavigation } from "./mobileNavigation.js";
+import type { MobileUI } from "./MobileUi.js";
 
 const icons = {
   "": "",
@@ -25,9 +25,9 @@ const icons = {
 
 export class WindowMenu extends Application {
   list: JQuery<HTMLElement> = null;
-  nav: MobileNavigation;
+  nav: MobileUI;
 
-  constructor(nav: MobileNavigation) {
+  constructor(nav: MobileUI) {
     super({
       template: "modules/mobile-improvements/templates/window-selector.hbs",
       popOut: false,

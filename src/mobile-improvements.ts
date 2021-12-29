@@ -6,13 +6,13 @@ import {
   setSetting,
 } from "./module/settings.js";
 import * as windowMgr from "./module/windowManager.js";
-import { MobileNavigation, ViewState } from "./module/mobileNavigation.js";
+import { MobileUI, ViewState } from "./module/MobileUi.js";
 import { viewHeight } from "./module/util.js";
 import { TouchInput } from "./module/touchInput.js";
 
 abstract class MobileMode {
   static enabled = false;
-  static navigation: MobileNavigation;
+  static navigation: MobileUI;
 
   static enter() {
     if (MobileMode.enabled) return;
@@ -84,7 +84,7 @@ Hooks.once("init", async function () {
   windowMgr.activate();
 
   if (MobileMode.navigation === undefined) {
-    MobileMode.navigation = new MobileNavigation();
+    MobileMode.navigation = new MobileUI();
   }
   registerSettings({
     [settings.SHOW_PLAYER_LIST]: togglePlayerList,
