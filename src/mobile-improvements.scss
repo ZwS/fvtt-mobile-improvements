@@ -136,7 +136,7 @@ body.mobile-improvements {
     padding: 4px;
     pointer-events: all;
     box-shadow: 0 0 10px #000c;
-    border-radius: 10px 10px 0 0;
+    border-radius: 5px 5px 0 0;
     transform: translateY(calc(100% + var(--navigationHeight)));
     margin: 0;
   }
@@ -244,6 +244,7 @@ body.mobile-improvements {
   .chat-message.bloop {
     animation-name: bloopborder;
     animation-duration: 4s;
+    animation-timing-function: ease-out;
   }
 }
 
