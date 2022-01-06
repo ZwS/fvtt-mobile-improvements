@@ -18,7 +18,7 @@ If you want to live on the edge, you can use the latest version from the develop
 branch, but there may be unfinished features and rough edges.
 
 ```
-https://gitlab.com/fvtt-modules-lab/quick-insert/-/jobs/artifacts/develop/raw/module.json?job=build-unstable
+https://gitlab.com/fvtt-modules-lab/mobile-improvements/-/jobs/artifacts/develop/raw/module.json?job=build-unstable
 ```
 
 # Features
