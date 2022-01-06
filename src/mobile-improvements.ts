@@ -102,6 +102,39 @@ Hooks.on("ready", () => {
   showToggleModeButton(getSetting(settings.SHOW_MOBILE_TOGGLE));
 });
 
+Hooks.once("renderChatLog", (app: Application) => {
+  let touchWhenFocused = false;
+  const form = app.element.find("#chat-form");
+  const textarea = form.find("#chat-message").get(0);
+  const btn = $(
+    `<button id="chat-form--send"><i class="fas fa-paper-plane"></i></button>`
+  );
+
+  btn.on("touchstart", () => {
+    if (document.activeElement === textarea) {
+      touchWhenFocused = true;
+    }
+  });
+  btn.on("touchend", () => {
+    setTimeout(() => (touchWhenFocused = false), 100);
+  });
+
+  btn.on("click", (evt) => {
+    evt.preventDefault();
+    if (touchWhenFocused) {
+      textarea.focus();
+    }
+    //@ts-ignore
+    app._onChatKeyDown({
+      code: "Enter",
+      originalEvent: {},
+      preventDefault: () => {},
+      currentTarget: textarea,
+    });
+  });
+  form.append(btn);
+});
+
 Hooks.once("renderSceneNavigation", () => {
   if (MobileMode.enabled) ui.nav?.collapse();
 });
