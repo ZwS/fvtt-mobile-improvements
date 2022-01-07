@@ -344,6 +344,7 @@ body.mobile-improvements {
     transform: translateX(-200%);
   }
 
+  &.windows-open #navigation,
   &.mobile-app #navigation,
   &.hide-hud #navigation {
     transform: translateY(-200%);

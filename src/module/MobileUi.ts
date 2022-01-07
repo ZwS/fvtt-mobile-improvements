@@ -39,13 +39,20 @@ export class MobileUI extends Application {
     // Ensure HUD shows on opening a new window
     Hooks.on("WindowManager:NewRendered", () => this._onShowWindow());
     Hooks.on("WindowManager:BroughtToTop", () => this._onShowWindow());
+    Hooks.on("WindowManager:NoneVisible", () => this._onHideAllWindows());
   }
 
   _onShowWindow(): void {
     $(document.body).removeClass("hide-hud");
+    $(document.body).addClass("windows-open");
+
     if (isTabletMode()) {
       this.showSidebar();
     }
+  }
+
+  _onHideAllWindows(): void {
+    $(document.body).removeClass("windows-open");
   }
 
   render(force: boolean, ...arg: unknown[]): unknown {

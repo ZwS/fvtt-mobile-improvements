@@ -74,6 +74,24 @@ export class WindowManager {
       windowBroughtToTop(this.appId);
     };
 
+    // Override Application minimize
+    const windowMinimized = this.windowMinimized.bind(this);
+    const oldMinimize = Application.prototype.minimize;
+    Application.prototype.minimize = function () {
+      const r = oldMinimize.call(this);
+      r.then(() => windowMinimized(this.appId));
+      return r;
+    };
+
+    // Override Application maximize
+    const windowMaximized = this.windowMaximized.bind(this);
+    const oldMaximize = Application.prototype.maximize;
+    Application.prototype.maximize = function () {
+      const r = oldMaximize.call(this);
+      r.then(() => windowMaximized(this.appId));
+      return r;
+    };
+
     console.info("Window Manager | Initiated");
     Hooks.call("WindowManager:Init");
   }
@@ -88,9 +106,25 @@ export class WindowManager {
   windowRemoved(appId: number): void {
     delete this.windows[appId];
     Hooks.call("WindowManager:Removed", appId);
+    this.checkEmpty();
   }
   windowBroughtToTop(appId: number): void {
     Hooks.call("WindowManager:BroughtToTop", appId);
+  }
+
+  windowMinimized(appId: number): void {
+    Hooks.call("WindowManager:Minimized", appId);
+    this.checkEmpty();
+  }
+  windowMaximized(appId: number): void {
+    Hooks.call("WindowManager:Maximized", appId);
+  }
+
+  checkEmpty(): void {
+    const windows = Object.values(this.windows);
+    if (windows.length === 0 || windows.every((w) => w.minimized)) {
+      Hooks.call("WindowManager:NoneVisible");
+    }
   }
 
   minimizeAll(): boolean {
