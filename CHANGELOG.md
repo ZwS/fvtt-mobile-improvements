@@ -1,3 +1,13 @@
+## [1.1.0] - 2022-01-07
+
+### Added
+
+- Send button for the chat
+
+### Fixed
+
+- V9 compatiblity
+
 ## [1.0.3] - 2021-07-25
 
 Long overdue fixes

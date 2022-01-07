@@ -5,18 +5,13 @@
   "version": "",
   "author": "Sunspots",
   "scripts": [],
-  "esmodules": [
-    "mobile-improvements.js"
-  ],
+  "esmodules": ["mobile-improvements.js"],
   "dependencies": [
     {
       "name": "touch-vtt"
     }
   ],
-  "styles": [
-    "./mobile-improvements.css",
-    "./sheets/dnd5e.css"
-  ],
+  "styles": ["./mobile-improvements.css", "./sheets/dnd5e.css"],
   "packs": [],
   "languages": [
     {
@@ -25,8 +20,8 @@
       "path": "lang/en.json"
     }
   ],
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "0.8.8",
+  "minimumCoreVersion": "9.238",
+  "compatibleCoreVersion": "9.238",
   "url": "",
   "manifest": "",
   "download": "",
