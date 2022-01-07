@@ -79,6 +79,7 @@
 
   .dnd5e.sheet .sheet-navigation .item {
     margin: 0;
+    font-size: max(min(20px, 5.2vw), 18px);
   }
   .dnd5e.sheet.actor ul.attributes {
     height: auto;
@@ -190,13 +191,6 @@
 
   .dnd5e.sheet.actor.character .resource .attribute-value label.recharge {
     height: auto;
-  }
-  .dnd5e.sheet.actor.character
-    .resource
-    .attribute-value
-    label.recharge
-    input[type="checkbox"] {
-    top: 3px;
   }
 
   .dnd5e.sheet.actor .tab.attributes {

@@ -72,8 +72,8 @@ body.mobile-improvements {
 
   // Scene mode is default
   #ui-right {
-    // max-width: 300px;
-    @media screen and (max-width: 550px) {
+    max-width: 300px;
+    @media screen and (max-width: 650px) {
       max-width: 100%;
     }
     transform: translateX(200%);
@@ -81,10 +81,6 @@ body.mobile-improvements {
 
   // App mode
   &.mobile-app {
-    #ui-left {
-      transform: translateX(-200%);
-    }
-
     #ui-right {
       transform: translateX(0);
     }
@@ -117,12 +113,6 @@ body.mobile-improvements {
 
   #ui-top #scene-list {
     min-width: 110px;
-  }
-
-  #players {
-    bottom: 90px;
-    left: 2px;
-    z-index: 62;
   }
 
   #players h3 {
