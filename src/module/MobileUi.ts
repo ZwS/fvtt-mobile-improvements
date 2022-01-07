@@ -1,7 +1,6 @@
 import { settings, getSetting } from "./settings.js";
 import { WindowMenu } from "./windowMenu.js";
 import { MobileMenu } from "./mobileMenu.js";
-import { noCanvasAvailable } from "./util.js";
 
 export enum ViewState {
   Unloaded,
@@ -56,8 +55,7 @@ export class MobileUI extends Application {
   }
 
   render(force: boolean, ...arg: unknown[]): unknown {
-    this.noCanvas =
-      noCanvasAvailable() && (game.settings.get("core", "noCanvas") as boolean);
+    this.noCanvas = game.settings.get("core", "noCanvas") as boolean;
     this.state = this.noCanvas ? ViewState.App : ViewState.Map;
 
     const r = super.render(force, ...arg);

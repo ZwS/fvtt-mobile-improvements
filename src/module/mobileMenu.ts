@@ -1,7 +1,6 @@
 import type { MobileUI } from "./MobileUi.js";
 import { getSetting, setSetting, settings } from "./settings.js";
 import { About } from "./about.js";
-import { noCanvasAvailable } from "./util.js";
 export class MobileMenu extends Application {
   nav: MobileUI;
   aboutApp: About;
@@ -20,9 +19,6 @@ export class MobileMenu extends Application {
       const [, name] = firstClass.split("-");
       this.selectItem(name);
     });
-    if (!noCanvasAvailable()) {
-      html.find(".menu-canvas").detach();
-    }
   }
 
   toggleOpen(): void {
