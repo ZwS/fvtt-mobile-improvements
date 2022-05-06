@@ -273,16 +273,24 @@ body.mobile-improvements {
   max-height: initial;
 }
 
-.app.filepicker form {
+.app.filepicker {
+  form {
   max-height: 100%;
   display: flex;
   flex-direction: column;
 }
-
-.app.filepicker .filepicker-body {
+  .filepicker-body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+    flex-grow: 1;
+  }
+
+  .tiles-list {
+    grid-template-columns: repeat(auto-fit, 100px);
+    width: calc(100% + 4px);
+    flex-shrink: 2;
+  }
 }
 
 .window-app.image-popout .form-group {
