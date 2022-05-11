@@ -1,3 +1,16 @@
+## [1.1.1] - 2022-05-11
+
+### Changed
+
+- Bumped version compatibility
+- Minor style updates
+
+### Fixed
+
+- Clean up warnings
+- Fix flex-styling on file picker
+- The "Show Mobile Mode toggle" is now controlled by the GM to make it easier to enable for tablets (the regular settings window may not be usable on tablet-sized screens)
+
 ## [1.1.0] - 2022-01-07
 
 ### Added
