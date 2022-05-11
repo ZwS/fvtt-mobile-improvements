@@ -2,18 +2,20 @@
 /*                Core UI               */
 /* ------------------------------------ */
 
+:root {
+  --navigationHeight: 35px;
+  --vh: 1vh;
+  --viewHeight: calc(calc(var(--vh) * 100) - var(--navigationHeight));
+  --miDarkBackground: #333;
+  --miDarkBackgroundTransparent: #333333ee;
+}
+
 * {
   scrollbar-width: thin;
 }
 
 html {
   background: black;
-}
-
-:root {
-  --navigationHeight: 35px;
-  --vh: 1vh;
-  --viewHeight: calc(calc(var(--vh) * 100) - var(--navigationHeight));
 }
 
 ::-webkit-scrollbar {
@@ -86,20 +88,30 @@ body.mobile-improvements {
     }
   }
 
+  #sidebar-tabs {
+    background: var(--miDarkBackground);
+    border-bottom: none;
+    box-shadow: 0 0 10px #000c;
+    --sidebar-tab-height: var(--navigationHeight);
+  }
+
   #sidebar-tabs > .item {
     border-radius: 0;
-    flex: 1;
+    flex-shrink: 1;
+    border: none;
   }
 
-  #sidebar:not(.collapsed) #sidebar-tabs > .item.active {
-    border-color: #ff6400;
-    box-shadow: 0 -6px 6px inset #ff6400;
-  }
-  #sidebar:not(.collapsed) #sidebar-tabs > .collapse {
-    display: none;
+  #sidebar #sidebar-tabs > .item.active {
+    border: none;
+    box-shadow: none;
+    color: var(--color-text-hyperlink);
+    text-shadow: 0 0 2px #0003;
+    .fas:not(.notification-pip) {
+    transform: scale(1.2);
+    }
   }
 
-  #sidebar.collapsed {
+  #sidebar #sidebar-tabs > .collapse {
     display: none;
   }
 
@@ -126,7 +138,7 @@ body.mobile-improvements {
     height: auto;
     width: 100%;
     max-width: 590px;
-    background: #333;
+    background: var(--miDarkBackground);
     padding: 4px;
     pointer-events: all;
     box-shadow: 0 0 10px #000c;
@@ -396,7 +408,7 @@ body.mobile-improvements {
 /* ------------------------------------ */
 .mobile-improvements {
   .app {
-    background: #333333ee;
+    background: var(--miDarkBackgroundTransparent);
     border-radius: 0;
   }
 
@@ -443,7 +455,7 @@ body.mobile-improvements {
       flex-basis: auto;
     }
     .window-header {
-      background: #333333ee;
+      background: var(--miDarkBackgroundTransparent);
       font-size: 110%;
       font-weight: bold;
     }
@@ -493,7 +505,7 @@ body.mobile-improvements {
   overflow: hidden;
 
   white-space: nowrap;
-  background-color: #333;
+  background-color: var(--miDarkBackground);
   color: #f0f0e0;
   padding: 6px 10px;
   border-radius: 100px;
@@ -539,7 +551,7 @@ body.mobile-improvements {
 .window-selector nav {
   width: 100%;
   padding: 0 1em;
-  background: #333;
+  background: var(--miDarkBackground);
   max-height: calc(100vh - var(--navigationHeight));
   overflow-y: auto;
   pointer-events: auto;
@@ -614,7 +626,7 @@ body.mobile-improvements {
   border: 1px solid #000;
   text-align: center;
   font-weight: bold;
-  background: #333333ee;
+  background: var(--miDarkBackgroundTransparent);
   color: #f0f0e0;
   box-shadow: 0 0 20px #000;
   cursor: pointer;
@@ -632,7 +644,7 @@ body.mobile-improvements {
   margin: 0;
   padding: 0;
   z-index: 1002;
-  background-color: #333;
+  background-color: #242424;
   position: absolute;
   top: var(--viewHeight);
   align-items: stretch;
@@ -691,7 +703,7 @@ body.mobile-improvements {
 }
 
 .mobile-navigation li.active:not(.toggle) {
-  color: #ff6400;
+  color: var(--color-text-hyperlink);
 }
 
 .mobile-navigation li.active:not(.toggle) i {
@@ -706,7 +718,7 @@ body.mobile-improvements {
   align-items: center;
   position: absolute;
   top: var(--viewHeight);
-  background: #333;
+  background: var(--miDarkBackground);
   height: 25px;
   width: 25px;
   font-size: 110%;
@@ -725,7 +737,7 @@ body.mobile-improvements {
   display: flex !important;
   margin: 0;
   padding: 0;
-  background-color: #333;
+  background-color: var(--miDarkBackground);
   align-items: stretch;
   list-style: none;
   color: #f0f0e0;
