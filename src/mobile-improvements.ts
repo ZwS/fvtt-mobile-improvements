@@ -38,7 +38,7 @@ abstract class MobileMode {
     if (localStorage.getItem("mobile-improvements.pinMobileMode") === "true")
       return MobileMode.enter();
 
-    if (window.innerWidth < 800) {
+    if (window.innerWidth <= 800) {
       MobileMode.enter();
     } else {
       MobileMode.leave();
