@@ -27,6 +27,7 @@ const moduleSettings = [
     hint: "MOBILEIMPROVEMENTS.SettingsShowToggleHint",
     type: Boolean,
     default: false,
+    scope: "world"
   },
   {
     setting: settings.SHOW_PLAYER_LIST,
